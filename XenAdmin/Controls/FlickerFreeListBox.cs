@@ -68,53 +68,55 @@ namespace XenAdmin.Controls
         private IntPtr _hScrollbarHandle = IntPtr.Zero;
         public WndProcCancelDelegate CancelWndProc = new WndProcCancelDelegate(delegate(Message msg) { return false; });
 
+		//DEBUG: GetScrollInfo
+    //    protected override void WndProc(ref Message msg)
+    //    {
+    //        if (msg.Msg == Win32.WM_HSCROLL)
+    //        {
+    //            // Store the handle for use in Invalidate()
+    //            _hScrollbarHandle = msg.HWnd;
+    //            // Collect info about the position of the horizontal scrollbar
+    //            Win32.ScrollInfo si = new Win32.ScrollInfo();
+    //            si.fMask = (int)Win32.ScrollInfoMask.SIF_ALL;
+    //            si.cbSize = (uint)Marshal.SizeOf(si);
+				//NativeCalls.Instance.GetScrollInfo(msg.HWnd, 0, ref si);
 
-        protected override void WndProc(ref Message msg)
-        {
-            if (msg.Msg == Win32.WM_HSCROLL)
-            {
-                // Store the handle for use in Invalidate()
-                _hScrollbarHandle = msg.HWnd;
-                // Collect info about the position of the horizontal scrollbar
-                Win32.ScrollInfo si = new Win32.ScrollInfo();
-                si.fMask = (int)Win32.ScrollInfoMask.SIF_ALL;
-                si.cbSize = (uint)Marshal.SizeOf(si);
-                Win32.GetScrollInfo(msg.HWnd, 0, ref si);
+        //        if ((msg.WParam.ToInt32() & 0xFF) == Win32.SB_THUMBTRACK)
+        //        {
+        //            // If the user is in the middle of dragging the scrollbar, we're interested in
+        //            // the 'track' position
+        //            _scrollLeft = si.nTrackPos;
+        //        }
+        //        else
+        //        {
+        //            // Otherwise just the regular scrollbar position
+        //            _scrollLeft = si.nPos;
+        //        }
+        //        // Force repaint
+        //        base.Invalidate();
+        //    }
 
-                if ((msg.WParam.ToInt32() & 0xFF) == Win32.SB_THUMBTRACK)
-                {
-                    // If the user is in the middle of dragging the scrollbar, we're interested in
-                    // the 'track' position
-                    _scrollLeft = si.nTrackPos;
-                }
-                else
-                {
-                    // Otherwise just the regular scrollbar position
-                    _scrollLeft = si.nPos;
-                }
-                // Force repaint
-                base.Invalidate();
-            }
+        //    if(!CancelWndProc(msg))
+        //        base.WndProc(ref msg);
+        //}
 
-            if(!CancelWndProc(msg))
-                base.WndProc(ref msg);
-        }
 
-        public new void Invalidate()
-        {
-            if (_hScrollbarHandle != IntPtr.Zero)
-            {
-                // If we've been invalidated, update our drawing code to the new horizontal scrollbar
-                // position (which is sometimes spontaneously reset to zero and can't be programmatically
-                // set to its former value) - see CA-11405.
-                Win32.ScrollInfo si = new Win32.ScrollInfo();
-                si.fMask = (int)Win32.ScrollInfoMask.SIF_ALL;
-                si.cbSize = (uint)Marshal.SizeOf(si);
-                Win32.GetScrollInfo(_hScrollbarHandle, 0, ref si);
-                _scrollLeft = si.nTrackPos; // often zero
-            }
-            base.Invalidate();
-        }
+		//DEBUG: GetScrollInfo
+    //    public new void Invalidate()
+    //    {
+    //        if (_hScrollbarHandle != IntPtr.Zero)
+    //        {
+    //            // If we've been invalidated, update our drawing code to the new horizontal scrollbar
+    //            // position (which is sometimes spontaneously reset to zero and can't be programmatically
+    //            // set to its former value) - see CA-11405.
+    //            Win32.ScrollInfo si = new Win32.ScrollInfo();
+    //            si.fMask = (int)Win32.ScrollInfoMask.SIF_ALL;
+    //            si.cbSize = (uint)Marshal.SizeOf(si);
+				//NativeCalls.Instance.GetScrollInfo(_hScrollbarHandle, 0, ref si);
+        //        _scrollLeft = si.nTrackPos; // often zero
+        //    }
+        //    base.Invalidate();
+        //}
 
         protected override void OnMouseWheel(MouseEventArgs e)
         {

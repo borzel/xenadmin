@@ -51,6 +51,7 @@
     <Reference Include="log4net">
       <HintPath>..\packages\log4net.dll</HintPath>
     </Reference>
+    <Reference Include="System.Runtime.InteropServices.RuntimeInformation" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Archive\ArchiveIterator.cs" />
@@ -91,6 +92,10 @@
     <Compile Include="ToStringWrapper.cs" />
     <Compile Include="Win32.cs" />
     <Compile Include="XSVersionAttribute.cs" />
+    <Compile Include="NativeCalls.cs" />
+    <Compile Include="INativeCalls.cs" />
+    <Compile Include="NativeCallsWin32.cs" />
+    <Compile Include="NativeCallsLinux.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

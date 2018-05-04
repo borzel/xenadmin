@@ -358,6 +358,7 @@ namespace XenAdmin
 
             try
             {
+				// TODO: CorssPlatform: ConnectPipe
                 //ConnectPipe();
             }
             catch (System.ComponentModel.Win32Exception exn)
@@ -513,7 +514,8 @@ namespace XenAdmin
 
             logApplicationStats();
 
-            Clip.UnregisterClipboardViewer();
+			// TODO: CrossPlatform ClipboardViewer
+            //Clip.UnregisterClipboardViewer();
 
             try
             {
@@ -645,62 +647,63 @@ namespace XenAdmin
             //
             // We also define a registry key to turn this off, just in case someone in the field complains.
 
-            if (Registry.ForceSystemFonts)
-            {
-                log.Debug("ForceSystemFonts registry key is defined");
-            }
-            else if (InvisibleMessages.LOCALE.StartsWith("ja-"))
-            {
-                Font new_font =
-                    (Environment.OSVersion.Version.Major < 6 || Environment.OSVersion.Version.Major == 6 && Environment.OSVersion.Version.Minor == 0) ?
-                        new Font("MS UI Gothic", 9.0f) : // 2K (5.0), XP (5.1), 2K3 and XP Pro (5.2), Vista and 2K8 (6.0)
-                        new Font("Meiryo UI", 9.0f); // Win 7 and 2K8R2 (6.1) and above
-                log.DebugFormat("Running on localized resources with Japanese fonts; switching the font from {0} {1}pt to {2} {3}pt.",
-                                DefaultFont.Name, DefaultFont.Size, new_font.Name, new_font.Size);
-                SetDefaultFonts(new_font);
-                return;
-            }
-            else if (InvisibleMessages.LOCALE.StartsWith("zh-"))
-            {
-                Font new_font =
-                        Environment.OSVersion.Version.Major < 6 ?
-                        new Font("MS Shell Dlg", 9.0f) : // 2K (5.0), XP (5.1), 2K3 and XP Pro (5.2)
-                        new Font("Microsoft YaHei", 9.0f); // Vista and above
-                log.DebugFormat("Running on localized resources with Simplified Chinese fonts; switching the font from {0} {1}pt to {2} {3}pt.",
-                                DefaultFont.Name, DefaultFont.Size, new_font.Name, new_font.Size);
-                SetDefaultFonts(new_font);
-                return;
-            }
-            else
-            {
-                if (DefaultFont.Size <= 9.0f)
-                {
-                    Size s = Drawing.MeasureText("Lorum ipsum", DefaultFont);
-                    // Segoe UI 9pt gives 78x15 here.  Tahoma 8pt gives 66x13.
-                    // We allow a bit of slop just in case antialias or hinting settings make a small difference.
-                    if (s.Width > 80 || s.Height > 16)
-                    {
-                        Font new_font =
-                            Environment.OSVersion.Version.Major < 6 ?
-                                new Font("Tahoma", 8.0f) : // 2K (5.0), XP (5.1), 2K3 and XP Pro (5.2)
-                                new Font("Segoe UI", 9.0f); // Vista and above
+			// TODO: CrossPlatform
+            //if (Registry.ForceSystemFonts)
+            //{
+            //    log.Debug("ForceSystemFonts registry key is defined");
+            //}
+            //else if (InvisibleMessages.LOCALE.StartsWith("ja-"))
+            //{
+            //    Font new_font =
+            //        (Environment.OSVersion.Version.Major < 6 || Environment.OSVersion.Version.Major == 6 && Environment.OSVersion.Version.Minor == 0) ?
+            //            new Font("MS UI Gothic", 9.0f) : // 2K (5.0), XP (5.1), 2K3 and XP Pro (5.2), Vista and 2K8 (6.0)
+            //            new Font("Meiryo UI", 9.0f); // Win 7 and 2K8R2 (6.1) and above
+            //    log.DebugFormat("Running on localized resources with Japanese fonts; switching the font from {0} {1}pt to {2} {3}pt.",
+            //                    DefaultFont.Name, DefaultFont.Size, new_font.Name, new_font.Size);
+            //    SetDefaultFonts(new_font);
+            //    return;
+            //}
+            //else if (InvisibleMessages.LOCALE.StartsWith("zh-"))
+            //{
+            //    Font new_font =
+            //            Environment.OSVersion.Version.Major < 6 ?
+            //            new Font("MS Shell Dlg", 9.0f) : // 2K (5.0), XP (5.1), 2K3 and XP Pro (5.2)
+            //            new Font("Microsoft YaHei", 9.0f); // Vista and above
+            //    log.DebugFormat("Running on localized resources with Simplified Chinese fonts; switching the font from {0} {1}pt to {2} {3}pt.",
+            //                    DefaultFont.Name, DefaultFont.Size, new_font.Name, new_font.Size);
+            //    SetDefaultFonts(new_font);
+            //    return;
+            //}
+            //else
+            //{
+            //    if (DefaultFont.Size <= 9.0f)
+            //    {
+            //        Size s = Drawing.MeasureText("Lorum ipsum", DefaultFont);
+            //        // Segoe UI 9pt gives 78x15 here.  Tahoma 8pt gives 66x13.
+            //        // We allow a bit of slop just in case antialias or hinting settings make a small difference.
+            //        if (s.Width > 80 || s.Height > 16)
+            //        {
+            //            Font new_font =
+            //                Environment.OSVersion.Version.Major < 6 ?
+            //                    new Font("Tahoma", 8.0f) : // 2K (5.0), XP (5.1), 2K3 and XP Pro (5.2)
+            //                    new Font("Segoe UI", 9.0f); // Vista and above
 
-                        log.DebugFormat("Running on default resources with large default font; switching the font from {0} {1}pt to {2} {3}pt.",
-                            DefaultFont.Name, DefaultFont.Size, new_font.Name, new_font.Size);
-                        SetDefaultFonts(new_font);
-                        return;
-                    }
-                    else
-                    {
-                        log.Debug("Running on default resources and happy with the font.");
-                    }
-                }
-                else
-                {
-                    log.Debug("Running on default resources but the font is bigger than usual.");
-                }
-            }
-            log.DebugFormat("Leaving the default font as {0} {1}pt.", DefaultFont.Name, DefaultFont.Size);
+            //            log.DebugFormat("Running on default resources with large default font; switching the font from {0} {1}pt to {2} {3}pt.",
+            //                DefaultFont.Name, DefaultFont.Size, new_font.Name, new_font.Size);
+            //            SetDefaultFonts(new_font);
+            //            return;
+            //        }
+            //        else
+            //        {
+            //            log.Debug("Running on default resources and happy with the font.");
+            //        }
+            //    }
+            //    else
+            //    {
+            //        log.Debug("Running on default resources but the font is bigger than usual.");
+            //    }
+            //}
+            //log.DebugFormat("Leaving the default font as {0} {1}pt.", DefaultFont.Name, DefaultFont.Size);
             SetDefaultFonts(DefaultFont);
         }
 

@@ -1077,21 +1077,25 @@ namespace XenAdmin.Controls
 
         private int ScrollInfo(Win32.ScrollBarConstants fnBar)
         {
-            Win32.ScrollInfo si = new Win32.ScrollInfo();
-            si.cbSize = (uint)Marshal.SizeOf(si);
-            si.fMask = (int)Win32.ScrollInfoMask.SIF_POS;
-            // TODO: CrossPlatform
-			//if (!Win32.GetScrollInfo(Handle, (int)fnBar, ref si))
+			//DEBUG: GetScrollInfo
+			return 0;
+
+   //         Win32.ScrollInfo si = new Win32.ScrollInfo();
+   //         si.cbSize = (uint)Marshal.SizeOf(si);
+   //         si.fMask = (int)Win32.ScrollInfoMask.SIF_POS;
+			//if (!NativeCalls.Instance.GetScrollInfo(Handle, (int)fnBar, ref si))
             //    return 0;
 
-            return si.nPos;
+            //return si.nPos;
         }
 
         public int HScrollPos
         {
             get
             {
-                return ScrollInfo(Win32.ScrollBarConstants.SB_HORZ);
+				//DEBUG: GetScrollInfo
+				return 0;
+				//return ScrollInfo(Win32.ScrollBarConstants.SB_HORZ);
             }
             set
             {

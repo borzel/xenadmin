@@ -126,7 +126,10 @@ namespace XenAdmin.Controls.MainWindowControls
             splitContainer1.Panel1MinSize = splitContainer1.ClientSize.Height - toolStripBig.MaximumSize.Height - splitContainer1.SplitterWidth;
 
             // Recalculate splitter distance so that Panel2.Height is preserved
-            splitContainer1.SplitterDistance = splitContainer1.ClientSize.Height - panel2Height - splitContainer1.SplitterWidth; 
+			int distance = splitContainer1.ClientSize.Height - panel2Height - splitContainer1.SplitterWidth;
+			if (distance < 0)
+				distance = 0;
+			splitContainer1.SplitterDistance = distance; 
         }
 
         #region Accessors

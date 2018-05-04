@@ -40,7 +40,7 @@ using XenAdmin.Network;
 using System.Diagnostics;
 using System.Windows.Forms;
 using XenAdmin.Dialogs;
-using System.Text;
+//using System.Text;
 
 namespace XenAdmin.Core
 {
@@ -63,7 +63,7 @@ namespace XenAdmin.Core
         
         public static IEnumerable<Alert> UpdateAlerts
         {
-            get { return updateAlerts; }
+			get { return updateAlerts;}
         }
 
         public static int UpdateAlertsCount
@@ -216,37 +216,9 @@ namespace XenAdmin.Core
         private static DownloadUpdatesXmlAction CreateDownloadUpdatesXmlAction(bool checkForXenCenter, bool checkForServerVersion, bool checkForPatches, string checkForUpdatesUrl = null)
         {
             string userAgent = string.Format("{0}/{1}.{2} ({3}-bit)", Branding.BRAND_CONSOLE, Branding.XENCENTER_VERSION, Program.Version.Revision.ToString(), IntPtr.Size * 8);
-            string userAgentId = GetUniqueIdHash();
+			string userAgentId = NativeCalls.Instance.GetUniqueIdHash();
 
             return new DownloadUpdatesXmlAction(checkForXenCenter, checkForServerVersion, checkForPatches, userAgent, userAgentId, checkForUpdatesUrl);
-        }
-
-        internal static string GetUniqueIdHash()
-        {
-            string uniqueIdHash = "nil";
-
-            try
-            {
-                var managementObj = new System.Management.ManagementObject("Win32_OperatingSystem=@");
-                string serialNumber = (string)managementObj["SerialNumber"];
-
-                if (!string.IsNullOrWhiteSpace(serialNumber))
-                {
-                    var serialBytes = Encoding.ASCII.GetBytes(serialNumber);
-
-                    using (var md = new System.Security.Cryptography.MD5CryptoServiceProvider()) // MD5 to keep it short enough as this hash is not used for security in any way
-                    {
-                        var hash = md.ComputeHash(serialBytes);
-                        uniqueIdHash = BitConverter.ToString(hash).Replace("-", "").ToLowerInvariant();
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                log.Error(ex);
-            }
-
-            return uniqueIdHash;
         }
 
         /// <summary>

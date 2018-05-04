@@ -304,11 +304,10 @@ namespace XenAdmin.Controls.CustomGridView
                 // we dont need to render again apparently :)
                 Core.Drawing.QuickDraw(Graphics, BackBuffer);
             }
-            else
-            {
+            else            {
                 //paint control
                 IntPtr pTarget = DragColumnsGraphics.GetHdc();
-                IntPtr pSource = Core.Drawing.CreateCompatibleDC(pTarget);
+				IntPtr pSource = NativeCalls.Instance.CreateCompatibleDC(pTarget);
                 IntPtr pOrig = Core.Drawing.SelectObject(pSource, BackBuffer.GetHbitmap());
                 Core.Drawing.BitBlt(pTarget, 0, 0, BackBuffer.Width, BackBuffer.Height, pSource, 0, 0, Core.Drawing.TernaryRasterOperations.SRCCOPY);
                 IntPtr pNew = Core.Drawing.SelectObject(pSource, pOrig);
@@ -318,7 +317,7 @@ namespace XenAdmin.Controls.CustomGridView
 
                 // paint dragged stuff
                 //IntPtr pTarget2 = DragGraphics.GetHdc();
-                IntPtr pSource2 = Core.Drawing.CreateCompatibleDC(pTarget);
+				IntPtr pSource2 = NativeCalls.Instance.CreateCompatibleDC(pTarget);
                 IntPtr pOrig2 = Core.Drawing.SelectObject(pSource2, DragColumnsData.GetHbitmap());
                 Core.Drawing.BitBlt(pTarget, DragColumnsWindowPosition.X, DragColumnsWindowPosition.Y, DragColumnsData.Width, DragColumnsData.Height, pSource2, 0, 0, Core.Drawing.TernaryRasterOperations.SRCAND);
                 IntPtr pNew2 = Core.Drawing.SelectObject(pSource2, pOrig2);
@@ -328,7 +327,7 @@ namespace XenAdmin.Controls.CustomGridView
 
                 // paint everything to screen
                 IntPtr pTarget3 = Graphics.GetHdc();
-                IntPtr pSource3 = Core.Drawing.CreateCompatibleDC(pTarget3);
+				IntPtr pSource3 = NativeCalls.Instance.CreateCompatibleDC(pTarget3);
                 IntPtr pOrig3 = Core.Drawing.SelectObject(pSource3, DragColumnsBuffer.GetHbitmap());
                 Core.Drawing.BitBlt(pTarget3, 0, 0, DragColumnsBuffer.Width, DragColumnsBuffer.Height, pSource3, 0, 0, Core.Drawing.TernaryRasterOperations.SRCCOPY);
                 IntPtr pNew3 = Core.Drawing.SelectObject(pSource3, pOrig3);

@@ -269,6 +269,9 @@ namespace XenAdmin.Controls
 
         protected override Size GetPreferredSize(Graphics graphics, DataGridViewCellStyle cellStyle, int rowIndex, Size constraintSize)
         {
+			//DEBUG: Font is null Workaround
+			if (cellStyle.Font == null)
+				cellStyle.Font = System.Drawing.SystemFonts.DefaultFont;
             var orig = base.GetPreferredSize(graphics, cellStyle, rowIndex, constraintSize);
             return new Size(orig.Width + SPLITTER_FROM_RIGHT, orig.Height);
         }

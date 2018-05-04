@@ -41,3 +41,5 @@ XenOvfApi/External Tools/*
 _ReSharper.*/
 *.opensdf
 *.sdf
+*.userprefs
+.vs

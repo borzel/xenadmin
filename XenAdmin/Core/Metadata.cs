@@ -127,7 +127,7 @@ namespace XenAdmin.Core
                     OsVersion = Environment.OSVersion.ToString(),
                     OsCulture = CultureInfo.CurrentUICulture.EnglishName,
                     IpAddress = GetLocalIPAddress(),
-                    Uuid = Updates.GetUniqueIdHash(),
+					Uuid = NativeCalls.Instance.GetUniqueIdHash(),
                     Uptime = isForXenCenter ? (DateTime.Now - Process.GetCurrentProcess().StartTime).ToString() : string.Empty
                 },
                 Settings = new XenCenterSettings

@@ -56,14 +56,18 @@ namespace XenAdmin.Core
 
         internal static void RegisterClipboardViewer()
         {
+			// TODO: CrossPlatform ClipboardViewer
+			return;
+			
             Program.AssertOnEventThread();
 
             UnregisterClipboardViewer();
 
             // Register ourselves at the front of the chain.
-            Win32.SetLastError(0);
+			NativeCalls.Instance.SetLastError(0);
             registeredClipboardHandle = Program.MainWindow.Handle;
-            nextClipboardViewer = Win32.SetClipboardViewer(registeredClipboardHandle);
+			// TODO: CrossPlatform ClipboardViewer
+			//nextClipboardViewer = Win32.SetClipboardViewer(registeredClipboardHandle);
 
             int err = Marshal.GetLastWin32Error();
             if (err != 0)
@@ -90,17 +94,20 @@ namespace XenAdmin.Core
                 nextClipboardViewer = IntPtr.Zero;
                 return;
             }
-
+				
             StartGetClipboard();
         }
 
         internal static void UnregisterClipboardViewer()
         {
+			// TODO: CrossPlatform ClipboardViewer
+			return;
+
             if (registeredClipboardHandle != IntPtr.Zero)
             {
                 // Remove existing registration from chain, if any.
-                Win32.SetLastError(0);
-                Win32.ChangeClipboardChain(registeredClipboardHandle, nextClipboardViewer);
+				NativeCalls.Instance.SetLastError(0);
+				Win32.ChangeClipboardChain(registeredClipboardHandle, nextClipboardViewer);
                 int err = Marshal.GetLastWin32Error();
                 if (err != 0)
                 {
@@ -114,6 +121,9 @@ namespace XenAdmin.Core
 
         internal static void ProcessWMChangeCBChain(Message e)
         {
+			// TODO: CrossPlatform ClipboardViewer
+			return;
+			
             Program.AssertOnEventThread();
 
             if (!processingChangeCBChain)
@@ -142,6 +152,9 @@ namespace XenAdmin.Core
 
         internal static void ProcessWMDrawClipboard(Message e)
         {
+			// TODO: CrossPlatform ClipboardViewer
+			return;
+
             Program.AssertOnEventThread();
 
             if (!processingDrawClipboard)
@@ -184,12 +197,15 @@ namespace XenAdmin.Core
 
         private static void ForwardClipboardMessage(Message e)
         {
+			// TODO: CrossPlatform ClipboardViewer
+			return;
+			
             Program.AssertOnEventThread();
 
             if (nextClipboardViewer == IntPtr.Zero)
                 return;
 
-            Win32.SetLastError(0);
+			NativeCalls.Instance.SetLastError(0);
             Win32.SendMessage(nextClipboardViewer, e.Msg, e.WParam, e.LParam);
             int err = Marshal.GetLastWin32Error();
             if (err != 0)
@@ -201,6 +217,9 @@ namespace XenAdmin.Core
 
         private static void StartGetClipboard()
         {
+			// TODO: CrossPlatform ClipboardViewer
+			return;
+			
             Program.AssertOnEventThread();
 
             if (!GettingClipboard)
@@ -215,6 +234,9 @@ namespace XenAdmin.Core
 
         private static void GetClipboard()
         {
+			// TODO: CrossPlatform ClipboardViewer
+			return;
+
             Program.AssertOffEventThread();
 
             try
@@ -237,6 +259,9 @@ namespace XenAdmin.Core
 
         private static void OnClipboardChanged()
         {
+			// TODO: CrossPlatform ClipboardViewer
+			return;
+
             Program.AssertOnEventThread();
 
             if (ClipboardChanged != null)
@@ -245,6 +270,9 @@ namespace XenAdmin.Core
 
         internal static void SetClipboardText(string text)
         {
+			// TODO: CrossPlatform ClipboardViewer
+			return;
+
             Program.AssertOnEventThread();
 
             try

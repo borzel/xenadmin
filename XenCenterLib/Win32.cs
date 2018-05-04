@@ -43,39 +43,17 @@ namespace XenAdmin.Core
     {
         private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
-        [DllImport("kernel32.dll")]
-        public static extern void SetLastError(uint dwErrCode);
-
         [DllImport("kernel32.dll", CharSet = CharSet.Auto, SetLastError = true)]
         public static extern IntPtr GetModuleHandle(string lpModuleName);
 
-        /// From George Shepherd's Windows Forms FAQ:
-        /// http://www.syncfusion.com/FAQ/WindowsForms/FAQ_c73c.aspx
-        /// 
-        /// uiFlags: 0 - Count of GDI objects 
-        /// uiFlags: 1 - Count of USER objects 
-        /// - Win32 GDI objects (pens, brushes, fonts, palettes, regions, device contexts, bitmap headers) 
-        /// - Win32 USER objects: 
-        ///      - WIN32 resources (accelerator tables, bitmap resources, dialog box templates, font resources, menu resources, raw data resources, string table entries, message table entries, cursors/icons) 
-        /// - Other USER objects (windows, menus) 
-        /// 
-        // TODO: CrossPlatform
-		[DllImport("User32", EntryPoint="GetGuiResources", CallingConvention=CallingConvention.StdCall, ExactSpelling = true, SetLastError = true)]
-        extern public static int GetGuiResources(IntPtr hProcess, int uiFlags);
-
-
         public static int GetGuiResourcesGDICount(IntPtr processHandle)
         {
-        	// TODO: CrossPlatform
-			return 0;
-            return GetGuiResources(processHandle, 0);
+			return NativeCalls.Instance.GetGuiResources(processHandle, 0);
         }
 
         public static int GetGuiResourcesUserCount(IntPtr processHandle)
         {
-        	// TODO: CrossPlatform
-			return 0;
-            return GetGuiResources(processHandle, 1);
+			return NativeCalls.Instance.GetGuiResources(processHandle, 1);
         }
 
         public const int TO_UNICODE_BUFFER_SIZE = 64;
@@ -467,13 +445,6 @@ namespace XenAdmin.Core
         /// </summary>
         public const int SB_THUMBTRACK = 5;
 
-        /// <summary>
-        /// See http://msdn2.microsoft.com/en-us/library/bb787583.aspx and
-        /// http://pinvoke.net/default.aspx/user32/GetScrollInfo.html
-        /// </summary>
-        [DllImport("user32.dll")]
-        [return: MarshalAs(UnmanagedType.Bool)]
-        public static extern bool GetScrollInfo(IntPtr hWnd, int n, ref ScrollInfo lpScrollInfo);
 
         [DllImport("user32.dll")]
         public static extern int SetScrollInfo(IntPtr hwnd, int fnBar, [In] ref ScrollInfo lpsi, bool fRedraw);

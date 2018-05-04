@@ -196,20 +196,22 @@ namespace XenAdmin.Plugins
 
         private void CreateBrowser()
         {
-            Browser = new WebBrowser2();
-            Browser.Dock = DockStyle.Fill;
-            Browser.IsWebBrowserContextMenuEnabled = ContextEnabled;
-            Browser.ProgressChanged += Browser_ProgressChanged;
-            Browser.DocumentCompleted += Browser_DocumentCompleted;
-            Browser.Navigating += Browser_Navigating;
-            Browser.Navigated += Browser_Navigated;
-            Browser.NavigateError += Browser_NavigateError;
-            Browser.WindowClosed += Browser_WindowClosed;
-            Browser.PreviewKeyDown += Browser_PreviewKeyDown;
-            Browser.AuthenticationPrompt += Browser_AuthenticationPrompt;
+			// TODO: Crossplatform: Chagne Webbrowser
 
-            // Navigate to about:blank to work around http://support.microsoft.com/kb/320153.
-            Browser.Navigate("about:blank");
+            //Browser = new WebBrowser2();
+            //Browser.Dock = DockStyle.Fill;
+            //Browser.IsWebBrowserContextMenuEnabled = ContextEnabled;
+            //Browser.ProgressChanged += Browser_ProgressChanged;
+            //Browser.DocumentCompleted += Browser_DocumentCompleted;
+            //Browser.Navigating += Browser_Navigating;
+            //Browser.Navigated += Browser_Navigated;
+            //Browser.NavigateError += Browser_NavigateError;
+            //Browser.WindowClosed += Browser_WindowClosed;
+            //Browser.PreviewKeyDown += Browser_PreviewKeyDown;
+            //Browser.AuthenticationPrompt += Browser_AuthenticationPrompt;
+
+            //// Navigate to about:blank to work around http://support.microsoft.com/kb/320153.
+            //Browser.Navigate("about:blank");
         }
 
         void Browser_WindowClosed(object sender, EventArgs e)
@@ -260,46 +262,49 @@ namespace XenAdmin.Plugins
 
         private void SetUrl()
         {
-            if (UrlIsLoaded && XenCenterOnly) // Never update XenCenter node tabs.
-                return;
+			// TODO: CrossPlatform: Change WebBrowser
+			return;
 
-            BrowserState state;
-            if (selectedXenObject == null)
-            {
-                // XenCenter node is selected, the placeholder code will sub in "null" for all placeholders
-                // After this point we will never update this url again for this node, so there is no need to store a browser state
-                state = new BrowserState(Placeholders.SubstituteUri(Url, selectedXenObject), selectedXenObject, Browser);
-            }
-            else if (BrowserStates.ContainsKey(selectedXenObject) && !BrowserStates[selectedXenObject].IsError)
-            {
-                // if there wasn't an error with navigation then use the stored browser-state. Otherwise try again.
-                state = BrowserStates[selectedXenObject];
-            }
-            else
-            {
-                state = new BrowserState(Placeholders.SubstituteUri(Url, selectedXenObject), selectedXenObject, Browser);
-                BrowserStates[selectedXenObject] = state;
-            }
+            //if (UrlIsLoaded && XenCenterOnly) // Never update XenCenter node tabs.
+            //    return;
 
-            if (lastBrowserState == state)
-                return;
+            //BrowserState state;
+            //if (selectedXenObject == null)
+            //{
+            //    // XenCenter node is selected, the placeholder code will sub in "null" for all placeholders
+            //    // After this point we will never update this url again for this node, so there is no need to store a browser state
+            //    state = new BrowserState(Placeholders.SubstituteUri(Url, selectedXenObject), selectedXenObject, Browser);
+            //}
+            //else if (BrowserStates.ContainsKey(selectedXenObject) && !BrowserStates[selectedXenObject].IsError)
+            //{
+            //    // if there wasn't an error with navigation then use the stored browser-state. Otherwise try again.
+            //    state = BrowserStates[selectedXenObject];
+            //}
+            //else
+            //{
+            //    state = new BrowserState(Placeholders.SubstituteUri(Url, selectedXenObject), selectedXenObject, Browser);
+            //    BrowserStates[selectedXenObject] = state;
+            //}
 
-            try
-            {
-                if (state.ObjectForScripting != null)
-                {
-                    if (Credentials)
-                        state.ObjectForScripting.LoginSession();
-                    Browser.ObjectForScripting = state.ObjectForScripting;
-                }
-                Browser.Navigate(state.Urls);
+            //if (lastBrowserState == state)
+            //    return;
 
-                lastBrowserState = state;
-            }
-            catch (Exception e)
-            {
-                log.Error(string.Format("Failed to set TabPage url to '{0}' for plugin '{1}'", string.Join(",", state.Urls.ConvertAll(u => u.ToString()).ToArray()), PluginDescriptor.Name), e);
-            }
+            //try
+            //{
+            //    if (state.ObjectForScripting != null)
+            //    {
+            //        if (Credentials)
+            //            state.ObjectForScripting.LoginSession();
+            //        Browser.ObjectForScripting = state.ObjectForScripting;
+            //    }
+            //    Browser.Navigate(state.Urls);
+
+            //    lastBrowserState = state;
+            //}
+            //catch (Exception e)
+            //{
+            //    log.Error(string.Format("Failed to set TabPage url to '{0}' for plugin '{1}'", string.Join(",", state.Urls.ConvertAll(u => u.ToString()).ToArray()), PluginDescriptor.Name), e);
+            //}
         }
 
         private void Browser_DocumentCompleted(object sender, WebBrowserDocumentCompletedEventArgs e)
@@ -324,30 +329,31 @@ namespace XenAdmin.Plugins
             }
         }
 
-        private void Browser_ProgressChanged(object sender, WebBrowserProgressChangedEventArgs e)
-        {
-            Program.AssertOnEventThread();
+		// TODO: CrossPlatform: Change WebBrowser
+        //private void Browser_ProgressChanged(object sender, WebBrowserProgressChangedEventArgs e)
+        //{
+        //    Program.AssertOnEventThread();
 
-            if (tabControl != null && tabControl.SelectedTab != null && tabControl.SelectedTab.Tag == this)
-            {
-                if (e.MaximumProgress != 0)
-                {
-                    if (Program.MainWindow.StatusBarAction == null || Program.MainWindow.StatusBarAction.IsCompleted)
-                    {
-                        MainWindowActionAtNavigateTime = Program.MainWindow.StatusBarAction;
-                        int progr = Convert.ToInt32((e.CurrentProgress * 100L) / (e.MaximumProgress));
-                        Program.MainWindow.SetProgressBar(true, progr);
-                    }
-                    if (Browser.Url != null)
-                    {
-                        string text = e.CurrentProgress >= e.MaximumProgress
-                            ? ""
-                            : string.Format(Messages.LOADING, Browser.Url.ToString().Ellipsise(50));
-                        Program.MainWindow.SetStatusBar(null, text);
-                    }
-                }
-            }
-        }
+        //    if (tabControl != null && tabControl.SelectedTab != null && tabControl.SelectedTab.Tag == this)
+        //    {
+        //        if (e.MaximumProgress != 0)
+        //        {
+        //            if (Program.MainWindow.StatusBarAction == null || Program.MainWindow.StatusBarAction.IsCompleted)
+        //            {
+        //                MainWindowActionAtNavigateTime = Program.MainWindow.StatusBarAction;
+        //                int progr = Convert.ToInt32((e.CurrentProgress * 100L) / (e.MaximumProgress));
+        //                Program.MainWindow.SetProgressBar(true, progr);
+        //            }
+        //            if (Browser.Url != null)
+        //            {
+        //                string text = e.CurrentProgress >= e.MaximumProgress
+        //                    ? ""
+        //                    : string.Format(Messages.LOADING, Browser.Url.ToString().Ellipsise(50));
+        //                Program.MainWindow.SetStatusBar(null, text);
+        //            }
+        //        }
+        //    }
+        //}
 
         [DllImport("wininet.dll", SetLastError = true)]
         private static extern long DeleteUrlCacheEntry(string url);
@@ -917,13 +923,14 @@ namespace XenAdmin.Plugins
             {
                 // If the connection has been reconnected then we need to update the session ref, as the old one is invalid
                 LoginSession();
-                Program.Invoke(Program.MainWindow, delegate
-                {
-                    if (!browser.IsDisposed)
-                        browser.Document.InvokeScript("RefreshPage");
-                    else
-                        log.Debug("Tried to access disposed webbrowser, ignoring refresh.");
-                });
+				// TODO: Crossplatform: Change Webbrowser
+				//Program.Invoke(Program.MainWindow, delegate
+                //{
+                //    if (!browser.IsDisposed)
+                //        browser.Document.InvokeScript("RefreshPage");
+                //    else
+                //        log.Debug("Tried to access disposed webbrowser, ignoring refresh.");
+                //});
             }
         }
 
@@ -952,61 +959,64 @@ namespace XenAdmin.Plugins
 
         private void writeXML(object context)
         {
-            try
-            {
-                // We post to the json url so that xapi returns the information in a way that is easy to consume by the JS
-                string[] jsCallbackAndData = context as string[];
-                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(string.Format("{0}/json", SessionUrl));
-                request.Method = "POST";
-                request.ContentType = "xml";
-                request.ContentLength = Encoding.UTF8.GetBytes(jsCallbackAndData[1]).Length;
-                request.UserAgent = Branding.BRAND_CONSOLE + "\\Plugin";
-                request.Proxy = XenAdminConfigManager.Provider.GetProxyFromSettings(connection, true);
+			// TODO: Crossplatform: Chagne Webbrowser
+			return;
 
-                using (StreamWriter xmlstream = new StreamWriter(request.GetRequestStream()))
-                {
-                    xmlstream.Write(jsCallbackAndData[1]);
-                }
-                WebResponse response = request.GetResponse();
-                StringBuilder outputBuilder = new StringBuilder();
-                using (StreamReader reader = new StreamReader(response.GetResponseStream()))
-                {
-                    while (reader.Peek() != -1)
-                    {
-                        outputBuilder.Append(reader.ReadLine());
-                    }
-                }
-                // The xmlrpc bit of jquery expects a function object, which turns up here as a string that you could eval to get the function
-                // We just want the name, so we filter it out.
-                Regex functionNameReg = new Regex("^function(.*)\\(");
-                string funcName = "";
-                Match m = functionNameReg.Match(jsCallbackAndData[0]);
-                if (m.Success)
-                {
-                    funcName = m.Groups[1].Value.Trim();
-                }
-                Program.Invoke(Program.MainWindow, delegate
-                {
-                    if (browser.IsDisposed || browser.Disposing)
-                    {
-                        log.DebugFormat("Browser has been disposed, cannot return message to plugin: {0}", outputBuilder.ToString());
-                    }
-                    else if (browser.ObjectForScripting != this)
-                    {
-                        // If you don't do this, you can get old data re-entering the javascript execution after you have switched to a new object
-                        log.DebugFormat("Scripting object has been changed, discarding message to plugin: {0}", outputBuilder.ToString());
-                    }
-                    else
-                    {
-                        browser.Document.InvokeScript(JAVASCRIPT_CALLBACK_METHOD, new string[] { funcName, outputBuilder.ToString() });
-                    }
-                });
-            }
-            catch (Exception e)
-            {
-                log.Error(e);
-            }
-            //TODO: Whats the sensible way to let the JS know that there has been an error? Invoke an method with the info? How does this work with regard to message callback?
+            //try
+            //{
+            //    // We post to the json url so that xapi returns the information in a way that is easy to consume by the JS
+            //    string[] jsCallbackAndData = context as string[];
+            //    HttpWebRequest request = (HttpWebRequest)WebRequest.Create(string.Format("{0}/json", SessionUrl));
+            //    request.Method = "POST";
+            //    request.ContentType = "xml";
+            //    request.ContentLength = Encoding.UTF8.GetBytes(jsCallbackAndData[1]).Length;
+            //    request.UserAgent = Branding.BRAND_CONSOLE + "\\Plugin";
+            //    request.Proxy = XenAdminConfigManager.Provider.GetProxyFromSettings(connection, true);
+
+            //    using (StreamWriter xmlstream = new StreamWriter(request.GetRequestStream()))
+            //    {
+            //        xmlstream.Write(jsCallbackAndData[1]);
+            //    }
+            //    WebResponse response = request.GetResponse();
+            //    StringBuilder outputBuilder = new StringBuilder();
+            //    using (StreamReader reader = new StreamReader(response.GetResponseStream()))
+            //    {
+            //        while (reader.Peek() != -1)
+            //        {
+            //            outputBuilder.Append(reader.ReadLine());
+            //        }
+            //    }
+            //    // The xmlrpc bit of jquery expects a function object, which turns up here as a string that you could eval to get the function
+            //    // We just want the name, so we filter it out.
+            //    Regex functionNameReg = new Regex("^function(.*)\\(");
+            //    string funcName = "";
+            //    Match m = functionNameReg.Match(jsCallbackAndData[0]);
+            //    if (m.Success)
+            //    {
+            //        funcName = m.Groups[1].Value.Trim();
+            //    }
+            //    Program.Invoke(Program.MainWindow, delegate
+            //    {
+            //        if (browser.IsDisposed || browser.Disposing)
+            //        {
+            //            log.DebugFormat("Browser has been disposed, cannot return message to plugin: {0}", outputBuilder.ToString());
+            //        }
+            //        else if (browser.ObjectForScripting != this)
+            //        {
+            //            // If you don't do this, you can get old data re-entering the javascript execution after you have switched to a new object
+            //            log.DebugFormat("Scripting object has been changed, discarding message to plugin: {0}", outputBuilder.ToString());
+            //        }
+            //        else
+            //        {
+            //            browser.Document.InvokeScript(JAVASCRIPT_CALLBACK_METHOD, new string[] { funcName, outputBuilder.ToString() });
+            //        }
+            //    });
+            //}
+            //catch (Exception e)
+            //{
+            //    log.Error(e);
+            //}
+            ////TODO: Whats the sensible way to let the JS know that there has been an error? Invoke an method with the info? How does this work with regard to message callback?
         }
     }
 }

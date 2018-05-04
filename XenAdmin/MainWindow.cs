@@ -364,15 +364,18 @@ namespace XenAdmin
             switch (e.Msg)
             {
                 case Win32.WM_CHANGECBCHAIN: // Clipboard chain has changed.
-                    Clip.ProcessWMChangeCBChain(e);
+					// TODO: CrossPlatform ClipboardViewer
+                    //Clip.ProcessWMChangeCBChain(e);
                     break;
 
                 case Win32.WM_DRAWCLIPBOARD: // Content of clipboard has changed.
-                    Clip.ProcessWMDrawClipboard(e);
+				    // TODO: CrossPlatform ClipboardViewer
+				    //Clip.ProcessWMDrawClipboard(e);
                     break;
 
                 case Win32.WM_DESTROY:
-                    Clip.UnregisterClipboardViewer();
+                    // TODO: CrossPlatform ClipboardViewer
+					//Clip.UnregisterClipboardViewer();
                     base.WndProc(ref e);
                     break;
 
@@ -592,7 +595,7 @@ namespace XenAdmin
             {
                 // Sleep a short time before closing the splash
                 Thread.Sleep(500);
-                // TODO: CrossPlatform
+                // TODO: CrossPlatform splash
                 //Program.Invoke(Program.MainWindow, Program.CloseSplash);
             });
 

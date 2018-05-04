@@ -58,14 +58,15 @@ namespace XenAdmin.Core
     /// Fortunately, we only need to implement IAuthenticate, not IDocHostUIHandler, so this isn't a problem
     /// for us, but it was confusing for a couple of days.)
     /// </summary>
-    public class WebBrowser2 : WebBrowser
+    //public class WebBrowser2 : WebBrowser
+	public class WebBrowser2 : Control
     {
         /// <summary>
         /// A list of <see cref="WebClient"/>s used to determine whether URLS are valid before Navigations.
         /// </summary>
-        private readonly List<WebClient> _webClients = new List<WebClient>();
-        private AxHost.ConnectionPointCookie cookie;
-        private WebBrowser2EventHelper helper;
+        //private readonly List<WebClient> _webClients = new List<WebClient>();
+        //private AxHost.ConnectionPointCookie cookie;
+        //private WebBrowser2EventHelper helper;
 
 
         public event WebBrowserNavigateErrorEventHandler NavigateError;
@@ -92,212 +93,212 @@ namespace XenAdmin.Core
             }
         }
 
-        [PermissionSet(SecurityAction.LinkDemand, Name="FullTrust")]
-        protected override void CreateSink()
-        {
-            base.CreateSink();
+        //[PermissionSet(SecurityAction.LinkDemand, Name="FullTrust")]
+        //protected override void CreateSink()
+        //{
+        //    base.CreateSink();
 
-            // Create an instance of the client that will handle the event
-            // and associate it with the underlying ActiveX control.
-            helper = new WebBrowser2EventHelper(this);
-            cookie = new AxHost.ConnectionPointCookie(
-                this.ActiveXInstance, helper, typeof(DWebBrowserEvents2));
-        }
+        //    // Create an instance of the client that will handle the event
+        //    // and associate it with the underlying ActiveX control.
+        //    helper = new WebBrowser2EventHelper(this);
+        //    cookie = new AxHost.ConnectionPointCookie(
+        //        this.ActiveXInstance, helper, typeof(DWebBrowserEvents2));
+        //}
 
-        [PermissionSet(SecurityAction.LinkDemand, Name="FullTrust")]
-        protected override void DetachSink()
-        {
-            // Disconnect the client that handles the event
-            // from the underlying ActiveX control.
-            if (cookie != null)
-            {
-                cookie.Disconnect();
-                cookie = null;
-            }
-            base.DetachSink();
-        }
+        //[PermissionSet(SecurityAction.LinkDemand, Name="FullTrust")]
+        //protected override void DetachSink()
+        //{
+        //    // Disconnect the client that handles the event
+        //    // from the underlying ActiveX control.
+        //    if (cookie != null)
+        //    {
+        //        cookie.Disconnect();
+        //        cookie = null;
+        //    }
+        //    base.DetachSink();
+        //}
 
-        protected override WebBrowserSiteBase CreateWebBrowserSiteBase()
-        {
-            return new WebBrowserSite2(this);
-        }
+        //protected override WebBrowserSiteBase CreateWebBrowserSiteBase()
+        //{
+        //    return new WebBrowserSite2(this);
+        //}
 
-        protected virtual void OnNavigateError(WebBrowserNavigateErrorEventArgs e)
-        {
-            if (NavigateError != null)
-                NavigateError(this, e);
-        }
+        //protected virtual void OnNavigateError(WebBrowserNavigateErrorEventArgs e)
+        //{
+        //    if (NavigateError != null)
+        //        NavigateError(this, e);
+        //}
 
-        protected override void WndProc(ref Message m)
-        {
-            switch (m.Msg)
-            {
-                case Win32.WM_PARENTNOTIFY:
-                    if (!DesignMode && (int)m.WParam == Win32.WM_DESTROY)
-                    {
-                        if (WindowClosed != null)
-                            WindowClosed(this, EventArgs.Empty);
-                    }
-                    break;
+        //protected override void WndProc(ref Message m)
+        //{
+        //    switch (m.Msg)
+        //    {
+        //        case Win32.WM_PARENTNOTIFY:
+        //            if (!DesignMode && (int)m.WParam == Win32.WM_DESTROY)
+        //            {
+        //                if (WindowClosed != null)
+        //                    WindowClosed(this, EventArgs.Empty);
+        //            }
+        //            break;
 
-                default:
-                    base.WndProc(ref m);
-                    break;
-            }
-        }
+        //        default:
+        //            base.WndProc(ref m);
+        //            break;
+        //    }
+        //}
 
-        protected override void OnNavigating(WebBrowserNavigatingEventArgs e)
-        {
-            Program.AssertOnEventThread();
+        //protected override void OnNavigating(WebBrowserNavigatingEventArgs e)
+        //{
+        //    Program.AssertOnEventThread();
 
-            // clear the _webClients so that an existing multiple-url Navigation is cancelled.
-            _webClients.Clear();
-            base.OnNavigating(e);
-        }
+        //    // clear the _webClients so that an existing multiple-url Navigation is cancelled.
+        //    _webClients.Clear();
+        //    base.OnNavigating(e);
+        //}
 
-        /// <summary>
-        /// Navigates to the specified URI.
-        /// </summary>
-        public new void Navigate(Uri uri)
-        {
-            Program.AssertOnEventThread();
-            Navigate(uri, null, null, "X-XenCenter: " + Program.ClientVersion());
-        }
+        ///// <summary>
+        ///// Navigates to the specified URI.
+        ///// </summary>
+        //public new void Navigate(Uri uri)
+        //{
+        //    Program.AssertOnEventThread();
+        //    Navigate(uri, null, null, "X-XenCenter: " + Program.ClientVersion());
+        //}
 
-        /// <summary>
-        /// Navigates to the first valid URI in the specified list.
-        /// </summary>
-        public void Navigate(IEnumerable<Uri> uris)
-        {
-            Program.AssertOnEventThread();
-            Util.ThrowIfEnumerableParameterNullOrEmpty(uris, "uris");
-            List<Uri> uriList = new List<Uri>(uris);
+        ///// <summary>
+        ///// Navigates to the first valid URI in the specified list.
+        ///// </summary>
+        //public void Navigate(IEnumerable<Uri> uris)
+        //{
+        //    Program.AssertOnEventThread();
+        //    Util.ThrowIfEnumerableParameterNullOrEmpty(uris, "uris");
+        //    List<Uri> uriList = new List<Uri>(uris);
 
-            if (uriList.Count == 1)
-            {
-                Navigate(uriList[0]);
-                return;
-            }
+        //    if (uriList.Count == 1)
+        //    {
+        //        Navigate(uriList[0]);
+        //        return;
+        //    }
 
-            // test each url with a WebClient to see if it works.
-            _webClients.Clear();
-            var proxy = XenAdminConfigManager.Provider.GetProxyFromSettings(null, false);
-            _webClients.AddRange(uriList.ConvertAll(u => new WebClient() { Proxy = proxy }));
+        //    // test each url with a WebClient to see if it works.
+        //    _webClients.Clear();
+        //    var proxy = XenAdminConfigManager.Provider.GetProxyFromSettings(null, false);
+        //    _webClients.AddRange(uriList.ConvertAll(u => new WebClient() { Proxy = proxy }));
 
-            // start all urls downloading in parallel.
-            for (int i = 0; i < _webClients.Count; i++)
-            {
-                _webClients[i].DownloadDataCompleted += webClient_DownloadDataCompleted;
+        //    // start all urls downloading in parallel.
+        //    for (int i = 0; i < _webClients.Count; i++)
+        //    {
+        //        _webClients[i].DownloadDataCompleted += webClient_DownloadDataCompleted;
 
-                try
-                {
-                    _webClients[i].DownloadDataAsync(uriList[i], uriList[i]);
-                }
-                catch (WebException)
-                {
-                    // we are expecting some urls to fail: do nothing.
-                }
-                catch (SocketException)
-                {
-                    // we are expecting some urls to fail: do nothing.
-                }
-            }
-        }
+        //        try
+        //        {
+        //            _webClients[i].DownloadDataAsync(uriList[i], uriList[i]);
+        //        }
+        //        catch (WebException)
+        //        {
+        //            // we are expecting some urls to fail: do nothing.
+        //        }
+        //        catch (SocketException)
+        //        {
+        //            // we are expecting some urls to fail: do nothing.
+        //        }
+        //    }
+        //}
 
-        private void webClient_DownloadDataCompleted(object sender, DownloadDataCompletedEventArgs e)
-        {
-            Program.AssertOnEventThread();
+        //private void webClient_DownloadDataCompleted(object sender, DownloadDataCompletedEventArgs e)
+        //{
+        //    Program.AssertOnEventThread();
 
-            WebClient webClient = (WebClient)sender;
-            if (_webClients.Contains(webClient))
-            {
-                _webClients.Remove(webClient);
+        //    WebClient webClient = (WebClient)sender;
+        //    if (_webClients.Contains(webClient))
+        //    {
+        //        _webClients.Remove(webClient);
 
-                if (e.Error == null || (e.Error != null && _webClients.Count == 0))
-                {
-                    // either one has finished successfully...or...they've all failed.                          
-                    // navigate the browser to this url and leave other requests (if any) to timeout.
-                    _webClients.Clear();
-                    Navigate((Uri)e.UserState);
-                }
-            }
-            else
-            {
-                // either a valid url has been found...or another Navigate has started: do nothing.
-            }
-        }
+        //        if (e.Error == null || (e.Error != null && _webClients.Count == 0))
+        //        {
+        //            // either one has finished successfully...or...they've all failed.                          
+        //            // navigate the browser to this url and leave other requests (if any) to timeout.
+        //            _webClients.Clear();
+        //            Navigate((Uri)e.UserState);
+        //        }
+        //    }
+        //    else
+        //    {
+        //        // either a valid url has been found...or another Navigate has started: do nothing.
+        //    }
+        //}
 
-        private class WebBrowserSite2 : WebBrowserSite, Win32.IAuthenticate, Win32.IServiceProvider
-        {
-            private WebBrowser2 Browser;
+        //private class WebBrowserSite2 : WebBrowserSite, Win32.IAuthenticate, Win32.IServiceProvider
+        //{
+        //    private WebBrowser2 Browser;
 
-            public WebBrowserSite2(WebBrowser2 Browser)
-                : base(Browser)
-            {
-                this.Browser = Browser;
-            }
+        //    public WebBrowserSite2(WebBrowser2 Browser)
+        //        : base(Browser)
+        //    {
+        //        this.Browser = Browser;
+        //    }
 
-            #region IAuthenticate Members
+        //    #region IAuthenticate Members
 
-            public int Authenticate(ref IntPtr phwnd, ref IntPtr pszUsername, ref IntPtr pszPassword)
-            {
-                string username, password;
-                if (Browser.Authenticate(out username, out password))
-                {
-                    IntPtr sUser = Marshal.StringToCoTaskMemAuto(username);
-                    IntPtr sPassword = Marshal.StringToCoTaskMemAuto(password);
+        //    public int Authenticate(ref IntPtr phwnd, ref IntPtr pszUsername, ref IntPtr pszPassword)
+        //    {
+        //        string username, password;
+        //        if (Browser.Authenticate(out username, out password))
+        //        {
+        //            IntPtr sUser = Marshal.StringToCoTaskMemAuto(username);
+        //            IntPtr sPassword = Marshal.StringToCoTaskMemAuto(password);
 
-                    pszUsername = sUser;
-                    pszPassword = sPassword;
-                    return Win32.S_OK;
-                }
-                else
-                {
-                    return Win32.E_ACCESSDENIED;
-                }
-            }
+        //            pszUsername = sUser;
+        //            pszPassword = sPassword;
+        //            return Win32.S_OK;
+        //        }
+        //        else
+        //        {
+        //            return Win32.E_ACCESSDENIED;
+        //        }
+        //    }
 
-            #endregion
+        //    #endregion
 
-            #region IServiceProvider Members
+        //    #region IServiceProvider Members
 
-            public int QueryService(ref Guid guidService, ref Guid riid, out IntPtr ppvObject)
-            {
-                if (guidService.CompareTo(Win32.IID_IAuthenticate) == 0 && riid.CompareTo(Win32.IID_IAuthenticate) == 0)
-                {
-                    ppvObject = Marshal.GetComInterfaceForObject(this, typeof(Win32.IAuthenticate));
-                    return Win32.S_OK;
-                }
-                else
-                {
-                    ppvObject = IntPtr.Zero;
-                    return Win32.INET_E_DEFAULT_ACTION;
-                }
-            }
+        //    public int QueryService(ref Guid guidService, ref Guid riid, out IntPtr ppvObject)
+        //    {
+        //        if (guidService.CompareTo(Win32.IID_IAuthenticate) == 0 && riid.CompareTo(Win32.IID_IAuthenticate) == 0)
+        //        {
+        //            ppvObject = Marshal.GetComInterfaceForObject(this, typeof(Win32.IAuthenticate));
+        //            return Win32.S_OK;
+        //        }
+        //        else
+        //        {
+        //            ppvObject = IntPtr.Zero;
+        //            return Win32.INET_E_DEFAULT_ACTION;
+        //        }
+        //    }
 
-            #endregion
-        }
+        //    #endregion
+        //}
 
-        // Handles the NavigateError event from the underlying ActiveX 
-        // control by raising the NavigateError event defined in this class.
-        private class WebBrowser2EventHelper : 
-            StandardOleMarshalObject, DWebBrowserEvents2
-        {
-            private WebBrowser2 parent;
+        //// Handles the NavigateError event from the underlying ActiveX 
+        //// control by raising the NavigateError event defined in this class.
+        //private class WebBrowser2EventHelper : 
+        //    StandardOleMarshalObject, DWebBrowserEvents2
+        //{
+        //    private WebBrowser2 parent;
 
-            public WebBrowser2EventHelper(WebBrowser2 parent)
-            {
-                this.parent = parent;
-            }
+        //    public WebBrowser2EventHelper(WebBrowser2 parent)
+        //    {
+        //        this.parent = parent;
+        //    }
 
-            public void NavigateError(object pDisp, ref object url, 
-                ref object frame, ref object statusCode, ref bool cancel)
-            {
-                parent.OnNavigateError(
-                    new WebBrowserNavigateErrorEventArgs(
-                    (string)url, (string)frame, (Int32)statusCode, cancel));
-            }
-        }
+        //    public void NavigateError(object pDisp, ref object url, 
+        //        ref object frame, ref object statusCode, ref bool cancel)
+        //    {
+        //        parent.OnNavigateError(
+        //            new WebBrowserNavigateErrorEventArgs(
+        //            (string)url, (string)frame, (Int32)statusCode, cancel));
+        //    }
+        //}
     }
 
     public delegate void WebBrowserNavigateErrorEventHandler(object sender, WebBrowserNavigateErrorEventArgs e);
