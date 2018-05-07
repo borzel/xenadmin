@@ -229,7 +229,7 @@ namespace XenAdmin
             Alert.RegisterAlertCollectionChanged(XenCenterAlerts_CollectionChanged);
             Updates.RegisterCollectionChanged(Updates_CollectionChanged);
 
-            FormFontFixer.Fix(this);
+            //FormFontFixer.Fix(this);
 
             Folders.InitFolders();
             DockerContainers.InitDockerContainers();
@@ -1282,8 +1282,8 @@ namespace XenAdmin
             {
                 log.DebugFormat("Number of times GC has occurred for generation {0} objects: {1}", i, GC.CollectionCount(i));
             }
-            log.Debug("GDI objects in use: " + Win32.GetGuiResourcesGDICount(Process.GetCurrentProcess().Handle));
-            log.Debug("USER objects in use: " + Win32.GetGuiResourcesUserCount(Process.GetCurrentProcess().Handle));
+            //log.Debug("GDI objects in use: " + Win32.GetGuiResourcesGDICount(Process.GetCurrentProcess().Handle));
+            //log.Debug("USER objects in use: " + Win32.GetGuiResourcesUserCount(Process.GetCurrentProcess().Handle));
         }
 
         void connection_ConnectionReconnecting(object sender, EventArgs e)

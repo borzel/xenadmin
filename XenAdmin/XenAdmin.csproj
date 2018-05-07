@@ -2632,6 +2632,7 @@
     <Compile Include="Wizards\NewVMApplianceWizard\NewVMApplianceWizard.Designer.cs">
       <DependentUpon>NewVMApplianceWizard.cs</DependentUpon>
     </Compile>
+    <Compile Include="Core\FontSetter.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="..\Branding\Images\AppIcon.ico" />

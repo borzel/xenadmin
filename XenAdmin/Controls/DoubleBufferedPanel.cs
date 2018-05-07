@@ -122,19 +122,19 @@ namespace XenAdmin.Controls
         {
         }
 
-        protected override void OnPaint(PaintEventArgs e)
-        {
-            if (Disposing || IsDisposed || Program.Exiting)
-                return;
+        //protected override void OnPaint(PaintEventArgs e)
+        //{
+        //    if (Disposing || IsDisposed || Program.Exiting)
+        //        return;
 
-            if (!valid)
-            {
-                visible = true;
-                RefreshBuffer();
-            }
+        //    if (!valid)
+        //    {
+        //        visible = true;
+        //        RefreshBuffer();
+        //    }
 
-            Drawing.QuickDraw(e.Graphics, BackBuffer);
-        }
+        //    Drawing.QuickDraw(e.Graphics, BackBuffer);
+        //}
 
         protected override void OnClientSizeChanged(EventArgs e)
         {

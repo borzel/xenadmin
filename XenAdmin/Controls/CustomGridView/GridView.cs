@@ -202,14 +202,14 @@ namespace XenAdmin.Controls.CustomGridView
             // ignore this size changed
         }
 
-        protected override void OnSizeChanged(EventArgs e)
-        {
-            // use this one instead
-            base.OnResize(e); // do size change <= calling on resize here may seem barking but it appears to be the only combination that works...
-            DisposeBuffer(); // reinitalise buffer
-            InitBuffer();
-            Refresh();  //refresh
-        }
+        //protected override void OnSizeChanged(EventArgs e)
+        //{
+        //    // use this one instead
+        //    base.OnResize(e); // do size change <= calling on resize here may seem barking but it appears to be the only combination that works...
+        //    DisposeBuffer(); // reinitalise buffer
+        //    InitBuffer();
+        //    Refresh();  //refresh
+        //}
 
         // dispose
         private void DisposeBuffer()
@@ -294,48 +294,48 @@ namespace XenAdmin.Controls.CustomGridView
             return total;
         }
 
-        protected override void OnPaint(PaintEventArgs e)
-        {
-            if (Disposing || IsDisposed || Program.Exiting)
-                return;
+    //    protected override void OnPaint(PaintEventArgs e)
+    //    {
+    //        if (Disposing || IsDisposed || Program.Exiting)
+    //            return;
 
-            if (!DraggingColumns)
-            {
-                // we dont need to render again apparently :)
-                Core.Drawing.QuickDraw(Graphics, BackBuffer);
-            }
-            else            {
-                //paint control
-                IntPtr pTarget = DragColumnsGraphics.GetHdc();
-				IntPtr pSource = NativeCalls.Instance.CreateCompatibleDC(pTarget);
-                IntPtr pOrig = Core.Drawing.SelectObject(pSource, BackBuffer.GetHbitmap());
-                Core.Drawing.BitBlt(pTarget, 0, 0, BackBuffer.Width, BackBuffer.Height, pSource, 0, 0, Core.Drawing.TernaryRasterOperations.SRCCOPY);
-                IntPtr pNew = Core.Drawing.SelectObject(pSource, pOrig);
-                Core.Drawing.DeleteObject(pNew);
-                Core.Drawing.DeleteDC(pSource);
-                //DragGraphics.ReleaseHdc(pTarget);
+    //        if (!DraggingColumns)
+    //        {
+    //            // we dont need to render again apparently :)
+    //            Core.Drawing.QuickDraw(Graphics, BackBuffer);
+    //        }
+    //        else            {
+    //            //paint control
+    //            IntPtr pTarget = DragColumnsGraphics.GetHdc();
+				//IntPtr pSource = NativeCalls.Instance.CreateCompatibleDC(pTarget);
+    //            IntPtr pOrig = Core.Drawing.SelectObject(pSource, BackBuffer.GetHbitmap());
+    //            Core.Drawing.BitBlt(pTarget, 0, 0, BackBuffer.Width, BackBuffer.Height, pSource, 0, 0, Core.Drawing.TernaryRasterOperations.SRCCOPY);
+    //            IntPtr pNew = Core.Drawing.SelectObject(pSource, pOrig);
+    //            Core.Drawing.DeleteObject(pNew);
+    //            Core.Drawing.DeleteDC(pSource);
+    //            //DragGraphics.ReleaseHdc(pTarget);
 
-                // paint dragged stuff
-                //IntPtr pTarget2 = DragGraphics.GetHdc();
-				IntPtr pSource2 = NativeCalls.Instance.CreateCompatibleDC(pTarget);
-                IntPtr pOrig2 = Core.Drawing.SelectObject(pSource2, DragColumnsData.GetHbitmap());
-                Core.Drawing.BitBlt(pTarget, DragColumnsWindowPosition.X, DragColumnsWindowPosition.Y, DragColumnsData.Width, DragColumnsData.Height, pSource2, 0, 0, Core.Drawing.TernaryRasterOperations.SRCAND);
-                IntPtr pNew2 = Core.Drawing.SelectObject(pSource2, pOrig2);
-                Core.Drawing.DeleteObject(pNew2);
-                Core.Drawing.DeleteDC(pSource2);
-                DragColumnsGraphics.ReleaseHdc(pTarget);
+    //            // paint dragged stuff
+    //            //IntPtr pTarget2 = DragGraphics.GetHdc();
+				//IntPtr pSource2 = NativeCalls.Instance.CreateCompatibleDC(pTarget);
+    //            IntPtr pOrig2 = Core.Drawing.SelectObject(pSource2, DragColumnsData.GetHbitmap());
+    //            Core.Drawing.BitBlt(pTarget, DragColumnsWindowPosition.X, DragColumnsWindowPosition.Y, DragColumnsData.Width, DragColumnsData.Height, pSource2, 0, 0, Core.Drawing.TernaryRasterOperations.SRCAND);
+    //            IntPtr pNew2 = Core.Drawing.SelectObject(pSource2, pOrig2);
+    //            Core.Drawing.DeleteObject(pNew2);
+    //            Core.Drawing.DeleteDC(pSource2);
+    //            DragColumnsGraphics.ReleaseHdc(pTarget);
 
-                // paint everything to screen
-                IntPtr pTarget3 = Graphics.GetHdc();
-				IntPtr pSource3 = NativeCalls.Instance.CreateCompatibleDC(pTarget3);
-                IntPtr pOrig3 = Core.Drawing.SelectObject(pSource3, DragColumnsBuffer.GetHbitmap());
-                Core.Drawing.BitBlt(pTarget3, 0, 0, DragColumnsBuffer.Width, DragColumnsBuffer.Height, pSource3, 0, 0, Core.Drawing.TernaryRasterOperations.SRCCOPY);
-                IntPtr pNew3 = Core.Drawing.SelectObject(pSource3, pOrig3);
-                Core.Drawing.DeleteObject(pNew3);
-                Core.Drawing.DeleteDC(pSource3);
-                Graphics.ReleaseHdc(pTarget3);
-            }
-        }
+    //            // paint everything to screen
+    //            IntPtr pTarget3 = Graphics.GetHdc();
+				//IntPtr pSource3 = NativeCalls.Instance.CreateCompatibleDC(pTarget3);
+        //        IntPtr pOrig3 = Core.Drawing.SelectObject(pSource3, DragColumnsBuffer.GetHbitmap());
+        //        Core.Drawing.BitBlt(pTarget3, 0, 0, DragColumnsBuffer.Width, DragColumnsBuffer.Height, pSource3, 0, 0, Core.Drawing.TernaryRasterOperations.SRCCOPY);
+        //        IntPtr pNew3 = Core.Drawing.SelectObject(pSource3, pOrig3);
+        //        Core.Drawing.DeleteObject(pNew3);
+        //        Core.Drawing.DeleteDC(pSource3);
+        //        Graphics.ReleaseHdc(pTarget3);
+        //    }
+        //}
 
         protected override void OnPaintBackground(PaintEventArgs e)
         {
@@ -578,141 +578,141 @@ namespace XenAdmin.Controls.CustomGridView
             if (DraggingItems)
                 return;
 
-            if (DraggingColumns)
-            {
-                int x = e.Location.X - DragColumnsMouseLocation.X;
-                int xmax = TotalWidth() - DragColumnsData.Width;
-                DragColumnsWindowPosition = new Point(x <= 0 ? 0 : x < xmax ? x : xmax, 0);
-                string swapwith = "";
-                int left = Padding.Left;
-                foreach (string index in HeaderRow.Columns)
-                {
-                    int width = GetColumnWidth(index, 1);
-                    if (((GridHeaderItem)HeaderRow.Items[index]).Immovable)
-                    {
-                        left += width;
-                        continue;
-                    }
-                    if (e.X - AutoScrollPosition.X < left + (width / 2))
-                    {
-                        swapwith = index;
-                        break;
-                    }
-                    left += width;
-                }
+            //if (DraggingColumns)
+            //{
+            //    int x = e.Location.X - DragColumnsMouseLocation.X;
+            //    int xmax = TotalWidth() - DragColumnsData.Width;
+            //    DragColumnsWindowPosition = new Point(x <= 0 ? 0 : x < xmax ? x : xmax, 0);
+            //    string swapwith = "";
+            //    int left = Padding.Left;
+            //    foreach (string index in HeaderRow.Columns)
+            //    {
+            //        int width = GetColumnWidth(index, 1);
+            //        if (((GridHeaderItem)HeaderRow.Items[index]).Immovable)
+            //        {
+            //            left += width;
+            //            continue;
+            //        }
+            //        if (e.X - AutoScrollPosition.X < left + (width / 2))
+            //        {
+            //            swapwith = index;
+            //            break;
+            //        }
+            //        left += width;
+            //    }
 
-                if (string.IsNullOrEmpty(swapwith))
-                    swapwith = "end";
+            //    if (string.IsNullOrEmpty(swapwith))
+            //        swapwith = "end";
 
-                if (swapwith != DragColumnsLastEntered)
-                {
-                    if (swapwith == "end")
-                    {
-                        HeaderRow.Columns.Remove(ActiveColumn);
-                        HeaderRow.Columns.Add(ActiveColumn);
-                    }
-                    else
-                    {
-                        int movedn = HeaderRow.Columns.IndexOf(ActiveColumn);
-                        int replacedn = HeaderRow.Columns.IndexOf(swapwith);
-                        if (movedn > replacedn)
-                        {
-                            HeaderRow.Columns.Remove(ActiveColumn);
-                            HeaderRow.Columns.Insert(replacedn, ActiveColumn);
-                        }
-                        else if (movedn < replacedn)
-                        {
-                            HeaderRow.Columns.Insert(replacedn, ActiveColumn);
-                            HeaderRow.Columns.Remove(ActiveColumn);
-                        }
-                    }
-                    DragColumnsLastEntered = swapwith;
-                    Refresh();
-                }
-                else
-                {
-                    OnPaint(null);
-                }
-            }
-            else if (ResizingColumns)
-            {
-                if (HeaderRow.Items.ContainsKey(ActiveColumn))
-                {
-                    GridHeaderItem item = (HeaderRow.Items[ActiveColumn] as GridHeaderItem);
-                    int newWidth = item.Width + (e.Location.X - ResizeColumnsInitialMouseLocation.X);
-                    if (newWidth > item.MinimumWidth)
-                    {
-                        item.Width = newWidth;
-                        ResizeColumnsInitialMouseLocation = e.Location;
-                    }
-                    else
-                    {
-                        item.Width = item.MinimumWidth;
-                    }
-                    Refresh();
-                }
-            }
-            else if (e.Button == MouseButtons.Left && string.IsNullOrEmpty(ActiveColumn) &&
-                DragDistance(lastClickedPoint, e.Location) >= 2)  // don't start dragging unles we've moved a little distance
-            // TODO: consider replacing the above with SystemParameters.MinimumHorizontalDragDistance etc. when we move to .NET 3.0
-            {
-                Point p;
-                GridRow row = FindRowFromPoint(lastClickedPoint, out p);  // the drag is then based on the mouse-down location
-                if (row is GridHeaderRow)
-                {
-                    GridHeaderItem item = (GridHeaderItem)row.FindItemFromPoint(new Point(p.X - GridHeaderItem.ResizeGutter, p.Y), out DragColumnsMouseLocation);
-                    DragColumnsMouseLocation.X += GridHeaderItem.ResizeGutter;
-                    if (item == null)
-                        return;
+            //    if (swapwith != DragColumnsLastEntered)
+            //    {
+            //        if (swapwith == "end")
+            //        {
+            //            HeaderRow.Columns.Remove(ActiveColumn);
+            //            HeaderRow.Columns.Add(ActiveColumn);
+            //        }
+            //        else
+            //        {
+            //            int movedn = HeaderRow.Columns.IndexOf(ActiveColumn);
+            //            int replacedn = HeaderRow.Columns.IndexOf(swapwith);
+            //            if (movedn > replacedn)
+            //            {
+            //                HeaderRow.Columns.Remove(ActiveColumn);
+            //                HeaderRow.Columns.Insert(replacedn, ActiveColumn);
+            //            }
+            //            else if (movedn < replacedn)
+            //            {
+            //                HeaderRow.Columns.Insert(replacedn, ActiveColumn);
+            //                HeaderRow.Columns.Remove(ActiveColumn);
+            //            }
+            //        }
+            //        DragColumnsLastEntered = swapwith;
+            //        Refresh();
+            //    }
+            //    else
+            //    {
+            //        OnPaint(null);
+            //    }
+            //}
+            //else if (ResizingColumns)
+            //{
+            //    if (HeaderRow.Items.ContainsKey(ActiveColumn))
+            //    {
+            //        GridHeaderItem item = (HeaderRow.Items[ActiveColumn] as GridHeaderItem);
+            //        int newWidth = item.Width + (e.Location.X - ResizeColumnsInitialMouseLocation.X);
+            //        if (newWidth > item.MinimumWidth)
+            //        {
+            //            item.Width = newWidth;
+            //            ResizeColumnsInitialMouseLocation = e.Location;
+            //        }
+            //        else
+            //        {
+            //            item.Width = item.MinimumWidth;
+            //        }
+            //        Refresh();
+            //    }
+            //}
+            //else if (e.Button == MouseButtons.Left && string.IsNullOrEmpty(ActiveColumn) &&
+            //    DragDistance(lastClickedPoint, e.Location) >= 2)  // don't start dragging unles we've moved a little distance
+            //// TODO: consider replacing the above with SystemParameters.MinimumHorizontalDragDistance etc. when we move to .NET 3.0
+            //{
+            //    Point p;
+            //    GridRow row = FindRowFromPoint(lastClickedPoint, out p);  // the drag is then based on the mouse-down location
+            //    if (row is GridHeaderRow)
+            //    {
+            //        GridHeaderItem item = (GridHeaderItem)row.FindItemFromPoint(new Point(p.X - GridHeaderItem.ResizeGutter, p.Y), out DragColumnsMouseLocation);
+            //        DragColumnsMouseLocation.X += GridHeaderItem.ResizeGutter;
+            //        if (item == null)
+            //            return;
 
-                    ActiveColumn = item.ColumnName;
-                    int colwidth = GetColumnWidth(ActiveColumn, 1);
+            //        ActiveColumn = item.ColumnName;
+            //        int colwidth = GetColumnWidth(ActiveColumn, 1);
 
-                    if (!item.UnSizable && DragColumnsMouseLocation.X >= colwidth - GridHeaderItem.ResizeGutter)
-                    {
-                        ResizingColumns = true;
-                        ResizeColumnsInitialMouseLocation = lastClickedPoint;
-                    }
-                    else if (!item.Immovable)
-                    {
-                        DraggingColumns = true;
-                        item.GreyOut = true;
-                        DragColumnsData = new Bitmap(GetColumnWidth(ActiveColumn, 1), ClientSize.Height);
+            //        if (!item.UnSizable && DragColumnsMouseLocation.X >= colwidth - GridHeaderItem.ResizeGutter)
+            //        {
+            //            ResizingColumns = true;
+            //            ResizeColumnsInitialMouseLocation = lastClickedPoint;
+            //        }
+            //        else if (!item.Immovable)
+            //        {
+            //            DraggingColumns = true;
+            //            item.GreyOut = true;
+            //            DragColumnsData = new Bitmap(GetColumnWidth(ActiveColumn, 1), ClientSize.Height);
 
-                        Graphics ddGraphics = Graphics.FromImage(DragColumnsData);
-                        ddGraphics.Clear(BackColor);
-                        XenAdmin.Core.Drawing.QuickDraw(ddGraphics, BackBuffer, new Point((lastClickedPoint.X - DragColumnsMouseLocation.X), 0), new Rectangle(0, 0, DragColumnsData.Width, DragColumnsData.Height));
-                        ddGraphics.Dispose();
+            //            Graphics ddGraphics = Graphics.FromImage(DragColumnsData);
+            //            ddGraphics.Clear(BackColor);
+            //            XenAdmin.Core.Drawing.QuickDraw(ddGraphics, BackBuffer, new Point((lastClickedPoint.X - DragColumnsMouseLocation.X), 0), new Rectangle(0, 0, DragColumnsData.Width, DragColumnsData.Height));
+            //            ddGraphics.Dispose();
 
-                        DragColumnsBuffer = new Bitmap(ClientSize.Width, ClientSize.Height);
-                        DragColumnsGraphics = Graphics.FromImage(DragColumnsBuffer);
-                    }
-                }
-                else if (row != null)
-                    row.OnMouseButtonAction(p, MouseButtonAction.StartDrag);
-            }
-            else
-            {
-                Point p;
-                GridRow row = FindRowFromPoint(e.Location, out p);
-                if (LastRow == null && row == null)
-                    return;
+            //            DragColumnsBuffer = new Bitmap(ClientSize.Width, ClientSize.Height);
+            //            DragColumnsGraphics = Graphics.FromImage(DragColumnsBuffer);
+            //        }
+            //    }
+            //    else if (row != null)
+            //        row.OnMouseButtonAction(p, MouseButtonAction.StartDrag);
+            //}
+            //else
+            //{
+            //    Point p;
+            //    GridRow row = FindRowFromPoint(e.Location, out p);
+            //    if (LastRow == null && row == null)
+            //        return;
 
-                if (LastRow == row)
-                {
-                    LastRow.OnMouseMove(p);
-                }
-                else
-                {
-                    if (LastRow != null)
-                        LastRow.OnLeave();
+            //    if (LastRow == row)
+            //    {
+            //        LastRow.OnMouseMove(p);
+            //    }
+            //    else
+            //    {
+            //        if (LastRow != null)
+            //            LastRow.OnLeave();
 
-                    LastRow = row;
+            //        LastRow = row;
 
-                    if (LastRow != null)
-                        LastRow.OnEnter(p);
-                }
-            }
+            //        if (LastRow != null)
+            //            LastRow.OnEnter(p);
+            //    }
+            //}
         }
 
         // The L_1 distance between two points

@@ -13,8 +13,8 @@ namespace XenAdmin.Core
 
 		public int GetGuiResources (IntPtr hProcess, int uiFlags)
 		{
-			return 0;
-			//return _GetGuiResources (hProcess, uiFlags);
+			//return 0;
+			return _GetGuiResources (hProcess, uiFlags);
 		}
 
 		/// From George Shepherd's Windows Forms FAQ:
@@ -27,15 +27,15 @@ namespace XenAdmin.Core
 		///      - WIN32 resources (accelerator tables, bitmap resources, dialog box templates, font resources, menu resources, raw data resources, string table entries, message table entries, cursors/icons) 
 		/// - Other USER objects (windows, menus) 
 		/// 
-//		[DllImport ("User32", EntryPoint = "GetGuiResources", CallingConvention = CallingConvention.StdCall, ExactSpelling = true, SetLastError = true)]
-//		extern static public int _GetGuiResources (IntPtr hProcess, int uiFlags);
+		[DllImport ("User32", EntryPoint = "GetGuiResources", CallingConvention = CallingConvention.StdCall, ExactSpelling = true, SetLastError = true)]
+		extern static public int _GetGuiResources (IntPtr hProcess, int uiFlags);
 
 
 
 		public bool GetScrollInfo(IntPtr hWnd, int n, ref Win32.ScrollInfo lpScrollInfo)
 		{
 			// TODO: linux GetScrollInfo implementation
-			if (true)
+			if (false)
 			{
 				lpScrollInfo.cbSize = 0;
 				lpScrollInfo.fMask = 0;

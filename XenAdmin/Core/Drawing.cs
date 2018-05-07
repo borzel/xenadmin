@@ -82,44 +82,42 @@ namespace XenAdmin.Core
 			AlphaAttributes.SetColorMatrix (AlphaColorMatrix);
 		}
 
-		/// <summary>
-		/// Kerpow!
-		/// </summary>
-		public static void QuickDraw (Graphics gTarget, Bitmap buffer)
-		{
-			QuickDraw (gTarget, buffer, new Point (0, 0), new Rectangle (0, 0, buffer.Width, buffer.Height));
-		}
+		///// <summary>
+		///// Kerpow!
+		///// </summary>
+		//public static void QuickDraw (Graphics gTarget, Bitmap buffer)
+		//{
+		//	QuickDraw (gTarget, buffer, new Point (0, 0), new Rectangle (0, 0, buffer.Width, buffer.Height));
+		//}
 
-		/// <summary>
-		/// Kerpow!
-		/// </summary>
-		public static void QuickDraw (Graphics gTarget, Bitmap buffer, Point source, Rectangle dest)
-		{
-			return;
+		///// <summary>
+		///// Kerpow!
+		///// </summary>
+		//public static void QuickDraw (Graphics gTarget, Bitmap buffer, Point source, Rectangle dest)
+		//{
+  //          IntPtr pTarget = gTarget.GetHdc ();
+		//	IntPtr pSource = NativeCalls.Instance.CreateCompatibleDC (pTarget);
+		//	IntPtr pNew = buffer.GetHbitmap ();
+		//	SelectObject (pSource, pNew);
+		//	BitBlt (pTarget, dest.X, dest.Y, dest.Width, dest.Height, pSource, source.X, source.Y, TernaryRasterOperations.SRCCOPY);
+		//	DeleteObject (pNew);
+		//	DeleteDC (pSource);
+		//	gTarget.ReleaseHdc (pTarget);
+		//}
 
-			IntPtr pTarget = gTarget.GetHdc ();
-			IntPtr pSource = NativeCalls.Instance.CreateCompatibleDC (pTarget);
-			IntPtr pNew = buffer.GetHbitmap ();
-			SelectObject (pSource, pNew);
-			BitBlt (pTarget, dest.X, dest.Y, dest.Width, dest.Height, pSource, source.X, source.Y, TernaryRasterOperations.SRCCOPY);
-			DeleteObject (pNew);
-			DeleteDC (pSource);
-			gTarget.ReleaseHdc (pTarget);
-		}
-
-		[DllImport ("gdi32.dll", SetLastError = true)]
-		public static extern bool BitBlt (IntPtr hObject, int nXDest, int nYDest, int nWidth,
-		                                       int nHeight, IntPtr hObjSource, int nXSrc, int nYSrc, TernaryRasterOperations dwRop);
+		//[DllImport ("gdi32.dll", SetLastError = true)]
+		//public static extern bool BitBlt (IntPtr hObject, int nXDest, int nYDest, int nWidth,
+		                                       //int nHeight, IntPtr hObjSource, int nXSrc, int nYSrc, TernaryRasterOperations dwRop);
 
 
-		[DllImport ("gdi32.dll", ExactSpelling = true, SetLastError = true)]
-		public static extern bool DeleteDC (IntPtr hdc);
+		//[DllImport ("gdi32.dll", ExactSpelling = true, SetLastError = true)]
+		//public static extern bool DeleteDC (IntPtr hdc);
 
-		[DllImport ("gdi32.dll", ExactSpelling = true, SetLastError = true)]
-		public static extern IntPtr SelectObject (IntPtr hdc, IntPtr hgdiobj);
+		//[DllImport ("gdi32.dll", ExactSpelling = true, SetLastError = true)]
+		//public static extern IntPtr SelectObject (IntPtr hdc, IntPtr hgdiobj);
 
-		[DllImport ("gdi32.dll", ExactSpelling = true, SetLastError = true)]
-		public static extern bool DeleteObject (IntPtr hObject);
+		//[DllImport ("gdi32.dll", ExactSpelling = true, SetLastError = true)]
+		//public static extern bool DeleteObject (IntPtr hObject);
 
 		public enum TernaryRasterOperations : uint
 		{

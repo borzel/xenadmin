@@ -422,7 +422,8 @@ namespace XenAdmin
                 Application.Exit();
             }
 
-            HealthCheck.SendMetadataToHealthCheck();
+			// TOOD: XCP-ng: we dont want to send Metadata
+            //HealthCheck.SendMetadataToHealthCheck();
         }
 
         private static void EncryptServerList()

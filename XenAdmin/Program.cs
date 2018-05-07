@@ -244,19 +244,19 @@ namespace XenAdmin
             AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
             Application.ThreadException -= Application_ThreadException;
             Application.ThreadException += Application_ThreadException;
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
+            //Application.EnableVisualStyles();
+            //Application.SetCompatibleTextRenderingDefault(false);
 
-            try
-            {
-                if (SystemInformation.FontSmoothingType == 2) // ClearType
-                    TransparentUsually = SystemColors.Window;
-            }
-            catch (NotSupportedException)
-            {
-                // Leave TransparentUsually == Color.Transparent.  This is an old platform
-                // without FontSmoothingType support.
-            }
+            //try
+            //{
+            //    if (SystemInformation.FontSmoothingType == 2) // ClearType
+            //        TransparentUsually = SystemColors.Window;
+            //}
+            //catch (NotSupportedException)
+            //{
+            //    // Leave TransparentUsually == Color.Transparent.  This is an old platform
+            //    // without FontSmoothingType support.
+            //}
 
             switch (Environment.OSVersion.Version.Major)
             {
@@ -542,8 +542,8 @@ namespace XenAdmin
             log.InfoFormat("Time since process started: {0}", (DateTime.Now - Process.GetCurrentProcess().StartTime).ToString());
 
             log.InfoFormat("Handles open: {0}", p.HandleCount.ToString());
-            log.InfoFormat("USER handles open: {0}", Win32.GetGuiResourcesUserCount(p.Handle));
-            log.InfoFormat("GDI handles open: {0}", Win32.GetGuiResourcesGDICount(p.Handle));
+            //log.InfoFormat("USER handles open: {0}", Win32.GetGuiResourcesUserCount(p.Handle));
+            //log.InfoFormat("GDI handles open: {0}", Win32.GetGuiResourcesGDICount(p.Handle));
             log.InfoFormat("Thread count: {0}", p.Threads.Count);
 
             log.InfoFormat("Virtual memory size: {0} B({1})", p.VirtualMemorySize64, Util.MemorySizeStringSuitableUnits(p.VirtualMemorySize64, false));

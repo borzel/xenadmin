@@ -812,14 +812,14 @@ namespace DotNetVnc
                 IntPtr pointer = Marshal.UnsafeAddrOfPinnedArrayElement(img, start);
                 using (Bitmap bitmap = new Bitmap(width, height, stride, cursor ? pixelFormatCursor : pixelFormat, pointer))
                 {
-                    if (cursor)
-                    {
-                        client.ClientSetCursor(bitmap, x, y, width, height);
-                    }
-                    else
-                    {
-                        client.ClientDrawImage(bitmap, x, y, width, height);
-                    }
+                    //if (cursor)
+                    //{
+                    //    client.ClientSetCursor(bitmap, x, y, width, height);
+                    //}
+                    //else
+                    //{
+                    //    client.ClientDrawImage(bitmap, x, y, width, height);
+                    //}
                 }
             }
             catch (ArgumentException exn)

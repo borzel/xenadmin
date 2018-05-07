@@ -270,6 +270,8 @@ namespace XenAdmin.TabPages
             appliesCell.Value = alert.AppliesTo;
             dateCell.Value = HelpersGUI.DateTimeToString(alert.Timestamp.ToLocalTime(), Messages.DATEFORMAT_DMY_HM, true);
             newRow.Cells.AddRange(expanderCell, imageCell, detailCell, appliesCell, dateCell, actionCell);
+
+			FontSetter.SetFont(newRow.Cells);
             
             return newRow;
         }

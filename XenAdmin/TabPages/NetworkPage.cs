@@ -165,7 +165,8 @@ namespace XenAdmin.TabPages
                         if (pif.IsManagementInterface(XenAdmin.Properties.Settings.Default.ShowHiddenVMs))
                             rows.Add(new PIFRow(_host, pif));
                     }
-                }
+                }            
+
                 dataGridViewEx1.Rows.AddRange(rows.ToArray());
 
                 //CA-47050: the dnsColumn should be autosized to Fill, but should not become smaller than a minimum

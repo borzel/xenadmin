@@ -76,8 +76,8 @@ namespace XenAdmin.ConsoleView
             get { return terminated; }
         }
 
-        private CustomCursor RemoteCursor = null;
-        private CustomCursor LocalCursor = new CustomCursor(XenAdmin.Properties.Resources.vnc_local_cursor, 2, 2);
+        //private CustomCursor RemoteCursor = null;
+        //private CustomCursor LocalCursor = new CustomCursor(XenAdmin.Properties.Resources.vnc_local_cursor, 2, 2);
 
         /// <summary>
         /// This field is locked before any drawing is done through backGraphics or frontGraphics.
@@ -213,11 +213,11 @@ namespace XenAdmin.ConsoleView
                     frontGraphics = null;
                 }
 
-                if (RemoteCursor != null)
-                {
-                    RemoteCursor.Dispose();
-                    RemoteCursor = null;
-                }
+                //if (RemoteCursor != null)
+                //{
+                //    RemoteCursor.Dispose();
+                //    RemoteCursor = null;
+                //}
             }
             finally
             {
@@ -481,17 +481,17 @@ namespace XenAdmin.ConsoleView
 
         public void ClientSetCursor(Bitmap image, int x, int y, int width, int height)
         {
-            Program.AssertOffEventThread();
+            //Program.AssertOffEventThread();
 
-            if (RemoteCursor != null)
-                RemoteCursor.Dispose();
-            RemoteCursor = new CustomCursor(image, x, y);
+            ////if (RemoteCursor != null)
+            ////    RemoteCursor.Dispose();
+            ////RemoteCursor = new CustomCursor(image, x, y);
 
-            Program.Invoke(this, delegate()
-            {
-                if (cursorOver)
-                    this.Cursor = RemoteCursor.Cursor;
-            });
+            //Program.Invoke(this, delegate()
+            //{
+            //    if (cursorOver)
+            //        this.Cursor = RemoteCursor.Cursor;
+            //});
         }
 
         #endregion
@@ -1006,44 +1006,44 @@ namespace XenAdmin.ConsoleView
                 int bottom = (int)((DesktopSize.Height * scale) + top);
                 int right = (int)((DesktopSize.Width * scale) + left);
 
-                if (e.X > left && e.X < right
-                 && e.Y > top && e.Y < bottom)
-                {
-                    cursorOver = true;
+                //if (e.X > left && e.X < right
+                // && e.Y > top && e.Y < bottom)
+                //{
+                //    cursorOver = true;
 
-                    if (RemoteCursor == null)
-                        Cursor = LocalCursor.Cursor;
-                    else
-                        Cursor = RemoteCursor.Cursor;
+                //    if (RemoteCursor == null)
+                //        Cursor = LocalCursor.Cursor;
+                //    else
+                //        Cursor = RemoteCursor.Cursor;
 
-                    lock (this.mouseEventLock)
-                    {
-                        if (this.mouseMoved < MOUSE_EVENTS_BEFORE_UPDATE)
-                        {
-                            this.mouseMoved++;
+                //    lock (this.mouseEventLock)
+                //    {
+                //        if (this.mouseMoved < MOUSE_EVENTS_BEFORE_UPDATE)
+                //        {
+                //            this.mouseMoved++;
 
-                            mouseEvent(currentMouseState, e.X, e.Y);
-                        }
-                        else if (this.mouseNotMoved > MOUSE_EVENTS_DROPPED)
-                        {
-                            this.mouseMoved = 0;
-                            this.mouseNotMoved = 0;
-                        }
-                        else
-                        {
-                            this.mouseNotMoved++;
+                //            mouseEvent(currentMouseState, e.X, e.Y);
+                //        }
+                //        else if (this.mouseNotMoved > MOUSE_EVENTS_DROPPED)
+                //        {
+                //            this.mouseMoved = 0;
+                //            this.mouseNotMoved = 0;
+                //        }
+                //        else
+                //        {
+                //            this.mouseNotMoved++;
 
-                            this.pendingState = currentMouseState;
-                            this.pending = e;
-                        }
-                    }
-                }
-                else
-                {
+                //            this.pendingState = currentMouseState;
+                //            this.pending = e;
+                //        }
+                //    }
+                //}
+                //else
+                //{
                     cursorOver = false;
 
                     Cursor = Cursors.Default;
-                }
+                //}
             }
         }
 
