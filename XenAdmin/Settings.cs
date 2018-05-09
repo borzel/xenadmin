@@ -402,7 +402,7 @@ namespace XenAdmin
         {
             try
             {
-                Properties.Settings.Default.Save();
+				Properties.Settings.Default.Save();            
             }
             catch (ConfigurationErrorsException ex)
             {

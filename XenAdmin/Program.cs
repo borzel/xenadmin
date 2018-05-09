@@ -190,43 +190,43 @@ namespace XenAdmin
             string appVersionString = appVersion.ToString();
             log.DebugFormat("Application version of new settings {0}", appVersionString);
 
-            try
-            {
-                if (Properties.Settings.Default.ApplicationVersion != appVersion.ToString())
-                {
-                    log.Debug("Upgrading settings...");
-                    Properties.Settings.Default.Upgrade();
+            //try
+            //{
+            //    if (Properties.Settings.Default.ApplicationVersion != appVersion.ToString())
+            //    {
+            //        log.Debug("Upgrading settings...");
+            //        Properties.Settings.Default.Upgrade();
 
-                    // if program's hash has changed (e.g. by upgrading to .NET 4.0), then Upgrade() doesn't import the previous application settings 
-                    // because it cannot locate a previous user.config file. In this case a new user.config file is created with the default settings.
-                    // We will try and find a config file from a previous installation and update the settings from it
-                    if (Properties.Settings.Default.ApplicationVersion == "" && Properties.Settings.Default.DoUpgrade)
-                        SettingsUpdate.Update();
-                    log.DebugFormat("Settings upgraded from '{0}' to '{1}'", Properties.Settings.Default.ApplicationVersion, appVersionString);
-                    Properties.Settings.Default.ApplicationVersion = appVersionString;
-                    Settings.TrySaveSettings();
-                }
-            }
-            catch (ConfigurationErrorsException ex)
-            {
-                log.Error("Could not load settings.", ex);
-                var msg = string.Format("{0}\n\n{1}", Messages.MESSAGEBOX_LOAD_CORRUPTED_TITLE,
-                                        string.Format(Messages.MESSAGEBOX_LOAD_CORRUPTED, Settings.GetUserConfigPath()));
-                using (var dlg = new ThreeButtonDialog(new ThreeButtonDialog.Details(SystemIcons.Error,msg,Messages.XENCENTER))
-                               {
-                                   StartPosition = FormStartPosition.CenterScreen,
-                                   //For reasons I do not fully comprehend at the moment, the runtime
-                                   //overrides the above StartPosition with WindowsDefaultPosition if
-                                   //ShowInTaskbar is false. However it's a good idea anyway to show it
-                                   //in the taskbar since the main form is not launcched at this point.
-                                   ShowInTaskbar = true
-                               })
-                {
-                    dlg.ShowDialog();
-                }
-                Application.Exit();
-                return;
-            }
+            //        // if program's hash has changed (e.g. by upgrading to .NET 4.0), then Upgrade() doesn't import the previous application settings 
+            //        // because it cannot locate a previous user.config file. In this case a new user.config file is created with the default settings.
+            //        // We will try and find a config file from a previous installation and update the settings from it
+            //        if (Properties.Settings.Default.ApplicationVersion == "" && Properties.Settings.Default.DoUpgrade)
+            //            SettingsUpdate.Update();
+            //        log.DebugFormat("Settings upgraded from '{0}' to '{1}'", Properties.Settings.Default.ApplicationVersion, appVersionString);
+            //        Properties.Settings.Default.ApplicationVersion = appVersionString;
+            //        Settings.TrySaveSettings();
+            //    }
+            //}
+            //catch (ConfigurationErrorsException ex)
+            //{
+            //    log.Error("Could not load settings.", ex);
+            //    var msg = string.Format("{0}\n\n{1}", Messages.MESSAGEBOX_LOAD_CORRUPTED_TITLE,
+            //                            string.Format(Messages.MESSAGEBOX_LOAD_CORRUPTED, Settings.GetUserConfigPath()));
+            //    using (var dlg = new ThreeButtonDialog(new ThreeButtonDialog.Details(SystemIcons.Error,msg,Messages.XENCENTER))
+            //                   {
+            //                       StartPosition = FormStartPosition.CenterScreen,
+            //                       //For reasons I do not fully comprehend at the moment, the runtime
+            //                       //overrides the above StartPosition with WindowsDefaultPosition if
+            //                       //ShowInTaskbar is false. However it's a good idea anyway to show it
+            //                       //in the taskbar since the main form is not launcched at this point.
+            //                       ShowInTaskbar = true
+            //                   })
+            //    {
+            //        dlg.ShowDialog();
+            //    }
+            //    Application.Exit();
+            //    return;
+            //}
 
             // Reset statics, because XenAdminTests likes to call Main() twice.
             TestExceptionString = null;

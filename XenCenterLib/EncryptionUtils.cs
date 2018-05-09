@@ -64,30 +64,34 @@ namespace XenAdmin.Core
 
         public static string Protect(string data)
         {
-            byte[] dataBytes = Encoding.Unicode.GetBytes(data);
-            byte[] protectedBytes = ProtectedData.Protect(dataBytes, GetSalt(), DataProtectionScope.CurrentUser);
-            return Convert.ToBase64String(protectedBytes);
+			byte[] dataBytes = Encoding.Unicode.GetBytes(data);
+			//byte[] protectedBytes = ProtectedData.Protect(dataBytes, GetSalt(), DataProtectionScope.CurrentUser);
+			//return Convert.ToBase64String(protectedBytes);
+			return Convert.ToBase64String(dataBytes);
         }
 
         public static string Unprotect(string protectedstring)
         {
             byte[] protectedBytes = Convert.FromBase64String(protectedstring);
-            byte[] dataBytes = ProtectedData.Unprotect(protectedBytes, GetSalt(), DataProtectionScope.CurrentUser);
-            return Encoding.Unicode.GetString(dataBytes);
+            //byte[] dataBytes = ProtectedData.Unprotect(protectedBytes, GetSalt(), DataProtectionScope.CurrentUser);
+            //return Encoding.Unicode.GetString(dataBytes);
+			return Encoding.Unicode.GetString(protectedBytes);
         }
 
         public static string ProtectForLocalMachine(string data)
         {
             byte[] dataBytes = Encoding.Unicode.GetBytes(data);
-            byte[] protectedBytes = ProtectedData.Protect(dataBytes, GetSalt(), DataProtectionScope.LocalMachine);
-            return Convert.ToBase64String(protectedBytes);
+            //byte[] protectedBytes = ProtectedData.Protect(dataBytes, GetSalt(), DataProtectionScope.LocalMachine);
+            //return Convert.ToBase64String(protectedBytes);
+			return Convert.ToBase64String(dataBytes);
         }
 
         public static string UnprotectForLocalMachine(string protectedstring)
         {
             byte[] protectedBytes = Convert.FromBase64String(protectedstring);
-            byte[] dataBytes = ProtectedData.Unprotect(protectedBytes, GetSalt(), DataProtectionScope.LocalMachine);
-            return Encoding.Unicode.GetString(dataBytes);
+            //byte[] dataBytes = ProtectedData.Unprotect(protectedBytes, GetSalt(), DataProtectionScope.LocalMachine);
+            //return Encoding.Unicode.GetString(dataBytes);
+			return Encoding.Unicode.GetString(protectedBytes);
         }
 
         /// <summary>
