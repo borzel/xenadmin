@@ -358,7 +358,7 @@ namespace XenAdmin.TabPages
 
         public void PanelShown()
         {
-            QueryPanel.PanelShown();
+            QueryPanel.PanelShown();         
         }
 
         public void PanelHidden()

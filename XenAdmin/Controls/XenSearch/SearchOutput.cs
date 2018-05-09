@@ -77,6 +77,7 @@ namespace XenAdmin.Controls.XenSearch
         {
             if (QueryPanel != null)
                 QueryPanel.BuildList();
+			folderNavigator.BackColor = System.Drawing.Color.Blue;
         }
 
         private void contextMenuStripColumns_Opening(object sender, CancelEventArgs e)

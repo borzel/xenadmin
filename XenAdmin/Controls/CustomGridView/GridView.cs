@@ -202,14 +202,14 @@ namespace XenAdmin.Controls.CustomGridView
             // ignore this size changed
         }
 
-        //protected override void OnSizeChanged(EventArgs e)
-        //{
-        //    // use this one instead
-        //    base.OnResize(e); // do size change <= calling on resize here may seem barking but it appears to be the only combination that works...
-        //    DisposeBuffer(); // reinitalise buffer
-        //    InitBuffer();
-        //    Refresh();  //refresh
-        //}
+        protected override void OnSizeChanged(EventArgs e)
+        {
+            // use this one instead
+            base.OnResize(e); // do size change <= calling on resize here may seem barking but it appears to be the only combination that works...
+            DisposeBuffer(); // reinitalise buffer
+            InitBuffer();
+            Refresh();  //refresh
+        }
 
         // dispose
         private void DisposeBuffer()
@@ -294,17 +294,17 @@ namespace XenAdmin.Controls.CustomGridView
             return total;
         }
 
-    //    protected override void OnPaint(PaintEventArgs e)
-    //    {
-    //        if (Disposing || IsDisposed || Program.Exiting)
-    //            return;
+        protected override void OnPaint(PaintEventArgs e)
+        {
+            if (Disposing || IsDisposed || Program.Exiting)
+                return;
 
-    //        if (!DraggingColumns)
-    //        {
-    //            // we dont need to render again apparently :)
-    //            Core.Drawing.QuickDraw(Graphics, BackBuffer);
-    //        }
-    //        else            {
+            if (!DraggingColumns)
+            {
+                // we dont need to render again apparently :)
+                Core.Drawing.QuickDraw(Graphics, BackBuffer);
+            }
+            else            {
     //            //paint control
     //            IntPtr pTarget = DragColumnsGraphics.GetHdc();
 				//IntPtr pSource = NativeCalls.Instance.CreateCompatibleDC(pTarget);
@@ -328,18 +328,18 @@ namespace XenAdmin.Controls.CustomGridView
     //            // paint everything to screen
     //            IntPtr pTarget3 = Graphics.GetHdc();
 				//IntPtr pSource3 = NativeCalls.Instance.CreateCompatibleDC(pTarget3);
-        //        IntPtr pOrig3 = Core.Drawing.SelectObject(pSource3, DragColumnsBuffer.GetHbitmap());
-        //        Core.Drawing.BitBlt(pTarget3, 0, 0, DragColumnsBuffer.Width, DragColumnsBuffer.Height, pSource3, 0, 0, Core.Drawing.TernaryRasterOperations.SRCCOPY);
-        //        IntPtr pNew3 = Core.Drawing.SelectObject(pSource3, pOrig3);
-        //        Core.Drawing.DeleteObject(pNew3);
-        //        Core.Drawing.DeleteDC(pSource3);
-        //        Graphics.ReleaseHdc(pTarget3);
-        //    }
-        //}
+                //IntPtr pOrig3 = Core.Drawing.SelectObject(pSource3, DragColumnsBuffer.GetHbitmap());
+                //Core.Drawing.BitBlt(pTarget3, 0, 0, DragColumnsBuffer.Width, DragColumnsBuffer.Height, pSource3, 0, 0, Core.Drawing.TernaryRasterOperations.SRCCOPY);
+                //IntPtr pNew3 = Core.Drawing.SelectObject(pSource3, pOrig3);
+                //Core.Drawing.DeleteObject(pNew3);
+                //Core.Drawing.DeleteDC(pSource3);
+                //Graphics.ReleaseHdc(pTarget3);
+            }
+        }
 
         protected override void OnPaintBackground(PaintEventArgs e)
         {
-            //base.OnPaintBackground(e);
+            base.OnPaintBackground(e);
         }
 
         private bool DraggingItems;

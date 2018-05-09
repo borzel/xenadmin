@@ -244,19 +244,19 @@ namespace XenAdmin
             AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
             Application.ThreadException -= Application_ThreadException;
             Application.ThreadException += Application_ThreadException;
-            //Application.EnableVisualStyles();
-            //Application.SetCompatibleTextRenderingDefault(false);
+            Application.EnableVisualStyles();
+            Application.SetCompatibleTextRenderingDefault(false);
 
-            //try
-            //{
-            //    if (SystemInformation.FontSmoothingType == 2) // ClearType
-            //        TransparentUsually = SystemColors.Window;
-            //}
-            //catch (NotSupportedException)
-            //{
-            //    // Leave TransparentUsually == Color.Transparent.  This is an old platform
-            //    // without FontSmoothingType support.
-            //}
+            try
+            {
+                if (SystemInformation.FontSmoothingType == 2) // ClearType
+                    TransparentUsually = SystemColors.Window;
+            }
+            catch (NotSupportedException)
+            {
+                // Leave TransparentUsually == Color.Transparent.  This is an old platform
+                // without FontSmoothingType support.
+            }
 
             switch (Environment.OSVersion.Version.Major)
             {
