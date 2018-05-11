@@ -163,12 +163,13 @@ namespace DotNetVnc
             this.stream = new MyStream(stream);
             this.paused = startPaused;
 
-            long freq;
-            if (!Win32.QueryPerformanceFrequency(out freq))
-            {
-                System.Diagnostics.Trace.Assert(false);
-            }
-            imageUpdateThreshold = freq / 3;
+			//if (!Win32.QueryPerformanceFrequency(out freq))
+			//{
+			//    System.Diagnostics.Trace.Assert(false);
+			//}
+			//imageUpdateThreshold = freq / 3;
+
+			imageUpdateThreshold = 100; //ms
         }
 
         public void connect(char[] password)
@@ -812,14 +813,14 @@ namespace DotNetVnc
                 IntPtr pointer = Marshal.UnsafeAddrOfPinnedArrayElement(img, start);
                 using (Bitmap bitmap = new Bitmap(width, height, stride, cursor ? pixelFormatCursor : pixelFormat, pointer))
                 {
-                    //if (cursor)
-                    //{
-                    //    client.ClientSetCursor(bitmap, x, y, width, height);
-                    //}
-                    //else
-                    //{
-                    //    client.ClientDrawImage(bitmap, x, y, width, height);
-                    //}
+                    if (cursor)
+                    {
+                        client.ClientSetCursor(bitmap, x, y, width, height);
+                    }
+                    else
+                    {
+                        client.ClientDrawImage(bitmap, x, y, width, height);
+                    }
                 }
             }
             catch (ArgumentException exn)
@@ -1263,9 +1264,12 @@ namespace DotNetVnc
             int n = this.stream.readCard16();
             Log.Debug("reading " + n + " rectangles");
             bool fb_updated = false;
-            long start;
-            long end;
-            Win32.QueryPerformanceCounter(out start);
+			//long start;
+			//long end;
+			DateTime start;
+			DateTime end;
+			//Win32.QueryPerformanceCounter(out start);
+			start = System.DateTime.Now;
             for (int i = 0; i < n; ++i)
             {
                 int x = this.stream.readCard16();
@@ -1311,8 +1315,9 @@ namespace DotNetVnc
                         throw new VNCException("unimplemented encoding: " + encoding);
                 }
 
-                Win32.QueryPerformanceCounter(out end);
-                if (end - start > imageUpdateThreshold)
+				//Win32.QueryPerformanceCounter(out end);
+				end = DateTime.Now;
+				if ((end - start).Milliseconds > imageUpdateThreshold)
                 {
                     client.ClientFrameBufferUpdate();
                     start = end;

@@ -41,51 +41,57 @@ namespace DotNetVnc
     {
         private static readonly log4net.ILog Log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
-        [DllImport("kernel32.dll")]
-        private extern static short QueryPerformanceCounter(ref long x);
-        [DllImport("kernel32.dll")]
-        private extern static short QueryPerformanceFrequency(ref long x);
+		//[DllImport("kernel32.dll")]
+		//private extern static short QueryPerformanceCounter(ref long x);
+		//[DllImport("kernel32.dll")]
+		//private extern static short QueryPerformanceFrequency(ref long x);
 
-        private static long ctr1 = 0, ctr2 = 0, freq = 0;
+		//private static long ctr1 = 0, ctr2 = 0, freq = 0;
+		private static DateTime ctr1, ctr2;
+		//private static long freq = 0;
 
         public static void startTime()
         {
-            QueryPerformanceCounter(ref ctr1);
+			//QueryPerformanceCounter(ref ctr1);
+			ctr1 = DateTime.Now;
         }
 
         public static double endTime(String msg)
         {
-            QueryPerformanceCounter(ref ctr2);
-            QueryPerformanceFrequency(ref freq);
-            double time = (ctr2 - ctr1) * 1.0 / freq;
+			//QueryPerformanceCounter(ref ctr2);
+			ctr2 = DateTime.Now;
+			//QueryPerformanceFrequency(ref freq);
+			//freq = 30; //Hz
+
+			double time = (ctr2 - ctr1).TotalSeconds;
             Log.Info(msg + " time: " + time + " seconds.");
-            ctr1 = ctr2 = freq = 0;
+            ctr1 = ctr2;
             return time;
         }
 
-        public static void copyRect(Bitmap src, int x, int y, int width, int height, Graphics dest, int dx, int dy)
-        {
-            IntPtr pTarget = dest.GetHdc();
-            IntPtr pSource = CreateCompatibleDC(pTarget);
-            IntPtr pOrig = SelectObject(pSource, src.GetHbitmap());
-            BitBlt(pTarget, dx, dy, width, height, pSource, x, y, (uint)TernaryRasterOperations.SRCCOPY);
-            IntPtr pNew = SelectObject(pSource, pOrig);
-            DeleteObject(pNew);
-            DeleteDC(pSource);
-            dest.ReleaseHdc(pTarget);
-        }
+        //public static void copyRect(Bitmap src, int x, int y, int width, int height, Graphics dest, int dx, int dy)
+        //{
+        //    IntPtr pTarget = dest.GetHdc();
+        //    IntPtr pSource = CreateCompatibleDC(pTarget);
+        //    IntPtr pOrig = SelectObject(pSource, src.GetHbitmap());
+        //    BitBlt(pTarget, dx, dy, width, height, pSource, x, y, (uint)TernaryRasterOperations.SRCCOPY);
+        //    IntPtr pNew = SelectObject(pSource, pOrig);
+        //    DeleteObject(pNew);
+        //    DeleteDC(pSource);
+        //    dest.ReleaseHdc(pTarget);
+        //}
 
-        [DllImport("gdi32.dll", ExactSpelling = true, SetLastError = true)]
-        private static extern IntPtr CreateCompatibleDC(IntPtr hdc);
+        //[DllImport("gdi32.dll", ExactSpelling = true, SetLastError = true)]
+        //private static extern IntPtr CreateCompatibleDC(IntPtr hdc);
 
-        [DllImport("gdi32.dll", ExactSpelling = true, SetLastError = true)]
-        private static extern bool DeleteDC(IntPtr hdc);
+        //[DllImport("gdi32.dll", ExactSpelling = true, SetLastError = true)]
+        //private static extern bool DeleteDC(IntPtr hdc);
 
-        [DllImport("gdi32.dll", ExactSpelling = true, SetLastError = true)]
-        private static extern IntPtr SelectObject(IntPtr hdc, IntPtr hgdiobj);
+        //[DllImport("gdi32.dll", ExactSpelling = true, SetLastError = true)]
+        //private static extern IntPtr SelectObject(IntPtr hdc, IntPtr hgdiobj);
 
-        [DllImport("gdi32.dll", ExactSpelling = true, SetLastError = true)]
-        private static extern bool DeleteObject(IntPtr hObject);
+        //[DllImport("gdi32.dll", ExactSpelling = true, SetLastError = true)]
+        //private static extern bool DeleteObject(IntPtr hObject);
 
         /// <summary>
         ///    Performs a bit-block transfer of the color data corresponding to a
@@ -104,9 +110,9 @@ namespace DotNetVnc
         /// <returns>
         ///    <c>true</c> if the operation succeeded, <c>false</c> otherwise.
         /// </returns>
-        [DllImport("gdi32.dll")]
-        private static extern bool BitBlt(IntPtr hdc, int nXDest, int nYDest, int nWidth,
-           int nHeight, IntPtr hdcSrc, int nXSrc, int nYSrc, uint dwRop);
+        //[DllImport("gdi32.dll")]
+        //private static extern bool BitBlt(IntPtr hdc, int nXDest, int nYDest, int nWidth,
+           //int nHeight, IntPtr hdcSrc, int nXSrc, int nYSrc, uint dwRop);
 
         /// <summary>
         ///     Specifies a raster-operation code. These codes define how the color data for the

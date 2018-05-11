@@ -146,6 +146,8 @@ namespace XenAdmin.ConsoleView
         internal string ElevatedUsername;
         internal string ElevatedPassword;
 
+		private static bool _activate_in_progress = false;
+
         internal XSVNCScreen(VM source, EventHandler resizeHandler, VNCTabView parent, string elevatedUsername, string elevatedPassword)
             : base()
         {
@@ -1309,12 +1311,20 @@ namespace XenAdmin.ConsoleView
         {
             if (RemoteConsole != null)
             {
-                RemoteConsole.Activate();
+				if (_activate_in_progress)
+					return;
+				_activate_in_progress = true;
+                
+				RemoteConsole.Activate();
+
                 if (autoCaptureKeyboardAndMouse)
                 {
                     SetKeyboardAndMouseCapture(true);
                 }
                 Unpause();
+
+
+				_activate_in_progress = false;
             }
 
             DisableMenuShortcuts();

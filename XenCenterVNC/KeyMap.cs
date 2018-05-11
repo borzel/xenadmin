@@ -147,7 +147,7 @@ namespace DotNetVnc
         private delegate int LowLevelKeyboardProc(
             int nCode, int wParam, KBDLLHOOKSTRUCT* lParam);
 
-        private static LowLevelKeyboardProc _proc = HookCallback;
+        //private static LowLevelKeyboardProc _proc = HookCallback;
         private static IntPtr _hookID = IntPtr.Zero;
 
         public delegate void KeyEvent(bool down, int scancode, int keysym);
@@ -172,7 +172,7 @@ namespace DotNetVnc
             if (InterceptKeys.keyEvent == null)
             {
                 InterceptKeys.keyEvent = keyEvent;
-                _hookID = SetHook(_proc);
+                //_hookID = SetHook(_proc);
             }
         }
 
@@ -181,91 +181,91 @@ namespace DotNetVnc
             if (InterceptKeys.keyEvent != null)
             {
                 InterceptKeys.keyEvent = null;
-                UnhookWindowsHookEx(_hookID);
+                //UnhookWindowsHookEx(_hookID);
             }
         }
 
-        private static IntPtr SetHook(LowLevelKeyboardProc proc)
-        {
-            using (Process curProcess = Process.GetCurrentProcess())
-            using (ProcessModule curModule = curProcess.MainModule)
-            {
-                return SetWindowsHookEx(WH_KEYBOARD_LL, proc,
-                    Win32.GetModuleHandle(curModule.ModuleName), 0);
-            }
-        }
+        //private static IntPtr SetHook(LowLevelKeyboardProc proc)
+        //{
+        //    using (Process curProcess = Process.GetCurrentProcess())
+        //    using (ProcessModule curModule = curProcess.MainModule)
+        //    {
+        //        return SetWindowsHookEx(WH_KEYBOARD_LL, proc,
+        //            Win32.GetModuleHandle(curModule.ModuleName), 0);
+        //    }
+        //}
 
         private const int RIGHT_SHIFT_SCAN = 54;
         private const int NUM_LOCK_SCAN = 69;
 
-        private static int HookCallback(int nCode, int wParam, KBDLLHOOKSTRUCT* lParam)
-        {
-             if (nCode < 0)
-            {
-                return CallNextHookEx(_hookID, nCode, wParam, lParam);
-            }
-            else
-            {
-                KBDLLHOOKSTRUCT kbStruct = *lParam;
+        //private static int HookCallback(int nCode, int wParam, KBDLLHOOKSTRUCT* lParam)
+        //{
+        //     if (nCode < 0)
+        //    {
+        //        return CallNextHookEx(_hookID, nCode, wParam, lParam);
+        //    }
+        //    else
+        //    {
+        //        KBDLLHOOKSTRUCT kbStruct = *lParam;
 
-                bool extended = (kbStruct.flags & FLAG_EXTENDED) == FLAG_EXTENDED;
-                bool down = (wParam == WM_KEYDOWN) || (wParam == WM_SYSKEYDOWN);
-                int scanCode = kbStruct.scanCode;
-                int keySym = KeyMap.translateKey((Keys)kbStruct.vkCode);
+        //        bool extended = (kbStruct.flags & FLAG_EXTENDED) == FLAG_EXTENDED;
+        //        bool down = (wParam == WM_KEYDOWN) || (wParam == WM_SYSKEYDOWN);
+        //        int scanCode = kbStruct.scanCode;
+        //        int keySym = KeyMap.translateKey((Keys)kbStruct.vkCode);
 
-                /* kbStruct.scanCode for NUM_LOCK and PAUSE are the same (69).
-                 * But NUM_LOCK is an extended key, where as PAUSE is not.
-                 * QEMU doesn't support PAUSE and expects NUM_LOCK scanCode
-                 * to be sent as 69
-                 */
+        //        /* kbStruct.scanCode for NUM_LOCK and PAUSE are the same (69).
+        //         * But NUM_LOCK is an extended key, where as PAUSE is not.
+        //         * QEMU doesn't support PAUSE and expects NUM_LOCK scanCode
+        //         * to be sent as 69
+        //         */
 
-                switch (scanCode)
-                {
-                    /* Although RIGHT_SHIFT, NUMS_LOCK are extended keys,
-                     * scan code for these keys are not prefixed with 0xe0.
-                     */
-                    case RIGHT_SHIFT_SCAN:
-                    case NUM_LOCK_SCAN:
-                       break;
-                    default:
-                        /* 128 is added to scanCode to differentiate
-                         * an extended key. Scan code for all extended keys
-                         * needs to be prefixed with 0xe0, so adding 128
-                         * or ( | 0x80) will give a hint to qemu that this
-                         * scanCode is an extended one and qemu can then prefix
-                         * scanCode with 0xe0
-                         */
-                        scanCode += (extended ? 128 : 0);
-                        break;
-                }
+        //        switch (scanCode)
+        //        {
+        //            /* Although RIGHT_SHIFT, NUMS_LOCK are extended keys,
+        //             * scan code for these keys are not prefixed with 0xe0.
+        //             */
+        //            case RIGHT_SHIFT_SCAN:
+        //            case NUM_LOCK_SCAN:
+        //               break;
+        //            default:
+        //                /* 128 is added to scanCode to differentiate
+        //                 * an extended key. Scan code for all extended keys
+        //                 * needs to be prefixed with 0xe0, so adding 128
+        //                 * or ( | 0x80) will give a hint to qemu that this
+        //                 * scanCode is an extended one and qemu can then prefix
+        //                 * scanCode with 0xe0
+        //                 */
+        //                scanCode += (extended ? 128 : 0);
+        //                break;
+        //        }
 
-                if (InterceptKeys.keyEvent != null)
-                {
-                    InterceptKeys.keyEvent(down, scanCode, keySym);
-                }
+        //        if (InterceptKeys.keyEvent != null)
+        //        {
+        //            InterceptKeys.keyEvent(down, scanCode, keySym);
+        //        }
 
-                if (bubble || scanCode == NUM_LOCK_SCAN)
-                {
-                    return CallNextHookEx(_hookID, nCode, wParam, lParam);
-                }
-                else
-                {
-                    return 1; // Prevent the message being passed on.
-                }
-            }
-        }
+        //        if (bubble || scanCode == NUM_LOCK_SCAN)
+        //        {
+        //            return CallNextHookEx(_hookID, nCode, wParam, lParam);
+        //        }
+        //        else
+        //        {
+        //            return 1; // Prevent the message being passed on.
+        //        }
+        //    }
+        //}
 
-        [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
-        private static extern IntPtr SetWindowsHookEx(int idHook,
-            LowLevelKeyboardProc lpfn, IntPtr hMod, uint dwThreadId);
+        //[DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
+        //private static extern IntPtr SetWindowsHookEx(int idHook,
+        //    LowLevelKeyboardProc lpfn, IntPtr hMod, uint dwThreadId);
 
-        [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
-        [return: MarshalAs(UnmanagedType.Bool)]
-        private static extern bool UnhookWindowsHookEx(IntPtr hhk);
+        //[DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
+        //[return: MarshalAs(UnmanagedType.Bool)]
+        //private static extern bool UnhookWindowsHookEx(IntPtr hhk);
 
-        [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
-        private static extern int CallNextHookEx(IntPtr hhk, int nCode,
-            int wParam, KBDLLHOOKSTRUCT * lParam);
+        //[DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
+        //private static extern int CallNextHookEx(IntPtr hhk, int nCode,
+            //int wParam, KBDLLHOOKSTRUCT * lParam);
 
     }
 }

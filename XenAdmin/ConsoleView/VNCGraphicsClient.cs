@@ -76,8 +76,8 @@ namespace XenAdmin.ConsoleView
             get { return terminated; }
         }
 
-        //private CustomCursor RemoteCursor = null;
-        //private CustomCursor LocalCursor = new CustomCursor(XenAdmin.Properties.Resources.vnc_local_cursor, 2, 2);
+        private CustomCursor RemoteCursor = null;
+        private CustomCursor LocalCursor = new CustomCursor(XenAdmin.Properties.Resources.vnc_local_cursor, 2, 2);
 
         /// <summary>
         /// This field is locked before any drawing is done through backGraphics or frontGraphics.
@@ -213,11 +213,11 @@ namespace XenAdmin.ConsoleView
                     frontGraphics = null;
                 }
 
-                //if (RemoteCursor != null)
-                //{
-                //    RemoteCursor.Dispose();
-                //    RemoteCursor = null;
-                //}
+                if (RemoteCursor != null)
+                {
+                    //RemoteCursor.Dispose();
+                    RemoteCursor = null;
+                }
             }
             finally
             {
@@ -412,21 +412,21 @@ namespace XenAdmin.ConsoleView
         // Taken from 
         // http://www.codeproject.com/cs/miscctrl/DragDropTreeview.asp?df=100&forumid=84437&exp=0&select=1838138#xx1838138xx
 
-        [StructLayout(LayoutKind.Sequential)]
-        public struct ICONINFO
-        {
-            public bool fIcon;
-            public int xHotspot;
-            public int yHotspot;
-            public IntPtr hbmMask;
-            public IntPtr hbmColor;
-        }
+        //[StructLayout(LayoutKind.Sequential)]
+        //public struct ICONINFO
+        //{
+        //    public bool fIcon;
+        //    public int xHotspot;
+        //    public int yHotspot;
+        //    public IntPtr hbmMask;
+        //    public IntPtr hbmColor;
+        //}
 
-        [DllImport("user32.dll")]
-        public static extern IntPtr CreateIconIndirect(ref ICONINFO iconinfo);
+        //[DllImport("user32.dll")]
+        //public static extern IntPtr CreateIconIndirect(ref ICONINFO iconinfo);
 
-        [DllImport("user32.dll")]
-        public static extern bool DestroyIcon(IntPtr hIcon);
+        //[DllImport("user32.dll")]
+        //public static extern bool DestroyIcon(IntPtr hIcon);
 
         class CustomCursor
         {
@@ -435,43 +435,44 @@ namespace XenAdmin.ConsoleView
 
             internal CustomCursor(Bitmap bitmap, int x, int y)
             {
-                ICONINFO iconInfo = new ICONINFO();
-                iconInfo.fIcon = false;
-                iconInfo.xHotspot = x;
-                iconInfo.yHotspot = y;
-                iconInfo.hbmMask = bitmap.GetHbitmap();
-                iconInfo.hbmColor = bitmap.GetHbitmap();
+                //ICONINFO iconInfo = new ICONINFO();
+                //iconInfo.fIcon = false;
+                //iconInfo.xHotspot = x;
+                //iconInfo.yHotspot = y;
+                //iconInfo.hbmMask = bitmap.GetHbitmap();
+                //iconInfo.hbmColor = bitmap.GetHbitmap();
 
-                handle = CreateIconIndirect(ref iconInfo);
-                cursor = new Cursor(handle);
+                //handle = CreateIconIndirect(ref iconInfo);
+                //cursor = new Cursor(handle);
+				cursor = Cursor.Current;
             }
 
-            ~CustomCursor()
-            {
-                Dispose(false);
-            }
+            //~CustomCursor()
+            //{
+            //    Dispose(false);
+            //}
 
-            public void Dispose()
-            {
-                GC.SuppressFinalize(this);
-                Dispose(true);
-            }
+            //public void Dispose()
+            //{
+            //    GC.SuppressFinalize(this);
+            //    Dispose(true);
+            //}
 
-            protected virtual void Dispose(bool disposing)
-            {
-                try
-                {
-                    if (handle != IntPtr.Zero)
-                        DestroyIcon(handle);
-                }
-                catch
-                {
-                }
-                finally
-                {
-                    handle = IntPtr.Zero;
-                }
-            }
+            //protected virtual void Dispose(bool disposing)
+            //{
+            //    try
+            //    {
+            //        if (handle != IntPtr.Zero)
+            //            DestroyIcon(handle);
+            //    }
+            //    catch
+            //    {
+            //    }
+            //    finally
+            //    {
+            //        handle = IntPtr.Zero;
+            //    }
+            //}
 
             public Cursor Cursor
             {
@@ -481,17 +482,17 @@ namespace XenAdmin.ConsoleView
 
         public void ClientSetCursor(Bitmap image, int x, int y, int width, int height)
         {
-            //Program.AssertOffEventThread();
+            Program.AssertOffEventThread();
 
-            ////if (RemoteCursor != null)
-            ////    RemoteCursor.Dispose();
-            ////RemoteCursor = new CustomCursor(image, x, y);
+            //if (RemoteCursor != null)
+                //RemoteCursor.Dispose();
+            RemoteCursor = new CustomCursor(image, x, y);
 
-            //Program.Invoke(this, delegate()
-            //{
-            //    if (cursorOver)
-            //        this.Cursor = RemoteCursor.Cursor;
-            //});
+            Program.Invoke(this, delegate()
+            {
+                if (cursorOver)
+                    this.Cursor = RemoteCursor.Cursor;
+            });
         }
 
         #endregion
@@ -505,7 +506,8 @@ namespace XenAdmin.ConsoleView
             lock (backBuffer)
             {
                 if (backGraphics != null)
-                    GraphicsUtils.copyRect(backBuffer, x, y, width, height, backGraphics, dx, dy);
+                    //GraphicsUtils.copyRect(backBuffer, x, y, width, height, backGraphics, dx, dy);
+					backGraphics.DrawImage(backBuffer, new Rectangle(dx, dy, backBuffer.Width, backBuffer.Height), x, y, backBuffer.Width, backBuffer.Height, GraphicsUnit.Display);
             }
             //GraphicsUtils.endTime("copyRectangle");
         }
@@ -1006,44 +1008,44 @@ namespace XenAdmin.ConsoleView
                 int bottom = (int)((DesktopSize.Height * scale) + top);
                 int right = (int)((DesktopSize.Width * scale) + left);
 
-                //if (e.X > left && e.X < right
-                // && e.Y > top && e.Y < bottom)
-                //{
-                //    cursorOver = true;
+                if (e.X > left && e.X < right
+                 && e.Y > top && e.Y < bottom)
+                {
+                    cursorOver = true;
 
-                //    if (RemoteCursor == null)
-                //        Cursor = LocalCursor.Cursor;
-                //    else
-                //        Cursor = RemoteCursor.Cursor;
+                    if (RemoteCursor == null)
+                        Cursor = LocalCursor.Cursor;
+                    else
+                        Cursor = RemoteCursor.Cursor;
 
-                //    lock (this.mouseEventLock)
-                //    {
-                //        if (this.mouseMoved < MOUSE_EVENTS_BEFORE_UPDATE)
-                //        {
-                //            this.mouseMoved++;
+                    lock (this.mouseEventLock)
+                    {
+                        if (this.mouseMoved < MOUSE_EVENTS_BEFORE_UPDATE)
+                        {
+                            this.mouseMoved++;
 
-                //            mouseEvent(currentMouseState, e.X, e.Y);
-                //        }
-                //        else if (this.mouseNotMoved > MOUSE_EVENTS_DROPPED)
-                //        {
-                //            this.mouseMoved = 0;
-                //            this.mouseNotMoved = 0;
-                //        }
-                //        else
-                //        {
-                //            this.mouseNotMoved++;
+                            mouseEvent(currentMouseState, e.X, e.Y);
+                        }
+                        else if (this.mouseNotMoved > MOUSE_EVENTS_DROPPED)
+                        {
+                            this.mouseMoved = 0;
+                            this.mouseNotMoved = 0;
+                        }
+                        else
+                        {
+                            this.mouseNotMoved++;
 
-                //            this.pendingState = currentMouseState;
-                //            this.pending = e;
-                //        }
-                //    }
-                //}
-                //else
-                //{
+                            this.pendingState = currentMouseState;
+                            this.pending = e;
+                        }
+                    }
+                }
+                else
+                {
                     cursorOver = false;
 
                     Cursor = Cursors.Default;
-                //}
+                }
             }
         }
 
@@ -1328,7 +1330,7 @@ namespace XenAdmin.ConsoleView
 
         public void Activate()
         {
-            this.Select();
+			this.Select();
         }
 
         public void DisconnectAndDispose()
