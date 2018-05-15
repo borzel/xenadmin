@@ -376,8 +376,12 @@ namespace XenAdmin.ConsoleView
             {
                 try
                 {
-                    if (backGraphics != null)
-                        backGraphics.DrawImageUnscaled(image, x, y);
+					if (backGraphics != null)
+					{
+						Brush b = new SolidBrush(Color.Black);
+						backGraphics.FillRectangle(b, new Rectangle(x, y, width, height));
+						backGraphics.DrawImageUnscaled(image, x, y);
+					}
                 }
                 catch (Exception e)
                 {
@@ -435,16 +439,16 @@ namespace XenAdmin.ConsoleView
 
             internal CustomCursor(Bitmap bitmap, int x, int y)
             {
-                //ICONINFO iconInfo = new ICONINFO();
-                //iconInfo.fIcon = false;
-                //iconInfo.xHotspot = x;
-                //iconInfo.yHotspot = y;
-                //iconInfo.hbmMask = bitmap.GetHbitmap();
-                //iconInfo.hbmColor = bitmap.GetHbitmap();
+				//ICONINFO iconInfo = new ICONINFO();
+				//iconInfo.fIcon = false;
+				//iconInfo.xHotspot = x;
+				//iconInfo.yHotspot = y;
+				//iconInfo.hbmMask = bitmap.GetHbitmap();
+				//iconInfo.hbmColor = bitmap.GetHbitmap();
 
-                //handle = CreateIconIndirect(ref iconInfo);
-                //cursor = new Cursor(handle);
-				cursor = Cursor.Current;
+				//handle = CreateIconIndirect(ref iconInfo);
+				//cursor = new Cursor(handle);
+				cursor = Cursors.Hand;
             }
 
             //~CustomCursor()
@@ -503,12 +507,16 @@ namespace XenAdmin.ConsoleView
 
             //GraphicsUtils.startTime();
             Damage(dx, dy, width, height);
-            lock (backBuffer)
-            {
-                if (backGraphics != null)
-                    //GraphicsUtils.copyRect(backBuffer, x, y, width, height, backGraphics, dx, dy);
+			lock (backBuffer)
+			{
+				if (backGraphics != null)
+				{
+					//GraphicsUtils.copyRect(backBuffer, x, y, width, height, backGraphics, dx, dy);
+					Brush b = new SolidBrush(Color.Black);
+					backGraphics.FillRectangle(b, new Rectangle(dx, dy, backBuffer.Width, backBuffer.Height));
 					backGraphics.DrawImage(backBuffer, new Rectangle(dx, dy, backBuffer.Width, backBuffer.Height), x, y, backBuffer.Width, backBuffer.Height, GraphicsUnit.Display);
-            }
+				}
+			}
             //GraphicsUtils.endTime("copyRectangle");
         }
 
@@ -542,8 +550,10 @@ namespace XenAdmin.ConsoleView
                 {
                     if (!damage.IsEmpty)
                     {
-                        if (frontGraphics != null)
-                            frontGraphics.DrawImage(backBuffer, damage, damage, GraphicsUnit.Pixel);
+						if (frontGraphics != null)
+						{
+							frontGraphics.DrawImage(backBuffer, damage, damage, GraphicsUnit.Pixel);
+						}
                         damage = Rectangle.Empty;
                     }
 
