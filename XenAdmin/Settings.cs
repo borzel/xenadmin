@@ -97,22 +97,22 @@ namespace XenAdmin
             if (Program.RunInAutomatedTestMode)
             {
                 Program.SkipSessionSave = true;
-                Properties.Settings.Default.SaveSession = false;
+				SettingsAbstraction.Instance.SaveSession = false;
                 return;
             }
             if (!Registry.AllowCredentialSave)
             {
                 Program.SkipSessionSave = true;
-                Properties.Settings.Default.SaveSession = false;
+				SettingsAbstraction.Instance.SaveSession = false;
                 Properties.Settings.Default.RequirePass = false;
                 RestoreSessionWithPassword(null, false);
                 return;
             }
             // Only try if the user has specified he actually wants to save sessions...
-            if (Properties.Settings.Default.SaveSession == true || Properties.Settings.Default.RequirePass)
+			if (SettingsAbstraction.Instance.SaveSession == true || Properties.Settings.Default.RequirePass)
             {
                 // Only try if we actually have a saved session list...
-                if ((Properties.Settings.Default.ServerList != null && Properties.Settings.Default.ServerList.Length > 0) || (Properties.Settings.Default.ServerAddressList != null && Properties.Settings.Default.ServerAddressList.Length > 0))
+				if ((SettingsAbstraction.Instance.ServerList != null && SettingsAbstraction.Instance.ServerList.Length > 0) || (Properties.Settings.Default.ServerAddressList != null && Properties.Settings.Default.ServerAddressList.Length > 0))
                 {
                     if (!Properties.Settings.Default.RequirePass)
                     {
@@ -145,14 +145,14 @@ namespace XenAdmin
                     if (passHash == null)
                     {
                         // an error state which can only occur on cancelled clicked
-                        Properties.Settings.Default.SaveSession = false;
+						SettingsAbstraction.Instance.SaveSession = false;
                         Properties.Settings.Default.RequirePass = true;
                         RestoreSessionWithPassword(null, false);
                     }
                     else
                     {
                         // otherwise make sure we have the correct settings
-                        Properties.Settings.Default.SaveSession = true;
+						SettingsAbstraction.Instance.SaveSession = true;
                         Properties.Settings.Default.RequirePass = true;
                     }
                     Program.SkipSessionSave = true;
@@ -162,7 +162,7 @@ namespace XenAdmin
                 {
                     // this is where the user comes in if it is the first time connecting
                     Properties.Settings.Default.RequirePass = false;
-                    Properties.Settings.Default.SaveSession = false;
+					SettingsAbstraction.Instance.SaveSession = false;
                     Program.MasterPassword = null;
                 }
             }
@@ -189,7 +189,7 @@ namespace XenAdmin
             if (useOriginalList)
             {
                 // if we are resuming without a password or have a valid password use Settings.ServerList
-                encServerList = Properties.Settings.Default.ServerList ?? new string[0];
+				encServerList = SettingsAbstraction.Instance.ServerList ?? new string[0];
             }
             else
             {
@@ -374,7 +374,7 @@ namespace XenAdmin
             if (ConnectionsManager.XenConnectionsCopy.Count == 0)
             {
                 // Ensure the list is empty in the serialized settings file...
-                Properties.Settings.Default.ServerList = new string[0];
+				SettingsAbstraction.Instance.ServerList = new string[0];
                 Properties.Settings.Default.ServerAddressList = new string[0];
                 TrySaveSettings();
                 return;
@@ -402,7 +402,8 @@ namespace XenAdmin
         {
             try
             {
-				Properties.Settings.Default.Save();            
+				//Properties.Settings.Default.Save();
+				SettingsAbstraction.Save();
             }
             catch (ConfigurationErrorsException ex)
             {
@@ -439,7 +440,7 @@ namespace XenAdmin
                     if (port <= 0)
                         port = ConnectionsManager.DEFAULT_XEN_PORT;
 
-                    if (Properties.Settings.Default.SaveSession)
+					if (SettingsAbstraction.Instance.SaveSession)
                     {
                         encServerList.Add(EncryptCredentials(connection.Hostname, port, connection.Username, connection.Password,
                             !connection.IsConnected, connection.FriendlyName, connection.PoolMembers));
@@ -450,7 +451,7 @@ namespace XenAdmin
                     encServerAddressList.Add(entryAddress);
                 }
 
-                if (Properties.Settings.Default.SaveSession)
+				if (SettingsAbstraction.Instance.SaveSession)
                 {
                     foreach (string vm_uuid in VNCPasswords.Keys)
                     {
@@ -460,8 +461,8 @@ namespace XenAdmin
                     }
                 }
 
-                if (Properties.Settings.Default.SaveSession)
-                    Properties.Settings.Default.ServerList = encServerList.ToArray();
+				if (SettingsAbstraction.Instance.SaveSession)
+					SettingsAbstraction.Instance.ServerList = encServerList.ToArray();
                 Properties.Settings.Default.ServerAddressList = encServerAddressList.ToArray();
             }
             catch (Exception exp)
@@ -506,7 +507,7 @@ namespace XenAdmin
             AutoCompleteStringCollection history = null;
             try
             {
-                history = Properties.Settings.Default.ServerHistory;
+				history = SettingsAbstraction.Instance.ServerHistory;
             }
             catch
             {
@@ -515,7 +516,7 @@ namespace XenAdmin
 
             if (history == null)
             {
-                history = Properties.Settings.Default.ServerHistory = new AutoCompleteStringCollection();
+				history = SettingsAbstraction.Instance.ServerHistory = new AutoCompleteStringCollection();
             }
 
             return history;
@@ -529,7 +530,7 @@ namespace XenAdmin
                 while (history.Count >= 20)
                     history.RemoveAt(0);
                 history.Add(hostnameWithPort);
-                Properties.Settings.Default.ServerHistory = history;
+				SettingsAbstraction.Instance.ServerHistory = history;
                 TrySaveSettings();
             }
         }

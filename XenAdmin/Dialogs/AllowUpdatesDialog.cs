@@ -48,7 +48,7 @@ namespace XenAdmin.Dialogs
 
         private void SetAllowUpdates(bool value)
         {
-            Properties.Settings.Default.AllowXenCenterUpdates = value;
+			SettingsAbstraction.Instance.AllowXenCenterUpdates = value;
             Properties.Settings.Default.AllowPatchesUpdates = value;
             Properties.Settings.Default.AllowXenServerUpdates = value;
         }

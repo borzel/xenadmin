@@ -666,10 +666,10 @@ namespace XenAdmin.TabPages
         private bool SomeButNotAllUpdatesDisabled()
         {
             return (!Properties.Settings.Default.AllowPatchesUpdates ||
-                    !Properties.Settings.Default.AllowXenCenterUpdates ||
+			        !SettingsAbstraction.Instance.AllowXenCenterUpdates ||
                     !Properties.Settings.Default.AllowXenServerUpdates) &&
                     (Properties.Settings.Default.AllowPatchesUpdates ||
-                    Properties.Settings.Default.AllowXenCenterUpdates ||
+				     SettingsAbstraction.Instance.AllowXenCenterUpdates ||
                     Properties.Settings.Default.AllowXenServerUpdates);
         }
 
@@ -680,7 +680,7 @@ namespace XenAdmin.TabPages
         private bool AllUpdatesDisabled()
         {
             return (!Properties.Settings.Default.AllowPatchesUpdates &&
-                   !Properties.Settings.Default.AllowXenCenterUpdates &&
+			        !SettingsAbstraction.Instance.AllowXenCenterUpdates &&
                    !Properties.Settings.Default.AllowXenServerUpdates);
         }
 

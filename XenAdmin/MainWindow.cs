@@ -569,7 +569,8 @@ namespace XenAdmin
                 Application.Exit();
                 return; // Application.Exit() does not exit the current method.
             }
-            ToolbarsEnabled = Properties.Settings.Default.ToolbarsEnabled;
+			//ToolbarsEnabled = Properties.Settings.Default.ToolbarsEnabled;
+			ToolbarsEnabled = SettingsAbstraction.Instance.ToolbarsEnabled;
             RequestRefreshTreeView();
             UpdateToolbars();
 
@@ -3172,7 +3173,8 @@ namespace XenAdmin
         private void ShowToolbarMenuItem_Click(object sender, EventArgs e)
         {
             ToolbarsEnabled = !ToolbarsEnabled;
-            Properties.Settings.Default.ToolbarsEnabled = ToolbarsEnabled;
+			//Properties.Settings.Default.ToolbarsEnabled = ToolbarsEnabled;
+			SettingsAbstraction.Instance.ToolbarsEnabled = ToolbarsEnabled;
             UpdateToolbars();
         }
 

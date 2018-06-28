@@ -87,7 +87,7 @@ namespace XenAdmin
                 return;
             }
 
-            if (!Registry.AllowCredentialSave || !Properties.Settings.Default.SaveSession)
+			if (!Registry.AllowCredentialSave || !SettingsAbstraction.Instance.SaveSession)
             {
                 WriteXML(destdir, null, "nosession");
                 return;
@@ -212,7 +212,7 @@ namespace XenAdmin
             try
             {
                 Settings.RestoreSession();
-                restored = Properties.Settings.Default.SaveSession;
+				restored = SettingsAbstraction.Instance.SaveSession;
             }
             catch (ConfigurationErrorsException ex)
             {

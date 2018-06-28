@@ -194,12 +194,12 @@ namespace XenAdmin.Core
             if (Helpers.CommonCriteriaCertificationRelease)
                 return;
 
-            if (Properties.Settings.Default.AllowXenCenterUpdates ||
+			if (SettingsAbstraction.Instance.AllowXenCenterUpdates ||
                 Properties.Settings.Default.AllowXenServerUpdates ||
                 Properties.Settings.Default.AllowPatchesUpdates || force || forceRefresh)
             {
                 var action = CreateDownloadUpdatesXmlAction(
-                    Properties.Settings.Default.AllowXenCenterUpdates || force,
+					SettingsAbstraction.Instance.AllowXenCenterUpdates || force,
                     Properties.Settings.Default.AllowXenServerUpdates || force,
                     Properties.Settings.Default.AllowPatchesUpdates || force,
                     Updates.CheckForUpdatesUrl);

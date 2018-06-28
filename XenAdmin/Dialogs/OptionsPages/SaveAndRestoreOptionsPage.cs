@@ -66,7 +66,7 @@ namespace XenAdmin.Dialogs.OptionsPages
         public static void Log()
         {
             // SSL Certificates
-            log.Info("=== SaveSession: " + Properties.Settings.Default.SaveSession.ToString());
+			log.Info("=== SaveSession: " + SettingsAbstraction.Instance.SaveSession.ToString());
             log.Info("=== RequirePass: " + Properties.Settings.Default.RequirePass.ToString());
         }
 
@@ -80,7 +80,7 @@ namespace XenAdmin.Dialogs.OptionsPages
             if (!saveStateCheckBox.Checked)
             {
                 // save nothing and nobody (personally my two favourite servers anyway...)
-                Properties.Settings.Default.SaveSession = false;
+				SettingsAbstraction.Instance.SaveSession = false;
                 Properties.Settings.Default.RequirePass = false;
 
                 Program.MasterPassword = null;
@@ -88,7 +88,7 @@ namespace XenAdmin.Dialogs.OptionsPages
             else if (!requireMasterPasswordCheckBox.Checked)
             {
                 // we need to save stuff but without a password
-                Properties.Settings.Default.SaveSession = true;
+				SettingsAbstraction.Instance.SaveSession = true;
                 Properties.Settings.Default.RequirePass = false;
 
                 Program.MasterPassword = null;
@@ -96,7 +96,7 @@ namespace XenAdmin.Dialogs.OptionsPages
             else
             {
                 // password protect stuff
-                Properties.Settings.Default.SaveSession = true;
+				SettingsAbstraction.Instance.SaveSession = true;
                 Properties.Settings.Default.RequirePass = true;
 
                 // set password
@@ -206,7 +206,7 @@ namespace XenAdmin.Dialogs.OptionsPages
         private void FillCurrentSettings()
         {
             bool allowCredSave = Registry.AllowCredentialSave;
-            bool saveSession = Properties.Settings.Default.SaveSession;
+			bool saveSession = SettingsAbstraction.Instance.SaveSession;
             bool reqPass = Properties.Settings.Default.RequirePass;
 
             saveStateLabel.Enabled = allowCredSave;

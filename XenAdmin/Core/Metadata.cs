@@ -134,7 +134,7 @@ namespace XenAdmin.Core
                 {
                     CFU = new CFU
                     {
-                        AllowXenCenterUpdates = Properties.Settings.Default.AllowXenCenterUpdates,
+						AllowXenCenterUpdates = SettingsAbstraction.Instance.AllowXenCenterUpdates,
                         AllowPatchesUpdates = Properties.Settings.Default.AllowPatchesUpdates,
                         AllowXenServerUpdates = Properties.Settings.Default.AllowXenServerUpdates
                     },
@@ -148,7 +148,7 @@ namespace XenAdmin.Core
                     },
                     SaveAndRestore = new SaveAndRestore
                     {
-                        SaveSessionCredentials = Properties.Settings.Default.SaveSession,
+						SaveSessionCredentials = SettingsAbstraction.Instance.SaveSession,
                         RequireMasterPassword = Properties.Settings.Default.RequirePass
                     },
                     HelpLastUsed = Properties.Settings.Default.HelpLastUsed

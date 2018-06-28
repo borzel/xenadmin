@@ -56,7 +56,7 @@ namespace XenAdmin.Dialogs.OptionsPages
         private void build()
         {
             // XenCenter updates
-            AllowXenCenterUpdatesCheckBox.Checked = Properties.Settings.Default.AllowXenCenterUpdates;
+			AllowXenCenterUpdatesCheckBox.Checked = SettingsAbstraction.Instance.AllowXenCenterUpdates;
 
             // XenServer updates
             AllowXenServerPatchesCheckBox.Checked = Properties.Settings.Default.AllowPatchesUpdates;
@@ -66,7 +66,7 @@ namespace XenAdmin.Dialogs.OptionsPages
         public static void Log()
         {
             // XenCenter updates
-            log.Info("=== AllowXenCenterUpdates: " + Properties.Settings.Default.AllowXenCenterUpdates.ToString());
+			log.Info("=== AllowXenCenterUpdates: " + SettingsAbstraction.Instance.AllowXenCenterUpdates.ToString());
 
             // XenServer updates
             log.Info("=== AllowPatchesUpdates: " + Properties.Settings.Default.AllowPatchesUpdates.ToString());
@@ -80,8 +80,8 @@ namespace XenAdmin.Dialogs.OptionsPages
             bool refreshUpdatesTab = IsCheckForUpdatesRequired();
 
             // XenCenter updates
-            if (AllowXenCenterUpdatesCheckBox.Checked != Properties.Settings.Default.AllowXenCenterUpdates)
-                Properties.Settings.Default.AllowXenCenterUpdates = AllowXenCenterUpdatesCheckBox.Checked;
+			if (AllowXenCenterUpdatesCheckBox.Checked != SettingsAbstraction.Instance.AllowXenCenterUpdates)
+				SettingsAbstraction.Instance.AllowXenCenterUpdates = AllowXenCenterUpdatesCheckBox.Checked;
 
             // XenServer updates
             if (AllowXenServerPatchesCheckBox.Checked != Properties.Settings.Default.AllowPatchesUpdates)
@@ -101,7 +101,7 @@ namespace XenAdmin.Dialogs.OptionsPages
         /// <returns></returns>
         private bool IsCheckForUpdatesRequired()
         {
-            return (AllowXenCenterUpdatesCheckBox.Checked != Properties.Settings.Default.AllowXenCenterUpdates) ||
+			return (AllowXenCenterUpdatesCheckBox.Checked != SettingsAbstraction.Instance.AllowXenCenterUpdates) ||
                    (AllowXenServerPatchesCheckBox.Checked != Properties.Settings.Default.AllowPatchesUpdates) ||
                    (AllowXenServerUpdatesCheckBox.Checked != Properties.Settings.Default.AllowXenServerUpdates);
         }
