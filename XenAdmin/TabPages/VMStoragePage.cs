@@ -214,7 +214,7 @@ namespace XenAdmin.TabPages
                     if (!vbd.IsCDROM() && !vbd.IsFloppyDrive())
                     {
                         VDI vdi = vm.Connection.Resolve(vbd.VDI);
-                        if (vdi == null || !vdi.Show(Properties.Settings.Default.ShowHiddenVMs))
+                        if (vdi == null || !vdi.Show(SettingsAbstraction.Instance.ShowHiddenVMs))
                             continue;
 
                         SR sr = vm.Connection.Resolve(vdi.SR);

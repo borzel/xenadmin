@@ -94,7 +94,7 @@ namespace XenAdmin.Plugins
             LoadAll(node);
 
             // this will initialize the features
-            Enabled = Settings.IsPluginEnabled(Name, Organization) && Properties.Settings.Default.LoadPlugins;
+            Enabled = Settings.IsPluginEnabled(Name, Organization) && SettingsAbstraction.Instance.LoadPlugins;
 
             ValidateAll();
             

@@ -162,7 +162,7 @@ namespace XenAdmin.TabPages
                         if (pif.host.opaque_ref != _host.opaque_ref)
                             continue;
 
-                        if (pif.IsManagementInterface(XenAdmin.Properties.Settings.Default.ShowHiddenVMs))
+                        if (pif.IsManagementInterface(XenAdmin.SettingsAbstraction.Instance.ShowHiddenVMs))
                             rows.Add(new PIFRow(_host, pif));
                     }
                 }            

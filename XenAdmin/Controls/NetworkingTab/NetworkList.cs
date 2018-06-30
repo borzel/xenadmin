@@ -55,6 +55,7 @@ namespace XenAdmin.Controls.NetworkingTab
 		public NetworkList()
 		{
 			InitializeComponent();
+			// TODO: Properties.Settings.Default
 			Properties.Settings.Default.PropertyChanged += Default_PropertyChanged;
 		}
 
@@ -299,7 +300,7 @@ namespace XenAdmin.Controls.NetworkingTab
 						var network = vif.Connection.Resolve(vif.network);
 						if (network != null &&
 							// CA-218956 - Expose HIMN when showing hidden objects
-							(network.IsGuestInstallerNetwork() && !XenAdmin.Properties.Settings.Default.ShowHiddenVMs))
+							(network.IsGuestInstallerNetwork() && !XenAdmin.SettingsAbstraction.Instance.ShowHiddenVMs))
 							continue;   // Don't show the guest installer network in the network tab (CA-73056)
 						vifRowsToAdd.Add(new VifRow(vif));
 					}
@@ -339,7 +340,7 @@ namespace XenAdmin.Controls.NetworkingTab
 					List<NetworkRow> networkRowsToAdd = new List<NetworkRow>();
 					for (int i = 0; i < networks.Length; i++)
 					{
-						if (!networks[i].Show(XenAdmin.Properties.Settings.Default.ShowHiddenVMs))
+						if (!networks[i].Show(XenAdmin.SettingsAbstraction.Instance.ShowHiddenVMs))
 							continue;
 						networkRowsToAdd.Add(new NetworkRow(networks[i], XenObject));
 					}
@@ -352,7 +353,7 @@ namespace XenAdmin.Controls.NetworkingTab
 					{
 						foreach (NetworkRow row in NetworksGridView.Rows)
 						{
-							if (row.Network.opaque_ref == selectedNetwork.opaque_ref && selectedNetwork.Show(XenAdmin.Properties.Settings.Default.ShowHiddenVMs))
+							if (row.Network.opaque_ref == selectedNetwork.opaque_ref && selectedNetwork.Show(XenAdmin.SettingsAbstraction.Instance.ShowHiddenVMs))
 							{
 								row.Selected = true;
 								break;
@@ -962,11 +963,11 @@ namespace XenAdmin.Controls.NetworkingTab
 			private object NetworkName()
 			{
 				bool isSlave = Network.IsSlave();
-				if (Network.Show(XenAdmin.Properties.Settings.Default.ShowHiddenVMs) && !isSlave)
+				if (Network.Show(XenAdmin.SettingsAbstraction.Instance.ShowHiddenVMs) && !isSlave)
 					return Helpers.GetName(Network);
-				else if (isSlave && Properties.Settings.Default.ShowHiddenVMs)
+				else if (isSlave && SettingsAbstraction.Instance.ShowHiddenVMs)
 					return string.Format(Messages.NIC_SLAVE, Helpers.GetName(Network));
-				else if (Properties.Settings.Default.ShowHiddenVMs)
+				else if (SettingsAbstraction.Instance.ShowHiddenVMs)
 					return string.Format(Messages.NIC_HIDDEN, Helpers.GetName(Network));
 				else
 					return string.Empty;

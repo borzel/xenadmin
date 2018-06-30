@@ -85,7 +85,7 @@ namespace XenAdmin.Network
                     {
                         return true;
                     }
-                    else if (!XenAdmin.Properties.Settings.Default.WarnChangedCertificate && Registry.AlwaysShowSSLCertificates == SSLCertificateTypes.None)
+                    else if (!XenAdmin.SettingsAbstraction.Instance.WarnChangedCertificate && Registry.AlwaysShowSSLCertificates == SSLCertificateTypes.None)
                     {
                         Settings.ReplaceCertificate(kvp.Key, certificate);
                         log.Debug("Updating cert silently");
@@ -107,7 +107,7 @@ namespace XenAdmin.Network
                     }
                 }
 
-                if (!XenAdmin.Properties.Settings.Default.WarnUnrecognizedCertificate && Registry.AlwaysShowSSLCertificates != SSLCertificateTypes.All)
+                if (!XenAdmin.SettingsAbstraction.Instance.WarnUnrecognizedCertificate && Registry.AlwaysShowSSLCertificates != SSLCertificateTypes.All)
                 {
                     // user has chosen to ignore new certificates
                     Settings.AddCertificate(certificate, webreq.Address.Host);

@@ -163,7 +163,7 @@ namespace XenAdmin.ConsoleView
 
                 undockedForm.Show();
 
-                if(Properties.Settings.Default.PreserveScaleWhenUndocked)
+                if(SettingsAbstraction.Instance.PreserveScaleWhenUndocked)
                     vncTabView.IsScaled = oldScaledSetting;
 
                 this.reattachConsoleButton.Show();
@@ -175,7 +175,7 @@ namespace XenAdmin.ConsoleView
                 this.oldUndockedLocation = undockedForm.Location;
                 this.oldUndockedSize = undockedForm.Size;
                 
-                if (!Properties.Settings.Default.PreserveScaleWhenUndocked)
+                if (!SettingsAbstraction.Instance.PreserveScaleWhenUndocked)
                     vncTabView.IsScaled = oldScaledSetting;
 
                 this.reattachConsoleButton.Hide();

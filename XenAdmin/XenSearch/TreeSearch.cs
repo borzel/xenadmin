@@ -47,7 +47,7 @@ namespace XenAdmin.XenSearch
 
         public static void InitSearch()
         {
-            defaultTreeSearch = SearchMarshalling.LoadSearch(Properties.Settings.Default.DefaultSearch);
+            defaultTreeSearch = SearchMarshalling.LoadSearch(SettingsAbstraction.Instance.DefaultSearch);
         }
 
         internal static Search SearchFor(IXenObject value)
@@ -61,13 +61,13 @@ namespace XenAdmin.XenSearch
 
             types |= ObjectTypes.Pool;  // They appear as groups anyway without this: but needed because of CA-28021
 
-            if (Properties.Settings.Default.DefaultTemplatesVisible)
+            if (SettingsAbstraction.Instance.DefaultTemplatesVisible)
                 types |= ObjectTypes.DefaultTemplate;
 
-            if (Properties.Settings.Default.UserTemplatesVisible)
+            if (SettingsAbstraction.Instance.UserTemplatesVisible)
                 types |= ObjectTypes.UserTemplate;
 
-            if (Properties.Settings.Default.LocalSRsVisible)
+            if (SettingsAbstraction.Instance.LocalSRsVisible)
                 types |= ObjectTypes.LocalSR;
 
             return new QueryScope(types);

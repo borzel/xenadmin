@@ -338,7 +338,7 @@ namespace XenAdmin.TabPages
         {
             if (ConnectionsManager.History.Count > 0)
             {
-                if (!Program.RunInAutomatedTestMode && !Properties.Settings.Default.DoNotConfirmDismissEvents)
+                if (!Program.RunInAutomatedTestMode && !SettingsAbstraction.Instance.DoNotConfirmDismissEvents)
                 {
                     using (var dlg = new ThreeButtonDialog(
                         new ThreeButtonDialog.Details(null, Messages.MESSAGEBOX_LOG_DELETE),
@@ -350,7 +350,7 @@ namespace XenAdmin.TabPages
                     })
                     {
                         var result = dlg.ShowDialog(this);
-                        Properties.Settings.Default.DoNotConfirmDismissEvents = dlg.IsCheckBoxChecked;
+                        SettingsAbstraction.Instance.DoNotConfirmDismissEvents = dlg.IsCheckBoxChecked;
                         Settings.TrySaveSettings();
 
                         if (result != DialogResult.Yes)
@@ -416,7 +416,7 @@ namespace XenAdmin.TabPages
                         result = dlog.ShowDialog(this);
                     }
                 }
-                else if (!Properties.Settings.Default.DoNotConfirmDismissEvents)
+                else if (!SettingsAbstraction.Instance.DoNotConfirmDismissEvents)
                 {
                     using (var dlog = new ThreeButtonDialog(
                         new ThreeButtonDialog.Details(null, Messages.MESSAGEBOX_LOGS_DELETE_NO_FILTER),
@@ -428,7 +428,7 @@ namespace XenAdmin.TabPages
                     })
                     {
                         result = dlog.ShowDialog(this);
-                        Properties.Settings.Default.DoNotConfirmDismissEvents = dlog.IsCheckBoxChecked;
+                        SettingsAbstraction.Instance.DoNotConfirmDismissEvents = dlog.IsCheckBoxChecked;
                         Settings.TrySaveSettings();
                     }
                 }
@@ -446,7 +446,7 @@ namespace XenAdmin.TabPages
 
         private void tsmiDismissSelected_Click(object sender, EventArgs e)
         {
-            if (!Properties.Settings.Default.DoNotConfirmDismissEvents)
+            if (!SettingsAbstraction.Instance.DoNotConfirmDismissEvents)
             {
                 using (var dlog = new ThreeButtonDialog(
                     new ThreeButtonDialog.Details(null, Messages.MESSAGEBOX_LOGS_DELETE_SELECTED),
@@ -457,7 +457,7 @@ namespace XenAdmin.TabPages
                 })
                 {
                     var result = dlog.ShowDialog(this);
-                    Properties.Settings.Default.DoNotConfirmDismissEvents = dlog.IsCheckBoxChecked;
+                    SettingsAbstraction.Instance.DoNotConfirmDismissEvents = dlog.IsCheckBoxChecked;
                     Settings.TrySaveSettings();
 
                     if (result != DialogResult.Yes)

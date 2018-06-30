@@ -121,7 +121,7 @@ namespace XenAdmin.Controls
 
         private bool SrIsSuitableForPvsCache(SR sr)
         {
-            return sr.Show(Properties.Settings.Default.ShowHiddenVMs) && sr.SupportsVdiCreate() && sr.FreeSpace() >= MIN_CACHE_SIZE_GB * Util.BINARY_GIGA;
+            return sr.Show(SettingsAbstraction.Instance.ShowHiddenVMs) && sr.SupportsVdiCreate() && sr.FreeSpace() >= MIN_CACHE_SIZE_GB * Util.BINARY_GIGA;
         }
 
         private void SetupCacheSizeSpinner(decimal value, decimal min, decimal max)

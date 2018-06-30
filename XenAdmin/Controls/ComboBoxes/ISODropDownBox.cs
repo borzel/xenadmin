@@ -172,7 +172,7 @@ namespace XenAdmin.Controls
                     continue;
 
                 VDI iso = vdiNameWrapper.item;
-                if (iso == null || !iso.Show(Properties.Settings.Default.ShowHiddenVMs))
+                if (iso == null || !iso.Show(SettingsAbstraction.Instance.ShowHiddenVMs))
                     continue;
 
                 if (iso == selectedCD)

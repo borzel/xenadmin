@@ -125,7 +125,7 @@ namespace XenAdmin.TabPages
 
         private bool VMWanted(VM vm, Host host)
         {
-            return vm.is_a_real_vm() && vm.Show(Properties.Settings.Default.ShowHiddenVMs) && vm.Home() == host;
+            return vm.is_a_real_vm() && vm.Show(SettingsAbstraction.Instance.ShowHiddenVMs) && vm.Home() == host;
         }
 
         private readonly CollectionChangeEventHandler VM_CollectionChangedWithInvoke;

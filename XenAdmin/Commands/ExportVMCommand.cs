@@ -127,7 +127,7 @@ namespace XenAdmin.Commands
                     else
                     {
                         ulong freeSpace = diskSpaceInfo.FreeBytesAvailable;
-                        decimal neededSpace = vm.GetRecommendedExportSpace(Properties.Settings.Default.ShowHiddenVMs);
+                        decimal neededSpace = vm.GetRecommendedExportSpace(SettingsAbstraction.Instance.ShowHiddenVMs);
                         ulong spaceLeft = 100 * Util.BINARY_MEGA; // We want the user to be left with some disk space afterwards
                         if (neededSpace >= freeSpace - spaceLeft)
                         {

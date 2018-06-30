@@ -276,7 +276,7 @@ namespace XenAdmin.TabPages
                 {
                     SR sr = pbd.Connection.Resolve(pbd.SR);
 
-                    if (sr == null || sr.IsToolsSR() || !sr.Show(Properties.Settings.Default.ShowHiddenVMs))
+                    if (sr == null || sr.IsToolsSR() || !sr.Show(SettingsAbstraction.Instance.ShowHiddenVMs))
                         continue;
 
                     // From MSDN:

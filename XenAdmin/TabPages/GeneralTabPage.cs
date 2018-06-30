@@ -593,7 +593,7 @@ namespace XenAdmin.TabPages
 
             foreach (PIF pif in xenObject.Connection.ResolveAll<PIF>(Host.PIFs))
             {
-                if (pif.IsSecondaryManagementInterface(Properties.Settings.Default.ShowHiddenVMs))
+                if (pif.IsSecondaryManagementInterface(SettingsAbstraction.Instance.ShowHiddenVMs))
                 {
                     if (!includeHostSuffix)
                         s.AddEntry(pif.GetManagementPurpose().Ellipsise(30), pif.FriendlyIPAddress(), editValue);

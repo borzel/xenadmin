@@ -64,7 +64,7 @@ namespace XenAdmin.TabPages
 
             ConnectionsManager.History.CollectionChanged += History_CollectionChanged;
             base.Text = Messages.VIRTUAL_DISKS;
-            Properties.Settings.Default.PropertyChanged += Default_PropertyChanged;
+			Properties.Settings.Default.PropertyChanged += Default_PropertyChanged;
             dataGridViewBuilder = new VDIsDataGridViewBuilder(this);
         }
 
@@ -82,7 +82,7 @@ namespace XenAdmin.TabPages
                 SR = null;
 
                 ConnectionsManager.History.CollectionChanged -= History_CollectionChanged;
-                Properties.Settings.Default.PropertyChanged -= Default_PropertyChanged;
+				Properties.Settings.Default.PropertyChanged -= Default_PropertyChanged;
 
                 if (disposing)
                 {
@@ -213,7 +213,7 @@ namespace XenAdmin.TabPages
         private void UnregisterHandlers()
         {
             ConnectionsManager.History.CollectionChanged -= History_CollectionChanged;
-            Properties.Settings.Default.PropertyChanged -= Default_PropertyChanged;
+			Properties.Settings.Default.PropertyChanged -= Default_PropertyChanged;
 
             if (sr != null)
             {
@@ -702,7 +702,7 @@ namespace XenAdmin.TabPages
                 List<VDI> vdis =
                         sr.Connection.ResolveAll(sr.VDIs).Where(
                             vdi =>
-                            vdi.Show(Properties.Settings.Default.ShowHiddenVMs) &&
+                            vdi.Show(SettingsAbstraction.Instance.ShowHiddenVMs) &&
                             !vdi.IsAnIntermediateStorageMotionSnapshot())
                             .ToList();
 

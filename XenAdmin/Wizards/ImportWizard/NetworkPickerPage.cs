@@ -255,7 +255,7 @@ namespace XenAdmin.Wizards.ImportWizard
 		/// </summary>
 		private bool ShowNetwork(XenAPI.Network network)
 		{
-			if (!network.Show(Properties.Settings.Default.ShowHiddenVMs))
+			if (!network.Show(SettingsAbstraction.Instance.ShowHiddenVMs))
 				return false;
 
 			if (network.IsSlave())
@@ -296,7 +296,7 @@ namespace XenAdmin.Wizards.ImportWizard
             // CA-73056: A row for the guest installer network shouldn't show up. But we still need
             // it present but invisible, otherwise the corresponding VIF doesn't get created at all.
             // CA-218956 - Expose HIMN when showing hidden objects
-            if (isGuestInstallerNetwork && !XenAdmin.Properties.Settings.Default.ShowHiddenVMs)
+            if (isGuestInstallerNetwork && !XenAdmin.SettingsAbstraction.Instance.ShowHiddenVMs)
                 row.Visible = false;
 
 			m_networkGridView.Rows.Add(row);

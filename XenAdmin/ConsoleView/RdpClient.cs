@@ -143,20 +143,20 @@ namespace XenAdmin.ConsoleView
 
             if (rdpClient9 == null)
             {
-                rdpClient6.SecuredSettings2.KeyboardHookMode = Properties.Settings.Default.WindowsShortcuts ? 1 : 0;
-                rdpClient6.SecuredSettings2.AudioRedirectionMode = Properties.Settings.Default.ReceiveSoundFromRDP ? 0 : 1;
-                rdpClient6.AdvancedSettings3.DisableRdpdr = Properties.Settings.Default.ClipboardAndPrinterRedirection ? 0 : 1;
-                rdpClient6.AdvancedSettings7.ConnectToAdministerServer = Properties.Settings.Default.ConnectToServerConsole;
+                rdpClient6.SecuredSettings2.KeyboardHookMode = SettingsAbstraction.Instance.WindowsShortcuts ? 1 : 0;
+                rdpClient6.SecuredSettings2.AudioRedirectionMode = SettingsAbstraction.Instance.ReceiveSoundFromRDP ? 0 : 1;
+                rdpClient6.AdvancedSettings3.DisableRdpdr = SettingsAbstraction.Instance.ClipboardAndPrinterRedirection ? 0 : 1;
+                rdpClient6.AdvancedSettings7.ConnectToAdministerServer = SettingsAbstraction.Instance.ConnectToServerConsole;
                 //CA-103910 - enable NLA 
                 rdpClient6.AdvancedSettings5.AuthenticationLevel = 2;
                 rdpClient6.AdvancedSettings7.EnableCredSspSupport = true;
             }
             else
             {
-                rdpClient9.SecuredSettings2.KeyboardHookMode = Properties.Settings.Default.WindowsShortcuts ? 1 : 0;
-                rdpClient9.SecuredSettings2.AudioRedirectionMode = Properties.Settings.Default.ReceiveSoundFromRDP ? 0 : 1;
-                rdpClient9.AdvancedSettings3.DisableRdpdr = Properties.Settings.Default.ClipboardAndPrinterRedirection ? 0 : 1;
-                rdpClient9.AdvancedSettings7.ConnectToAdministerServer = Properties.Settings.Default.ConnectToServerConsole;
+                rdpClient9.SecuredSettings2.KeyboardHookMode = SettingsAbstraction.Instance.WindowsShortcuts ? 1 : 0;
+                rdpClient9.SecuredSettings2.AudioRedirectionMode = SettingsAbstraction.Instance.ReceiveSoundFromRDP ? 0 : 1;
+                rdpClient9.AdvancedSettings3.DisableRdpdr = SettingsAbstraction.Instance.ClipboardAndPrinterRedirection ? 0 : 1;
+                rdpClient9.AdvancedSettings7.ConnectToAdministerServer = SettingsAbstraction.Instance.ConnectToServerConsole;
                 //CA-103910 - enable NLA
                 rdpClient9.AdvancedSettings5.AuthenticationLevel = 2;
                 rdpClient9.AdvancedSettings7.EnableCredSspSupport = true;

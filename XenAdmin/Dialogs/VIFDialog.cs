@@ -1,4 +1,4 @@
-/* Copyright (c) Citrix Systems, Inc. 
+﻿/* Copyright (c) Citrix Systems, Inc. 
  * All rights reserved. 
  * 
  * Redistribution and use in source and binary forms, 
@@ -206,7 +206,7 @@ namespace XenAdmin.Dialogs
             networks.Sort();
             foreach (XenAPI.Network network in networks)
             {
-                if (!network.Show(Properties.Settings.Default.ShowHiddenVMs) || network.IsSlave())
+                if (!network.Show(SettingsAbstraction.Instance.ShowHiddenVMs) || network.IsSlave())
                     continue;
 
                 comboBoxNetwork.Items.Add(new NetworkComboBoxItem(network));

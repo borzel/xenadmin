@@ -436,7 +436,7 @@ namespace XenAdmin.SettingsPanels
 
 			Repopulate();
 			haNtolIndicator.Connection = vm.Connection;
-			haNtolIndicator.Settings = Helpers.GetVmHaRestartPriorities(vm.Connection, Properties.Settings.Default.ShowHiddenVMs);
+			haNtolIndicator.Settings = Helpers.GetVmHaRestartPriorities(vm.Connection, SettingsAbstraction.Instance.ShowHiddenVMs);
 			haNtolIndicator.UpdateInProgressChanged += new EventHandler(haNtolIndicator_UpdateInProgressChanged);
 
 			// Put property changed listener on pool, disable edits if HA becomes disabled
@@ -578,7 +578,7 @@ namespace XenAdmin.SettingsPanels
 
             comboLabel.Text = Helpers.RestartPriorityDescription(SelectedPriority);
 
-			var settings = Helpers.GetVmHaRestartPriorities(vm.Connection, Properties.Settings.Default.ShowHiddenVMs);
+			var settings = Helpers.GetVmHaRestartPriorities(vm.Connection, SettingsAbstraction.Instance.ShowHiddenVMs);
 			// Supplement with the changed setting
             settings[vm] = SelectedPriority;
 

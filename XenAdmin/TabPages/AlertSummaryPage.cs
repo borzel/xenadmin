@@ -491,7 +491,7 @@ namespace XenAdmin.TabPages
             if (alert == null)
                 return;
 
-            if (!Properties.Settings.Default.DoNotConfirmDismissAlerts)
+            if (!SettingsAbstraction.Instance.DoNotConfirmDismissAlerts)
             {
                 using (var dlog = new ThreeButtonDialog(
                     new ThreeButtonDialog.Details(null, Messages.ALERT_DISMISS_CONFIRM, Messages.XENCENTER),
@@ -503,7 +503,7 @@ namespace XenAdmin.TabPages
                 })
                 {
                     var result = dlog.ShowDialog(this);
-                    Properties.Settings.Default.DoNotConfirmDismissAlerts = dlog.IsCheckBoxChecked;
+                    SettingsAbstraction.Instance.DoNotConfirmDismissAlerts = dlog.IsCheckBoxChecked;
                     Settings.TrySaveSettings();
 
                     if (result != DialogResult.Yes)
@@ -529,7 +529,7 @@ namespace XenAdmin.TabPages
                     result = dlog.ShowDialog(this);
                 }
             }
-            else if (!Properties.Settings.Default.DoNotConfirmDismissAlerts)
+            else if (!SettingsAbstraction.Instance.DoNotConfirmDismissAlerts)
             {
                 using (var dlog = new ThreeButtonDialog(
                     new ThreeButtonDialog.Details(null, Messages.ALERT_DISMISS_ALL_NO_FILTER_CONTINUE),
@@ -541,7 +541,7 @@ namespace XenAdmin.TabPages
                 })
                 {
                     result = dlog.ShowDialog(this);
-                    Properties.Settings.Default.DoNotConfirmDismissAlerts = dlog.IsCheckBoxChecked;
+                    SettingsAbstraction.Instance.DoNotConfirmDismissAlerts = dlog.IsCheckBoxChecked;
                     Settings.TrySaveSettings();
                 }
             }
@@ -558,7 +558,7 @@ namespace XenAdmin.TabPages
 
         private void tsmiDismissSelected_Click(object sender, EventArgs e)
         {
-            if (!Properties.Settings.Default.DoNotConfirmDismissAlerts)
+            if (!SettingsAbstraction.Instance.DoNotConfirmDismissAlerts)
             {
                 using (var dlog = new ThreeButtonDialog(
                     new ThreeButtonDialog.Details(null, Messages.ALERT_DISMISS_SELECTED_CONFIRM, Messages.XENCENTER),
@@ -569,7 +569,7 @@ namespace XenAdmin.TabPages
                 })
                 {
                     var result = dlog.ShowDialog(this);
-                    Properties.Settings.Default.DoNotConfirmDismissAlerts = dlog.IsCheckBoxChecked;
+                    SettingsAbstraction.Instance.DoNotConfirmDismissAlerts = dlog.IsCheckBoxChecked;
                     Settings.TrySaveSettings();
 
                     if (result != DialogResult.Yes)

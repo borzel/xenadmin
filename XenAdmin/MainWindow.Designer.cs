@@ -1,4 +1,4 @@
-using XenAdmin.Alerts;
+﻿using XenAdmin.Alerts;
 using XenAdmin.Network;
 using XenAdmin.Commands;
 using XenAdmin.Controls;
@@ -35,7 +35,7 @@ namespace XenAdmin
             Alert.DeregisterAlertCollectionChanged(XenCenterAlerts_CollectionChanged);
             XenAdmin.Core.Updates.DeregisterCollectionChanged(Updates_CollectionChanged);
             ConnectionsManager.XenConnections.CollectionChanged -= XenConnection_CollectionChanged;
-            Properties.Settings.Default.SettingChanging -= new System.Configuration.SettingChangingEventHandler(Default_SettingChanging);
+			Properties.Settings.Default.SettingChanging -= new System.Configuration.SettingChangingEventHandler(Default_SettingChanging);
             SearchPage.SearchChanged -= SearchPanel_SearchChanged;
 
             if (disposing && (components != null))

@@ -57,7 +57,7 @@ namespace XenAdmin.Controls.ConsoleTab
 
         private string GetFullScreenMessage()
         {
-            switch (Properties.Settings.Default.FullScreenShortcutKey)
+            switch (SettingsAbstraction.Instance.FullScreenShortcutKey)
             {
                 case 0:
                     return Messages.VNC_FULLSCREEN_MESSAGE_CTRL_ALT;

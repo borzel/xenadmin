@@ -49,14 +49,14 @@ namespace XenAdmin.Dialogs
         private void SetAllowUpdates(bool value)
         {
 			SettingsAbstraction.Instance.AllowXenCenterUpdates = value;
-            Properties.Settings.Default.AllowPatchesUpdates = value;
-            Properties.Settings.Default.AllowXenServerUpdates = value;
+			SettingsAbstraction.Instance.AllowPatchesUpdates = value;
+			SettingsAbstraction.Instance.AllowXenServerUpdates = value;
         }
 
         private void YesButtonClicked()
         {
             SetAllowUpdates(true);
-            Properties.Settings.Default.SeenAllowUpdatesDialog = true;
+			SettingsAbstraction.Instance.SeenAllowUpdatesDialog = true;
             if (checkBox1.Checked)
             {
                 using (var dialog = new OptionsDialog(m_pluginManager))
@@ -71,7 +71,7 @@ namespace XenAdmin.Dialogs
         private void NoButtonClicked()
         {
             SetAllowUpdates(false);
-            Properties.Settings.Default.SeenAllowUpdatesDialog = true;
+			SettingsAbstraction.Instance.SeenAllowUpdatesDialog = true;
             Settings.TrySaveSettings();
         }
 

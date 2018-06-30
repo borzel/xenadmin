@@ -70,7 +70,7 @@ namespace XenAdmin.Help
                 if (s != null)
                 {
                     log.DebugFormat("Help ID for {0} is {1}", pageref, s);
-                    if (Properties.Settings.Default.DebugHelp && !Program.RunInAutomatedTestMode)
+                    if (SettingsAbstraction.Instance.DebugHelp && !Program.RunInAutomatedTestMode)
                     {
                         using (var dlg = new ThreeButtonDialog(
                            new ThreeButtonDialog.Details(
@@ -89,7 +89,7 @@ namespace XenAdmin.Help
                     // Do not show the help window with TOC if the help ID is not found with the system running in AutomatedTest mode
                     if (!Program.RunInAutomatedTestMode)
                     {
-                        if (Properties.Settings.Default.DebugHelp)
+                        if (SettingsAbstraction.Instance.DebugHelp)
                         {
                             using (var dlg = new ThreeButtonDialog(
                                new ThreeButtonDialog.Details(
@@ -110,7 +110,7 @@ namespace XenAdmin.Help
                 // Do not show the help window with TOC if the help ID is not found with the system running in AutomatedTest mode
                 if (!Program.RunInAutomatedTestMode)
                 {
-                    if (Properties.Settings.Default.DebugHelp)
+                    if (SettingsAbstraction.Instance.DebugHelp)
                     {
                         using (var dlg = new ThreeButtonDialog(
                            new ThreeButtonDialog.Details(

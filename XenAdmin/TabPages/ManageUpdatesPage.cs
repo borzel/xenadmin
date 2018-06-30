@@ -665,12 +665,12 @@ namespace XenAdmin.TabPages
         /// <returns></returns>
         private bool SomeButNotAllUpdatesDisabled()
         {
-            return (!Properties.Settings.Default.AllowPatchesUpdates ||
+			return (!SettingsAbstraction.Instance.AllowPatchesUpdates ||
 			        !SettingsAbstraction.Instance.AllowXenCenterUpdates ||
-                    !Properties.Settings.Default.AllowXenServerUpdates) &&
-                    (Properties.Settings.Default.AllowPatchesUpdates ||
+			        !SettingsAbstraction.Instance.AllowXenServerUpdates) &&
+				(SettingsAbstraction.Instance.AllowPatchesUpdates ||
 				     SettingsAbstraction.Instance.AllowXenCenterUpdates ||
-                    Properties.Settings.Default.AllowXenServerUpdates);
+				 SettingsAbstraction.Instance.AllowXenServerUpdates);
         }
 
         /// <summary>
@@ -679,9 +679,9 @@ namespace XenAdmin.TabPages
         /// <returns></returns>
         private bool AllUpdatesDisabled()
         {
-            return (!Properties.Settings.Default.AllowPatchesUpdates &&
+			return (!SettingsAbstraction.Instance.AllowPatchesUpdates &&
 			        !SettingsAbstraction.Instance.AllowXenCenterUpdates &&
-                   !Properties.Settings.Default.AllowXenServerUpdates);
+			        !SettingsAbstraction.Instance.AllowXenServerUpdates);
         }
 
         /// <summary>
@@ -955,7 +955,7 @@ namespace XenAdmin.TabPages
                     result = dlog.ShowDialog(this);
                 }
             }
-            else if (!Properties.Settings.Default.DoNotConfirmDismissUpdates)
+            else if (!SettingsAbstraction.Instance.DoNotConfirmDismissUpdates)
             {
                 using (var dlog = new ThreeButtonDialog(
                     new ThreeButtonDialog.Details(null, Messages.UPDATE_DISMISS_ALL_NO_FILTER_CONTINUE),
@@ -967,7 +967,7 @@ namespace XenAdmin.TabPages
                 })
                 {
                     result = dlog.ShowDialog(this);
-                    Properties.Settings.Default.DoNotConfirmDismissUpdates = dlog.IsCheckBoxChecked;
+                    SettingsAbstraction.Instance.DoNotConfirmDismissUpdates = dlog.IsCheckBoxChecked;
                     Settings.TrySaveSettings();
                 }
             }
@@ -990,7 +990,7 @@ namespace XenAdmin.TabPages
         /// <param name="e"></param>
         private void dismissSelectedToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (!Properties.Settings.Default.DoNotConfirmDismissUpdates)
+            if (!SettingsAbstraction.Instance.DoNotConfirmDismissUpdates)
             {
                 using (var dlog = new ThreeButtonDialog(
                     new ThreeButtonDialog.Details(null, Messages.UPDATE_DISMISS_SELECTED_CONFIRM, Messages.XENCENTER),
@@ -1001,7 +1001,7 @@ namespace XenAdmin.TabPages
                 })
                 {
                     var result = dlog.ShowDialog(this);
-                    Properties.Settings.Default.DoNotConfirmDismissUpdates = dlog.IsCheckBoxChecked;
+                    SettingsAbstraction.Instance.DoNotConfirmDismissUpdates = dlog.IsCheckBoxChecked;
                     Settings.TrySaveSettings();
                     
                     if (result != DialogResult.Yes)
@@ -1032,7 +1032,7 @@ namespace XenAdmin.TabPages
             if (alert == null)
                 return;
 
-            if (!Properties.Settings.Default.DoNotConfirmDismissUpdates)
+            if (!SettingsAbstraction.Instance.DoNotConfirmDismissUpdates)
             {
                 using (var dlog = new ThreeButtonDialog(
                     new ThreeButtonDialog.Details(null, Messages.UPDATE_DISMISS_CONFIRM, Messages.XENCENTER),
@@ -1044,7 +1044,7 @@ namespace XenAdmin.TabPages
                 })
                 {
                     var result = dlog.ShowDialog(this);
-                    Properties.Settings.Default.DoNotConfirmDismissUpdates = dlog.IsCheckBoxChecked;
+                    SettingsAbstraction.Instance.DoNotConfirmDismissUpdates = dlog.IsCheckBoxChecked;
                     Settings.TrySaveSettings();
                     
                     if (result != DialogResult.Yes)

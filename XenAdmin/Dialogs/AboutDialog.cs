@@ -57,7 +57,7 @@ namespace XenAdmin.Dialogs
             //label2.Text = string.Format(Messages.COPYRIGHT, Branding.COMPANY_NAME_LEGAL);
             label2.Visible = !HiddenFeatures.CopyrightHidden;
 
-            showAgainCheckBox.Checked = Properties.Settings.Default.ShowAboutDialog;
+            showAgainCheckBox.Checked = SettingsAbstraction.Instance.ShowAboutDialog;
             var showLicenseNag = HiddenFeatures.LicenseNagVisible;
             LicenseDetailsTextBox.Text = showLicenseNag ? GetLicenseDetails() : "";
             licenseDetailsLabel.Visible = LicenseDetailsTextBox.Visible = showLicenseNag;
@@ -102,9 +102,9 @@ namespace XenAdmin.Dialogs
 
         private void showAgainCheckBox_CheckedChanged(object sender, EventArgs e)
         {
-            if (Properties.Settings.Default.ShowAboutDialog != showAgainCheckBox.Checked)
+            if (SettingsAbstraction.Instance.ShowAboutDialog != showAgainCheckBox.Checked)
             {
-                Properties.Settings.Default.ShowAboutDialog = showAgainCheckBox.Checked;
+                SettingsAbstraction.Instance.ShowAboutDialog = showAgainCheckBox.Checked;
                 Settings.TrySaveSettings();
             }
         }

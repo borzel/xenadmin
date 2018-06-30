@@ -135,23 +135,23 @@ namespace XenAdmin.Core
                     CFU = new CFU
                     {
 						AllowXenCenterUpdates = SettingsAbstraction.Instance.AllowXenCenterUpdates,
-                        AllowPatchesUpdates = Properties.Settings.Default.AllowPatchesUpdates,
-                        AllowXenServerUpdates = Properties.Settings.Default.AllowXenServerUpdates
+						AllowPatchesUpdates = SettingsAbstraction.Instance.AllowPatchesUpdates,
+						AllowXenServerUpdates = SettingsAbstraction.Instance.AllowXenServerUpdates
                     },
                     Proxy = new Proxy
                     {
-                        UseProxy = (HTTPHelper.ProxyStyle) Properties.Settings.Default.ProxySetting == HTTPHelper.ProxyStyle.SpecifiedProxy,
-                        UseIEProxy = (HTTPHelper.ProxyStyle) Properties.Settings.Default.ProxySetting == HTTPHelper.ProxyStyle.SystemProxy,
-                        BypassProxyForServers = Properties.Settings.Default.BypassProxyForServers,
-                        ProxyAuthentication = Properties.Settings.Default.ProvideProxyAuthentication,
-                        ProxyAuthenticationMethod = ((HTTP.ProxyAuthenticationMethod)Properties.Settings.Default.ProxyAuthenticationMethod).ToString()
+                        UseProxy = (HTTPHelper.ProxyStyle) SettingsAbstraction.Instance.ProxySetting == HTTPHelper.ProxyStyle.SpecifiedProxy,
+                        UseIEProxy = (HTTPHelper.ProxyStyle) SettingsAbstraction.Instance.ProxySetting == HTTPHelper.ProxyStyle.SystemProxy,
+                        BypassProxyForServers = SettingsAbstraction.Instance.BypassProxyForServers,
+                        ProxyAuthentication = SettingsAbstraction.Instance.ProvideProxyAuthentication,
+                        ProxyAuthenticationMethod = ((HTTP.ProxyAuthenticationMethod)SettingsAbstraction.Instance.ProxyAuthenticationMethod).ToString()
                     },
                     SaveAndRestore = new SaveAndRestore
                     {
 						SaveSessionCredentials = SettingsAbstraction.Instance.SaveSession,
-                        RequireMasterPassword = Properties.Settings.Default.RequirePass
+                        RequireMasterPassword = SettingsAbstraction.Instance.RequirePass
                     },
-                    HelpLastUsed = Properties.Settings.Default.HelpLastUsed
+                    HelpLastUsed = SettingsAbstraction.Instance.HelpLastUsed
                 },
                 Infrastructure = new XenCenterInfrastructure
                 {

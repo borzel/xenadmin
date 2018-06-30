@@ -660,7 +660,7 @@ namespace XenAdmin.Actions
                     throw new CancelledException();
 
                 // CA-218956 - Expose HIMN when showing hidden objects
-                if (network.IsGuestInstallerNetwork() && !XenAdmin.Properties.Settings.Default.ShowHiddenVMs)
+                if (network.IsGuestInstallerNetwork() && !XenAdmin.SettingsAbstraction.Instance.ShowHiddenVMs)
                 {
                     PercentComplete = Convert.ToInt32((++itemIndex) * baseIndex / itemCount);
                     continue;

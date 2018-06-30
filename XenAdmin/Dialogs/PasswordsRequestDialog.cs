@@ -52,7 +52,7 @@ namespace XenAdmin.Dialogs
 
             OKAlwaysTooltipContainer.SetToolTip(Messages.PASSWORDS_REQUEST_ALWAYS_DISABLED_TOOLTIP_BODY);
 
-            bool p = Properties.Settings.Default.RequirePass;
+            bool p = SettingsAbstraction.Instance.RequirePass;
             OKAlwaysButton.Enabled = !p;
         }
 

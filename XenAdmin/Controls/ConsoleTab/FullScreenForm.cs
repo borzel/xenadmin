@@ -67,7 +67,7 @@ namespace XenAdmin.Controls.ConsoleTab
         {
             base.OnShown(e);
 
-            if (Properties.Settings.Default.PinConnectionBar)
+            if (SettingsAbstraction.Instance.PinConnectionBar)
                 connectionBar1.ShowPinned();
             else
                 connectionBar1.HideAnimated();

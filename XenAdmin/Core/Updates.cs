@@ -195,13 +195,13 @@ namespace XenAdmin.Core
                 return;
 
 			if (SettingsAbstraction.Instance.AllowXenCenterUpdates ||
-                Properties.Settings.Default.AllowXenServerUpdates ||
-                Properties.Settings.Default.AllowPatchesUpdates || force || forceRefresh)
+			    SettingsAbstraction.Instance.AllowXenServerUpdates ||
+			    SettingsAbstraction.Instance.AllowPatchesUpdates || force || forceRefresh)
             {
                 var action = CreateDownloadUpdatesXmlAction(
 					SettingsAbstraction.Instance.AllowXenCenterUpdates || force,
-                    Properties.Settings.Default.AllowXenServerUpdates || force,
-                    Properties.Settings.Default.AllowPatchesUpdates || force,
+					SettingsAbstraction.Instance.AllowXenServerUpdates || force,
+					SettingsAbstraction.Instance.AllowPatchesUpdates || force,
                     Updates.CheckForUpdatesUrl);
 
                 action.Completed += actionCompleted;
@@ -901,7 +901,7 @@ namespace XenAdmin.Core
         {
             Program.Invoke(Program.MainWindow, () =>
             {
-                Properties.Settings.Default.LatestXenCenterSeen = "";
+                SettingsAbstraction.Instance.LatestXenCenterSeen = "";
                 Settings.TrySaveSettings();
 
                 CheckForUpdates(true);

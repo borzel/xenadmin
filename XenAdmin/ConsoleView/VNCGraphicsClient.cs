@@ -282,7 +282,7 @@ namespace XenAdmin.ConsoleView
 
         private bool RedirectingClipboard()
         {
-            return XenAdmin.Properties.Settings.Default.ClipboardAndPrinterRedirection;
+            return XenAdmin.SettingsAbstraction.Instance.ClipboardAndPrinterRedirection;
         }
 
         private static bool handlingChange = false;

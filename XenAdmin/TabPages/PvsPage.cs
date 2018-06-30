@@ -99,7 +99,7 @@ namespace XenAdmin.TabPages
             if (XenAdminConfigManager.Provider.ObjectIsHidden(vm.opaque_ref))
                 return false;
 
-            return vm.is_a_real_vm() && vm.Show(Properties.Settings.Default.ShowHiddenVMs) && !vm.IsBeingCreated;
+            return vm.is_a_real_vm() && vm.Show(SettingsAbstraction.Instance.ShowHiddenVMs) && !vm.IsBeingCreated;
         }
 
         private static bool VmIsJustAdded(VM vm)

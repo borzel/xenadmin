@@ -67,7 +67,7 @@ namespace XenAdmin.Dialogs.OptionsPages
         {
             // SSL Certificates
 			log.Info("=== SaveSession: " + SettingsAbstraction.Instance.SaveSession.ToString());
-            log.Info("=== RequirePass: " + Properties.Settings.Default.RequirePass.ToString());
+            log.Info("=== RequirePass: " + SettingsAbstraction.Instance.RequirePass.ToString());
         }
 
         // all prompts for old password should have been made
@@ -81,7 +81,7 @@ namespace XenAdmin.Dialogs.OptionsPages
             {
                 // save nothing and nobody (personally my two favourite servers anyway...)
 				SettingsAbstraction.Instance.SaveSession = false;
-                Properties.Settings.Default.RequirePass = false;
+                SettingsAbstraction.Instance.RequirePass = false;
 
                 Program.MasterPassword = null;
             }
@@ -89,7 +89,7 @@ namespace XenAdmin.Dialogs.OptionsPages
             {
                 // we need to save stuff but without a password
 				SettingsAbstraction.Instance.SaveSession = true;
-                Properties.Settings.Default.RequirePass = false;
+                SettingsAbstraction.Instance.RequirePass = false;
 
                 Program.MasterPassword = null;
             }
@@ -97,7 +97,7 @@ namespace XenAdmin.Dialogs.OptionsPages
             {
                 // password protect stuff
 				SettingsAbstraction.Instance.SaveSession = true;
-                Properties.Settings.Default.RequirePass = true;
+                SettingsAbstraction.Instance.RequirePass = true;
 
                 // set password
                 if (Program.MasterPassword != TemporaryMasterPassword) 
@@ -207,7 +207,7 @@ namespace XenAdmin.Dialogs.OptionsPages
         {
             bool allowCredSave = Registry.AllowCredentialSave;
 			bool saveSession = SettingsAbstraction.Instance.SaveSession;
-            bool reqPass = Properties.Settings.Default.RequirePass;
+            bool reqPass = SettingsAbstraction.Instance.RequirePass;
 
             saveStateLabel.Enabled = allowCredSave;
             saveStateCheckBox.Enabled = allowCredSave;

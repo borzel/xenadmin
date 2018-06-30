@@ -1812,7 +1812,7 @@ namespace XenAdmin.Controls.XenSearch
                     foreach (T entry in entries.ToArray())
                     {
                         XenAPI.Network e = entry as XenAPI.Network;
-                        if (!e.Show(XenAdmin.Properties.Settings.Default.ShowHiddenVMs))
+                        if (!e.Show(XenAdmin.SettingsAbstraction.Instance.ShowHiddenVMs))
                             entries.Remove(entry);
                     }
                 }

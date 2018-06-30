@@ -87,7 +87,7 @@ namespace XenAdmin.Wizards.ImportWizard
 
         public override void PopulatePage()
 		{
-            var isoName = Path.GetFileName(XenOvf.Properties.Settings.Default.xenLinuxFixUpDisk);
+			var isoName = Path.GetFileName(XenOvf.Properties.Settings.Default.xenLinuxFixUpDisk);
 			VDI theVdi = Connection.Cache.VDIs.FirstOrDefault(vdi => vdi != null && vdi.name_label == isoName);
 
             m_fixupISOInLibrary = theVdi != null;

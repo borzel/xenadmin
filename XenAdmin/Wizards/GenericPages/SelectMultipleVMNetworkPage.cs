@@ -261,7 +261,7 @@ namespace XenAdmin.Wizards.GenericPages
 
         private bool ShowNetwork(Host targetHost, XenAPI.Network network)
         {
-            if (!network.Show(Properties.Settings.Default.ShowHiddenVMs))
+            if (!network.Show(SettingsAbstraction.Instance.ShowHiddenVMs))
                 return false;
 
             if (network.IsSlave())

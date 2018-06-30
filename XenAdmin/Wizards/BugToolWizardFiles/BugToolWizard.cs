@@ -149,7 +149,7 @@ namespace XenAdmin.Wizards
             }
 
             // Save away the output path for next time
-            XenAdmin.Properties.Settings.Default.ServerStatusPath = bugToolPageDestination1.OutputFile;
+            XenAdmin.SettingsAbstraction.Instance.ServerStatusPath = bugToolPageDestination1.OutputFile;
 
             log.Debug("Cleaning up crash dump logs on server");
             var capabilities = bugToolPageSelectCapabilities1.Capabilities;

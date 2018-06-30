@@ -243,7 +243,8 @@ namespace XenAdmin
 
             SelectionManager.BindTo(MainMenuBar.Items, this);
             SelectionManager.BindTo(ToolStrip.Items, this);
-            Properties.Settings.Default.SettingChanging += Default_SettingChanging;
+			// TODO: Properties.Settings.Default
+			Properties.Settings.Default.SettingChanging += Default_SettingChanging;
 
             licenseTimer = new LicenseTimer(licenseManagerLauncher);
             GeneralPage.LicenseLauncher = licenseManagerLauncher;
@@ -314,16 +315,17 @@ namespace XenAdmin
              */
             try
             {
+				// TODO: Properties.Settings.Default
                 // Bring in previous version user setting for the first time.  
-                if (Properties.Settings.Default.DoUpgrade)
+				if (Properties.Settings.Default.DoUpgrade)
                 {
-                    Properties.Settings.Default.Upgrade();
-                    Properties.Settings.Default.DoUpgrade = false;
+					Properties.Settings.Default.Upgrade();
+					Properties.Settings.Default.DoUpgrade = false;
                     XenAdmin.Settings.TrySaveSettings();
                 }
 
-                Point savedLocation = Properties.Settings.Default.WindowLocation;
-                Size savedSize = Properties.Settings.Default.WindowSize;
+                Point savedLocation = SettingsAbstraction.Instance.WindowLocation;
+                Size savedSize = SettingsAbstraction.Instance.WindowSize;
 
                 if (HelpersGUI.WindowIsOnScreen(savedLocation, savedSize))
                 {
@@ -569,7 +571,7 @@ namespace XenAdmin
                 Application.Exit();
                 return; // Application.Exit() does not exit the current method.
             }
-			//ToolbarsEnabled = Properties.Settings.Default.ToolbarsEnabled;
+			//ToolbarsEnabled = SettingsAbstraction.Instance.ToolbarsEnabled;
 			ToolbarsEnabled = SettingsAbstraction.Instance.ToolbarsEnabled;
             RequestRefreshTreeView();
             UpdateToolbars();
@@ -602,7 +604,7 @@ namespace XenAdmin
 
             if (!Program.RunInAutomatedTestMode && !Helpers.CommonCriteriaCertificationRelease)
             {
-                if (!Properties.Settings.Default.SeenAllowUpdatesDialog)
+				if (!SettingsAbstraction.Instance.SeenAllowUpdatesDialog)
                     new AllowUpdatesDialog(pluginManager).ShowDialog(this);
 
                 // start checkforupdates thread
@@ -685,7 +687,7 @@ namespace XenAdmin
             Program.AssertOnEventThread();
             if (connectionsInProgressOnStartup > 0)
                 return;
-            if (Properties.Settings.Default.ShowAboutDialog && HiddenFeatures.LicenseNagVisible)
+            if (SettingsAbstraction.Instance.ShowAboutDialog && HiddenFeatures.LicenseNagVisible)
                 ShowForm(typeof(AboutDialog));
         }
 
@@ -973,7 +975,7 @@ namespace XenAdmin
             if(licenseTimer != null)
                 licenseTimer.CheckActiveServerLicense(connection, false);
 
-            if (Properties.Settings.Default.ShowHealthCheckEnrollmentReminder)
+			if (SettingsAbstraction.Instance.ShowHealthCheckEnrollmentReminder)
                 ThreadPool.QueueUserWorkItem(CheckHealthCheckEnrollment, connection);
             ThreadPool.QueueUserWorkItem(HealthCheck.CheckForAnalysisResults, connection);
             ThreadPool.QueueUserWorkItem(InformHealthCheckEnrollment, connection);
@@ -1734,10 +1736,10 @@ namespace XenAdmin
                 VMSnapshotScheduleToolStripMenuItem.Available = false;
             }
             
-            templatesToolStripMenuItem1.Checked = Properties.Settings.Default.DefaultTemplatesVisible;
-            customTemplatesToolStripMenuItem.Checked = Properties.Settings.Default.UserTemplatesVisible;
-            localStorageToolStripMenuItem.Checked = Properties.Settings.Default.LocalSRsVisible;
-            ShowHiddenObjectsToolStripMenuItem.Checked = Properties.Settings.Default.ShowHiddenVMs;
+            templatesToolStripMenuItem1.Checked = SettingsAbstraction.Instance.DefaultTemplatesVisible;
+            customTemplatesToolStripMenuItem.Checked = SettingsAbstraction.Instance.UserTemplatesVisible;
+            localStorageToolStripMenuItem.Checked = SettingsAbstraction.Instance.LocalSRsVisible;
+            ShowHiddenObjectsToolStripMenuItem.Checked = SettingsAbstraction.Instance.ShowHiddenVMs;
             connectDisconnectToolStripMenuItem.Enabled = ConnectionsManager.XenConnectionsCopy.Count > 0;
         }
 
@@ -1998,7 +2000,7 @@ namespace XenAdmin
                         if (connection != null)
                         {
                             //If ShowJustHostInSearch is enabled and only one live host is selected, we show the search for the host only
-                            if (Properties.Settings.Default.ShowJustHostInSearch && SelectionManager.Selection.Count == 1 
+                            if (SettingsAbstraction.Instance.ShowJustHostInSearch && SelectionManager.Selection.Count == 1 
                                 && SelectionManager.Selection.FirstIsLiveHost)
                             {
                                 SearchPage.XenObject = SelectionManager.Selection.FirstAsXenObject;
@@ -2145,28 +2147,28 @@ namespace XenAdmin
         private void templatesToolStripMenuItem1_Click(object sender, EventArgs e)
         {
             templatesToolStripMenuItem1.Checked = !templatesToolStripMenuItem1.Checked;
-            Properties.Settings.Default.DefaultTemplatesVisible = templatesToolStripMenuItem1.Checked;
+            SettingsAbstraction.Instance.DefaultTemplatesVisible = templatesToolStripMenuItem1.Checked;
             ViewSettingsChanged();
         }
 
         private void customTemplatesToolStripMenuItem_Click(object sender, EventArgs e)
         {
             customTemplatesToolStripMenuItem.Checked = !customTemplatesToolStripMenuItem.Checked;
-            Properties.Settings.Default.UserTemplatesVisible = customTemplatesToolStripMenuItem.Checked;
+            SettingsAbstraction.Instance.UserTemplatesVisible = customTemplatesToolStripMenuItem.Checked;
             ViewSettingsChanged();
         }
 
         private void localStorageToolStripMenuItem_Click(object sender, EventArgs e)
         {
             localStorageToolStripMenuItem.Checked = !localStorageToolStripMenuItem.Checked;
-            Properties.Settings.Default.LocalSRsVisible = localStorageToolStripMenuItem.Checked;
+            SettingsAbstraction.Instance.LocalSRsVisible = localStorageToolStripMenuItem.Checked;
             ViewSettingsChanged();
         }
 
         private void ShowHiddenObjectsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             ShowHiddenObjectsToolStripMenuItem.Checked = !ShowHiddenObjectsToolStripMenuItem.Checked;
-            Properties.Settings.Default.ShowHiddenVMs = ShowHiddenObjectsToolStripMenuItem.Checked;
+            SettingsAbstraction.Instance.ShowHiddenVMs = ShowHiddenObjectsToolStripMenuItem.Checked;
             ViewSettingsChanged();
         }
 
@@ -2246,12 +2248,12 @@ namespace XenAdmin
             // Disconnect the named pipe
             Program.DisconnectPipe();
 
-            Properties.Settings.Default.WindowSize = this.Size;
-            Properties.Settings.Default.WindowLocation = this.Location;
+            SettingsAbstraction.Instance.WindowSize = this.Size;
+            SettingsAbstraction.Instance.WindowLocation = this.Location;
             try
             {
                 Settings.SaveServerList();
-                Properties.Settings.Default.Save();
+                SettingsAbstraction.Instance.Save();
             }
             catch (ConfigurationErrorsException ex)
             {
@@ -2593,7 +2595,7 @@ namespace XenAdmin
                 }
             }
             // record help usage
-            Properties.Settings.Default.HelpLastUsed = DateTime.UtcNow.ToString("u");
+            SettingsAbstraction.Instance.HelpLastUsed = DateTime.UtcNow.ToString("u");
             Settings.TrySaveSettings();
         }
 
@@ -3173,7 +3175,7 @@ namespace XenAdmin
         private void ShowToolbarMenuItem_Click(object sender, EventArgs e)
         {
             ToolbarsEnabled = !ToolbarsEnabled;
-			//Properties.Settings.Default.ToolbarsEnabled = ToolbarsEnabled;
+			//SettingsAbstraction.Instance.ToolbarsEnabled = ToolbarsEnabled;
 			SettingsAbstraction.Instance.ToolbarsEnabled = ToolbarsEnabled;
             UpdateToolbars();
         }

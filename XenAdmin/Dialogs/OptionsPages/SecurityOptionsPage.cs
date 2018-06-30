@@ -56,9 +56,9 @@ namespace XenAdmin.Dialogs.OptionsPages
         private void build()
         {
             // SSL Certificates
-            CertificateFoundCheckBox.Checked    = Properties.Settings.Default.WarnUnrecognizedCertificate || 
+            CertificateFoundCheckBox.Checked    = SettingsAbstraction.Instance.WarnUnrecognizedCertificate || 
                                                     Registry.AlwaysShowSSLCertificates == SSLCertificateTypes.All;
-            CertificateChangedCheckBox.Checked  = Properties.Settings.Default.WarnChangedCertificate || 
+            CertificateChangedCheckBox.Checked  = SettingsAbstraction.Instance.WarnChangedCertificate || 
                                                     Registry.AlwaysShowSSLCertificates != SSLCertificateTypes.None;
             CertificateFoundCheckBox.Enabled    = Registry.AlwaysShowSSLCertificates != SSLCertificateTypes.All;
             CertificateChangedCheckBox.Enabled  = Registry.AlwaysShowSSLCertificates == SSLCertificateTypes.None;
@@ -67,8 +67,8 @@ namespace XenAdmin.Dialogs.OptionsPages
         public static void Log()
         {
             // SSL Certificates
-            log.Info("=== WarnUnrecognizedCertificate: " + Properties.Settings.Default.WarnUnrecognizedCertificate.ToString());
-            log.Info("=== WarnChangedCertificate: " + Properties.Settings.Default.WarnChangedCertificate.ToString());
+            log.Info("=== WarnUnrecognizedCertificate: " + SettingsAbstraction.Instance.WarnUnrecognizedCertificate.ToString());
+            log.Info("=== WarnChangedCertificate: " + SettingsAbstraction.Instance.WarnChangedCertificate.ToString());
         }
 
         #region IOptionsPage Members
@@ -76,10 +76,10 @@ namespace XenAdmin.Dialogs.OptionsPages
         public void Save()
         {
             // SSL Certificates
-            if (CertificateFoundCheckBox.Enabled && CertificateFoundCheckBox.Checked != Properties.Settings.Default.WarnUnrecognizedCertificate)
-                Properties.Settings.Default.WarnUnrecognizedCertificate = CertificateFoundCheckBox.Checked;
-            if (CertificateChangedCheckBox.Enabled && CertificateChangedCheckBox.Checked != Properties.Settings.Default.WarnChangedCertificate)
-                Properties.Settings.Default.WarnChangedCertificate = CertificateChangedCheckBox.Checked;
+            if (CertificateFoundCheckBox.Enabled && CertificateFoundCheckBox.Checked != SettingsAbstraction.Instance.WarnUnrecognizedCertificate)
+                SettingsAbstraction.Instance.WarnUnrecognizedCertificate = CertificateFoundCheckBox.Checked;
+            if (CertificateChangedCheckBox.Enabled && CertificateChangedCheckBox.Checked != SettingsAbstraction.Instance.WarnChangedCertificate)
+                SettingsAbstraction.Instance.WarnChangedCertificate = CertificateChangedCheckBox.Checked;
         }
 
         #endregion

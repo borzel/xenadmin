@@ -54,28 +54,28 @@ namespace XenAdmin.Dialogs.OptionsPages
 
         private void build()
         {
-            GraphAreasRadioButton.Checked = Properties.Settings.Default.FillAreaUnderGraphs;
-            GraphLinesRadioButton.Checked = !Properties.Settings.Default.FillAreaUnderGraphs;
+            GraphAreasRadioButton.Checked = SettingsAbstraction.Instance.FillAreaUnderGraphs;
+            GraphLinesRadioButton.Checked = !SettingsAbstraction.Instance.FillAreaUnderGraphs;
 
-            showHostOnlyOptionForSearchRadioButton.Checked = Properties.Settings.Default.ShowJustHostInSearch;
-            showWholePoolOptionForSearchRadioButton.Checked = !Properties.Settings.Default.ShowJustHostInSearch;
+            showHostOnlyOptionForSearchRadioButton.Checked = SettingsAbstraction.Instance.ShowJustHostInSearch;
+            showWholePoolOptionForSearchRadioButton.Checked = !SettingsAbstraction.Instance.ShowJustHostInSearch;
         }
 
         public static void Log()
         {
-            log.Info("=== FillAreaUnderGraphs: " + Properties.Settings.Default.FillAreaUnderGraphs.ToString());
-            log.Info("=== ShowHostOnlyInSearch: " + Properties.Settings.Default.ShowJustHostInSearch.ToString());
+            log.Info("=== FillAreaUnderGraphs: " + SettingsAbstraction.Instance.FillAreaUnderGraphs.ToString());
+            log.Info("=== ShowHostOnlyInSearch: " + SettingsAbstraction.Instance.ShowJustHostInSearch.ToString());
         }
 
         #region IOptionsPage Members
 
         public void Save()
         {
-            if (GraphAreasRadioButton.Checked != Properties.Settings.Default.FillAreaUnderGraphs)
-                Properties.Settings.Default.FillAreaUnderGraphs = GraphAreasRadioButton.Checked;
+            if (GraphAreasRadioButton.Checked != SettingsAbstraction.Instance.FillAreaUnderGraphs)
+                SettingsAbstraction.Instance.FillAreaUnderGraphs = GraphAreasRadioButton.Checked;
  
-            if (showHostOnlyOptionForSearchRadioButton.Checked != Properties.Settings.Default.ShowJustHostInSearch)
-                Properties.Settings.Default.ShowJustHostInSearch = showHostOnlyOptionForSearchRadioButton.Checked;
+            if (showHostOnlyOptionForSearchRadioButton.Checked != SettingsAbstraction.Instance.ShowJustHostInSearch)
+                SettingsAbstraction.Instance.ShowJustHostInSearch = showHostOnlyOptionForSearchRadioButton.Checked;
  
         }
 

@@ -167,7 +167,7 @@ namespace XenAdmin.ConsoleView
             //We're going to try and catch when the IP address changes for the VM, and re-scan for ports.
             if (source == null)
                 return;
-            Properties.Settings.Default.PropertyChanged += Default_PropertyChanged;
+			Properties.Settings.Default.PropertyChanged += Default_PropertyChanged;
             VM_guest_metrics guestMetrics = Source.Connection.Resolve<VM_guest_metrics>(Source.guest_metrics);
             if (guestMetrics == null)
                 return;
@@ -295,7 +295,7 @@ namespace XenAdmin.ConsoleView
 
         private void PollRDPPort(Object Sender)
         {
-            if (hasRDP && !Properties.Settings.Default.EnableRDPPolling)
+            if (hasRDP && !SettingsAbstraction.Instance.EnableRDPPolling)
             {
                 if (connectionPoller != null)
                     connectionPoller.Change(Timeout.Infinite, Timeout.Infinite);

@@ -66,17 +66,17 @@ namespace XenAdmin.Dialogs.OptionsPages
             buildUncaptureKeyCodeComboBox();
 
             // Windows Remote Desktop console
-            WindowsKeyCheckBox.Checked = Properties.Settings.Default.WindowsShortcuts;
-            SoundCheckBox.Checked = Properties.Settings.Default.ReceiveSoundFromRDP;
-            AutoSwitchCheckBox.Checked = Properties.Settings.Default.AutoSwitchToRDP;
-            ClipboardCheckBox.Checked = Properties.Settings.Default.ClipboardAndPrinterRedirection;
-            ConnectToServerConsoleCheckBox.Checked = Properties.Settings.Default.ConnectToServerConsole;
+            WindowsKeyCheckBox.Checked = SettingsAbstraction.Instance.WindowsShortcuts;
+            SoundCheckBox.Checked = SettingsAbstraction.Instance.ReceiveSoundFromRDP;
+            AutoSwitchCheckBox.Checked = SettingsAbstraction.Instance.AutoSwitchToRDP;
+            ClipboardCheckBox.Checked = SettingsAbstraction.Instance.ClipboardAndPrinterRedirection;
+            ConnectToServerConsoleCheckBox.Checked = SettingsAbstraction.Instance.ConnectToServerConsole;
 
             // Console scaling
-            PreserveUndockedScaleCheckBox.Checked = Properties.Settings.Default.PreserveScaleWhenUndocked;
-            PreserveVNCConsoleScalingCheckBox.Checked = Properties.Settings.Default.PreserveScaleWhenSwitchBackToVNC;
+            PreserveUndockedScaleCheckBox.Checked = SettingsAbstraction.Instance.PreserveScaleWhenUndocked;
+            PreserveVNCConsoleScalingCheckBox.Checked = SettingsAbstraction.Instance.PreserveScaleWhenSwitchBackToVNC;
             checkBoxDisableRDPPolling.Visible = !HiddenFeatures.RDPPollingHidden;
-            checkBoxDisableRDPPolling.Checked = Properties.Settings.Default.EnableRDPPolling;
+            checkBoxDisableRDPPolling.Checked = SettingsAbstraction.Instance.EnableRDPPolling;
         }
 
         private void buildKeyCodeListBox()
@@ -100,12 +100,12 @@ namespace XenAdmin.Dialogs.OptionsPages
 
         private void selectDockKeyCombo()
         {
-            DockKeyComboBox.SelectedIndex = Properties.Settings.Default.DockShortcutKey;
+            DockKeyComboBox.SelectedIndex = SettingsAbstraction.Instance.DockShortcutKey;
         }
 
         private void selectKeyCombo()
         {
-            KeyComboListBox.SelectedIndex = Properties.Settings.Default.FullScreenShortcutKey;
+            KeyComboListBox.SelectedIndex = SettingsAbstraction.Instance.FullScreenShortcutKey;
         }
 
         private void buildUncaptureKeyCodeComboBox()
@@ -118,7 +118,7 @@ namespace XenAdmin.Dialogs.OptionsPages
 
         private void selectUncaptureKeyCombo()
         {
-            UncaptureKeyComboBox.SelectedIndex = Properties.Settings.Default.UncaptureShortcutKey;
+            UncaptureKeyComboBox.SelectedIndex = SettingsAbstraction.Instance.UncaptureShortcutKey;
         }
 
         public static void Log()
@@ -126,22 +126,22 @@ namespace XenAdmin.Dialogs.OptionsPages
             log.Info(ConsoleTabSettingsHeader);
 
             // Fullscreen shortcut keys
-            log.Info("=== FullScreenShortcutKey: " + Properties.Settings.Default.FullScreenShortcutKey.ToString());
+            log.Info("=== FullScreenShortcutKey: " + SettingsAbstraction.Instance.FullScreenShortcutKey.ToString());
             // Dock-undock shortcut keys
-            log.Info("=== DockShortcutKey: " + Properties.Settings.Default.DockShortcutKey.ToString());
+            log.Info("=== DockShortcutKey: " + SettingsAbstraction.Instance.DockShortcutKey.ToString());
             // Uncapture keyboard and mouse shortcut keys
-            log.Info("=== UncaptureShortcutKey: " + Properties.Settings.Default.UncaptureShortcutKey.ToString());
+            log.Info("=== UncaptureShortcutKey: " + SettingsAbstraction.Instance.UncaptureShortcutKey.ToString());
 
             // Windows Remote Desktop console
-            log.Info("=== ClipboardAndPrinterRedirection: " + Properties.Settings.Default.ClipboardAndPrinterRedirection.ToString());
-            log.Info("=== WindowsShortcuts: " + Properties.Settings.Default.WindowsShortcuts.ToString());
-            log.Info("=== ReceiveSoundFromRDP: " + Properties.Settings.Default.ReceiveSoundFromRDP.ToString());
-            log.Info("=== AutoSwitchToRDP: " + Properties.Settings.Default.AutoSwitchToRDP.ToString());
-            log.Info("=== ConnectToServerConsole: " + Properties.Settings.Default.ConnectToServerConsole.ToString());
+            log.Info("=== ClipboardAndPrinterRedirection: " + SettingsAbstraction.Instance.ClipboardAndPrinterRedirection.ToString());
+            log.Info("=== WindowsShortcuts: " + SettingsAbstraction.Instance.WindowsShortcuts.ToString());
+            log.Info("=== ReceiveSoundFromRDP: " + SettingsAbstraction.Instance.ReceiveSoundFromRDP.ToString());
+            log.Info("=== AutoSwitchToRDP: " + SettingsAbstraction.Instance.AutoSwitchToRDP.ToString());
+            log.Info("=== ConnectToServerConsole: " + SettingsAbstraction.Instance.ConnectToServerConsole.ToString());
 
             // Console scaling
-            log.Info("=== PreserveScaleWhenUndocked: " + Properties.Settings.Default.PreserveScaleWhenUndocked.ToString());
-            log.Info("=== PreserveScaleWhenSwitchBackToVNC: " + Properties.Settings.Default.PreserveScaleWhenSwitchBackToVNC.ToString());
+            log.Info("=== PreserveScaleWhenUndocked: " + SettingsAbstraction.Instance.PreserveScaleWhenUndocked.ToString());
+            log.Info("=== PreserveScaleWhenSwitchBackToVNC: " + SettingsAbstraction.Instance.PreserveScaleWhenSwitchBackToVNC.ToString());
         }
 
         #region IOptionsPage Members
@@ -149,34 +149,34 @@ namespace XenAdmin.Dialogs.OptionsPages
         public void Save()
         {
             // Fullscreen shortcut keys
-            if (KeyComboListBox.SelectedIndex != Properties.Settings.Default.FullScreenShortcutKey)
-                Properties.Settings.Default.FullScreenShortcutKey = KeyComboListBox.SelectedIndex;
+            if (KeyComboListBox.SelectedIndex != SettingsAbstraction.Instance.FullScreenShortcutKey)
+                SettingsAbstraction.Instance.FullScreenShortcutKey = KeyComboListBox.SelectedIndex;
             // Dock-undock shortcut keys
-            if (DockKeyComboBox.SelectedIndex != Properties.Settings.Default.DockShortcutKey)
-                Properties.Settings.Default.DockShortcutKey = DockKeyComboBox.SelectedIndex;
+            if (DockKeyComboBox.SelectedIndex != SettingsAbstraction.Instance.DockShortcutKey)
+                SettingsAbstraction.Instance.DockShortcutKey = DockKeyComboBox.SelectedIndex;
             // Uncapture keyboard and mouse shortcut keys
-            if (UncaptureKeyComboBox.SelectedIndex != Properties.Settings.Default.UncaptureShortcutKey)
-                Properties.Settings.Default.UncaptureShortcutKey = UncaptureKeyComboBox.SelectedIndex;
+            if (UncaptureKeyComboBox.SelectedIndex != SettingsAbstraction.Instance.UncaptureShortcutKey)
+                SettingsAbstraction.Instance.UncaptureShortcutKey = UncaptureKeyComboBox.SelectedIndex;
 
             // Windows Remote Desktop console
-            if (WindowsKeyCheckBox.Checked != Properties.Settings.Default.WindowsShortcuts)
-                Properties.Settings.Default.WindowsShortcuts = WindowsKeyCheckBox.Checked;
-            if (SoundCheckBox.Checked != Properties.Settings.Default.ReceiveSoundFromRDP)
-                Properties.Settings.Default.ReceiveSoundFromRDP = SoundCheckBox.Checked;
-            if (AutoSwitchCheckBox.Checked != Properties.Settings.Default.AutoSwitchToRDP)
-                Properties.Settings.Default.AutoSwitchToRDP = AutoSwitchCheckBox.Checked;
-            if (ClipboardCheckBox.Checked != Properties.Settings.Default.ClipboardAndPrinterRedirection)
-                Properties.Settings.Default.ClipboardAndPrinterRedirection = ClipboardCheckBox.Checked;
-            if (ConnectToServerConsoleCheckBox.Checked != Properties.Settings.Default.ConnectToServerConsole)
-                Properties.Settings.Default.ConnectToServerConsole = ConnectToServerConsoleCheckBox.Checked;
+            if (WindowsKeyCheckBox.Checked != SettingsAbstraction.Instance.WindowsShortcuts)
+                SettingsAbstraction.Instance.WindowsShortcuts = WindowsKeyCheckBox.Checked;
+            if (SoundCheckBox.Checked != SettingsAbstraction.Instance.ReceiveSoundFromRDP)
+                SettingsAbstraction.Instance.ReceiveSoundFromRDP = SoundCheckBox.Checked;
+            if (AutoSwitchCheckBox.Checked != SettingsAbstraction.Instance.AutoSwitchToRDP)
+                SettingsAbstraction.Instance.AutoSwitchToRDP = AutoSwitchCheckBox.Checked;
+            if (ClipboardCheckBox.Checked != SettingsAbstraction.Instance.ClipboardAndPrinterRedirection)
+                SettingsAbstraction.Instance.ClipboardAndPrinterRedirection = ClipboardCheckBox.Checked;
+            if (ConnectToServerConsoleCheckBox.Checked != SettingsAbstraction.Instance.ConnectToServerConsole)
+                SettingsAbstraction.Instance.ConnectToServerConsole = ConnectToServerConsoleCheckBox.Checked;
 
             // Console scaling
-            if (PreserveUndockedScaleCheckBox.Checked != Properties.Settings.Default.PreserveScaleWhenUndocked)
-                Properties.Settings.Default.PreserveScaleWhenUndocked = PreserveUndockedScaleCheckBox.Checked;
-            if (PreserveVNCConsoleScalingCheckBox.Checked != Properties.Settings.Default.PreserveScaleWhenSwitchBackToVNC)
-                Properties.Settings.Default.PreserveScaleWhenSwitchBackToVNC = PreserveVNCConsoleScalingCheckBox.Checked;
-            if (checkBoxDisableRDPPolling.Checked != Properties.Settings.Default.EnableRDPPolling)
-                Properties.Settings.Default.EnableRDPPolling = checkBoxDisableRDPPolling.Checked;
+            if (PreserveUndockedScaleCheckBox.Checked != SettingsAbstraction.Instance.PreserveScaleWhenUndocked)
+                SettingsAbstraction.Instance.PreserveScaleWhenUndocked = PreserveUndockedScaleCheckBox.Checked;
+            if (PreserveVNCConsoleScalingCheckBox.Checked != SettingsAbstraction.Instance.PreserveScaleWhenSwitchBackToVNC)
+                SettingsAbstraction.Instance.PreserveScaleWhenSwitchBackToVNC = PreserveVNCConsoleScalingCheckBox.Checked;
+            if (checkBoxDisableRDPPolling.Checked != SettingsAbstraction.Instance.EnableRDPPolling)
+                SettingsAbstraction.Instance.EnableRDPPolling = checkBoxDisableRDPPolling.Checked;
         }
 
         #endregion

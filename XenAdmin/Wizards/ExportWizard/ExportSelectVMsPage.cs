@@ -187,7 +187,7 @@ namespace XenAdmin.Wizards.ExportWizard
 			if (!vm.is_a_real_vm())
 				return false;
 
-			if (!vm.Show(Properties.Settings.Default.ShowHiddenVMs))
+			if (!vm.Show(SettingsAbstraction.Instance.ShowHiddenVMs))
 				return false;
 
 			if (vm.power_state != vm_power_state.Halted && vm.power_state != vm_power_state.Suspended)

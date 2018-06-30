@@ -449,7 +449,7 @@ namespace XenAdmin.Commands
 
             foreach (VDI vdi in selection.AsXenObjects<VDI>())
             {
-                if (vdi.Locked || !vdi.Show(XenAdmin.Properties.Settings.Default.ShowHiddenVMs))
+                if (vdi.Locked || !vdi.Show(XenAdmin.SettingsAbstraction.Instance.ShowHiddenVMs))
                     continue;
 
                 actionsToComplete.AddRange(getDestroyVDIAction(vdi, deletedVMSnapshots));

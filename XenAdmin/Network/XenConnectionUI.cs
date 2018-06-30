@@ -214,7 +214,7 @@ namespace XenAdmin.Network
                 WebException w = (WebException)error;
 
                 var solutionCheckXenServer = 
-                    Properties.Settings.Default.ProxySetting != (int)HTTPHelper.ProxyStyle.DirectConnection ? Messages.SOLUTION_CHECK_XENSERVER_WITH_PROXY : Messages.SOLUTION_CHECK_XENSERVER;
+                    SettingsAbstraction.Instance.ProxySetting != (int)HTTPHelper.ProxyStyle.DirectConnection ? Messages.SOLUTION_CHECK_XENSERVER_WITH_PROXY : Messages.SOLUTION_CHECK_XENSERVER;
 
                 switch (w.Status)
                 {
@@ -229,7 +229,7 @@ namespace XenAdmin.Network
                             AddError(owner, connection, string.Format(Messages.ERROR_NO_XENSERVER, ((XenConnection)connection).Hostname), string.Format(solutionCheckXenServer, ((XenConnection)connection).Hostname));
                         else if (w.Message != null && w.Message.Contains("(407)"))
                         {
-                            string proxyAddress = Properties.Settings.Default.ProxyAddress;
+                            string proxyAddress = SettingsAbstraction.Instance.ProxyAddress;
                             AddError(owner, connection, string.Format(Messages.ERROR_PROXY_AUTHENTICATION, proxyAddress), string.Format(Messages.SOLUTION_CHECK_PROXY, proxyAddress));
                         }
                         else

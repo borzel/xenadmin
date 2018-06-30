@@ -128,19 +128,19 @@ namespace XenAdmin.Core
 
         public static void SendProxySettingsToHealthCheck()
         {
-            string protectedUsername = Properties.Settings.Default.ProxyUsername;
-            string protectedPassword = Properties.Settings.Default.ProxyPassword;
+            string protectedUsername = SettingsAbstraction.Instance.ProxyUsername;
+            string protectedPassword = SettingsAbstraction.Instance.ProxyPassword;
             new TransferProxySettingsAction(
-                (HTTPHelper.ProxyStyle)Properties.Settings.Default.ProxySetting,
-                Properties.Settings.Default.ProxyAddress,
-                Properties.Settings.Default.ProxyPort,
-                Properties.Settings.Default.ConnectionTimeout,
+                (HTTPHelper.ProxyStyle)SettingsAbstraction.Instance.ProxySetting,
+                SettingsAbstraction.Instance.ProxyAddress,
+                SettingsAbstraction.Instance.ProxyPort,
+                SettingsAbstraction.Instance.ConnectionTimeout,
                 true,
-                Properties.Settings.Default.BypassProxyForServers,
-                Properties.Settings.Default.ProvideProxyAuthentication,
+                SettingsAbstraction.Instance.BypassProxyForServers,
+                SettingsAbstraction.Instance.ProvideProxyAuthentication,
                 string.IsNullOrEmpty(protectedUsername) ? "" : EncryptionUtils.Unprotect(protectedUsername),
                 string.IsNullOrEmpty(protectedPassword) ? "" : EncryptionUtils.Unprotect(protectedPassword),
-                (HTTP.ProxyAuthenticationMethod)Properties.Settings.Default.ProxyAuthenticationMethod).RunAsync();
+                (HTTP.ProxyAuthenticationMethod)SettingsAbstraction.Instance.ProxyAuthenticationMethod).RunAsync();
         }
 
         /// <summary>

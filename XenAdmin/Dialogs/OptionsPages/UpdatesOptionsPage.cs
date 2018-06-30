@@ -59,8 +59,8 @@ namespace XenAdmin.Dialogs.OptionsPages
 			AllowXenCenterUpdatesCheckBox.Checked = SettingsAbstraction.Instance.AllowXenCenterUpdates;
 
             // XenServer updates
-            AllowXenServerPatchesCheckBox.Checked = Properties.Settings.Default.AllowPatchesUpdates;
-            AllowXenServerUpdatesCheckBox.Checked = Properties.Settings.Default.AllowXenServerUpdates;
+			AllowXenServerPatchesCheckBox.Checked = SettingsAbstraction.Instance.AllowPatchesUpdates;
+			AllowXenServerUpdatesCheckBox.Checked = SettingsAbstraction.Instance.AllowXenServerUpdates;
         }
 
         public static void Log()
@@ -69,8 +69,8 @@ namespace XenAdmin.Dialogs.OptionsPages
 			log.Info("=== AllowXenCenterUpdates: " + SettingsAbstraction.Instance.AllowXenCenterUpdates.ToString());
 
             // XenServer updates
-            log.Info("=== AllowPatchesUpdates: " + Properties.Settings.Default.AllowPatchesUpdates.ToString());
-            log.Info("=== AllowXenServerUpdates: " + Properties.Settings.Default.AllowXenServerUpdates.ToString());
+			log.Info("=== AllowPatchesUpdates: " + SettingsAbstraction.Instance.AllowPatchesUpdates.ToString());
+			log.Info("=== AllowXenServerUpdates: " + SettingsAbstraction.Instance.AllowXenServerUpdates.ToString());
         }
 
         #region IOptionsPage Members
@@ -84,10 +84,10 @@ namespace XenAdmin.Dialogs.OptionsPages
 				SettingsAbstraction.Instance.AllowXenCenterUpdates = AllowXenCenterUpdatesCheckBox.Checked;
 
             // XenServer updates
-            if (AllowXenServerPatchesCheckBox.Checked != Properties.Settings.Default.AllowPatchesUpdates)
-                Properties.Settings.Default.AllowPatchesUpdates = AllowXenServerPatchesCheckBox.Checked;
-            if (AllowXenServerUpdatesCheckBox.Checked != Properties.Settings.Default.AllowXenServerUpdates)
-                Properties.Settings.Default.AllowXenServerUpdates = AllowXenServerUpdatesCheckBox.Checked;
+			if (AllowXenServerPatchesCheckBox.Checked != SettingsAbstraction.Instance.AllowPatchesUpdates)
+				SettingsAbstraction.Instance.AllowPatchesUpdates = AllowXenServerPatchesCheckBox.Checked;
+			if (AllowXenServerUpdatesCheckBox.Checked != SettingsAbstraction.Instance.AllowXenServerUpdates)
+				SettingsAbstraction.Instance.AllowXenServerUpdates = AllowXenServerUpdatesCheckBox.Checked;
 
             if(refreshUpdatesTab)
             {
@@ -102,8 +102,8 @@ namespace XenAdmin.Dialogs.OptionsPages
         private bool IsCheckForUpdatesRequired()
         {
 			return (AllowXenCenterUpdatesCheckBox.Checked != SettingsAbstraction.Instance.AllowXenCenterUpdates) ||
-                   (AllowXenServerPatchesCheckBox.Checked != Properties.Settings.Default.AllowPatchesUpdates) ||
-                   (AllowXenServerUpdatesCheckBox.Checked != Properties.Settings.Default.AllowXenServerUpdates);
+				(AllowXenServerPatchesCheckBox.Checked != SettingsAbstraction.Instance.AllowPatchesUpdates) ||
+				(AllowXenServerUpdatesCheckBox.Checked != SettingsAbstraction.Instance.AllowXenServerUpdates);
         }
 
         #endregion

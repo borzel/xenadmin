@@ -100,7 +100,7 @@ namespace XenAdmin.Controls.CustomDataGraph
         /// </summary>
         public static Brush CreateBrush(string uuid)
         {
-            if (!Properties.Settings.Default.FillAreaUnderGraphs)
+            if (!SettingsAbstraction.Instance.FillAreaUnderGraphs)
                 return null;
 
             Color c = GetColour(uuid);

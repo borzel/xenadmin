@@ -183,7 +183,7 @@ namespace XenAdmin.Dialogs.ScheduledSnapshots
 
             foreach (var vm in pool.Connection.Cache.VMs)
             {
-                if (vm.is_a_real_vm() && vm.Show(Properties.Settings.Default.ShowHiddenVMs))
+                if (vm.is_a_real_vm() && vm.Show(SettingsAbstraction.Instance.ShowHiddenVMs))
                 {
                     realVMs++;
                     if (vm.Connection.Resolve(vm.snapshot_schedule) != null)

@@ -192,18 +192,18 @@ namespace XenAdmin
 
             //try
             //{
-            //    if (Properties.Settings.Default.ApplicationVersion != appVersion.ToString())
+            //    if (SettingsAbstraction.Instance.ApplicationVersion != appVersion.ToString())
             //    {
             //        log.Debug("Upgrading settings...");
-            //        Properties.Settings.Default.Upgrade();
+            //        SettingsAbstraction.Instance.Upgrade();
 
             //        // if program's hash has changed (e.g. by upgrading to .NET 4.0), then Upgrade() doesn't import the previous application settings 
             //        // because it cannot locate a previous user.config file. In this case a new user.config file is created with the default settings.
             //        // We will try and find a config file from a previous installation and update the settings from it
-            //        if (Properties.Settings.Default.ApplicationVersion == "" && Properties.Settings.Default.DoUpgrade)
+            //        if (SettingsAbstraction.Instance.ApplicationVersion == "" && SettingsAbstraction.Instance.DoUpgrade)
             //            SettingsUpdate.Update();
-            //        log.DebugFormat("Settings upgraded from '{0}' to '{1}'", Properties.Settings.Default.ApplicationVersion, appVersionString);
-            //        Properties.Settings.Default.ApplicationVersion = appVersionString;
+            //        log.DebugFormat("Settings upgraded from '{0}' to '{1}'", SettingsAbstraction.Instance.ApplicationVersion, appVersionString);
+            //        SettingsAbstraction.Instance.ApplicationVersion = appVersionString;
             //        Settings.TrySaveSettings();
             //    }
             //}
@@ -1049,7 +1049,7 @@ namespace XenAdmin
             foreach (var module in modulesToUnregister)
                 AuthenticationManager.Unregister(module);
 
-            var authSetting = (HTTP.ProxyAuthenticationMethod)Properties.Settings.Default.ProxyAuthenticationMethod;
+            var authSetting = (HTTP.ProxyAuthenticationMethod)SettingsAbstraction.Instance.ProxyAuthenticationMethod;
             if (authSetting == HTTP.ProxyAuthenticationMethod.Basic)
                 AuthenticationManager.Register(BasicAuthenticationModule);
             else

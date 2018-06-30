@@ -104,17 +104,17 @@ namespace XenAdmin
             {
                 Program.SkipSessionSave = true;
 				SettingsAbstraction.Instance.SaveSession = false;
-                Properties.Settings.Default.RequirePass = false;
+                SettingsAbstraction.Instance.RequirePass = false;
                 RestoreSessionWithPassword(null, false);
                 return;
             }
             // Only try if the user has specified he actually wants to save sessions...
-			if (SettingsAbstraction.Instance.SaveSession == true || Properties.Settings.Default.RequirePass)
+			if (SettingsAbstraction.Instance.SaveSession == true || SettingsAbstraction.Instance.RequirePass)
             {
                 // Only try if we actually have a saved session list...
-				if ((SettingsAbstraction.Instance.ServerList != null && SettingsAbstraction.Instance.ServerList.Length > 0) || (Properties.Settings.Default.ServerAddressList != null && Properties.Settings.Default.ServerAddressList.Length > 0))
+				if ((SettingsAbstraction.Instance.ServerList != null && SettingsAbstraction.Instance.ServerList.Length > 0) || (SettingsAbstraction.Instance.ServerAddressList != null && SettingsAbstraction.Instance.ServerAddressList.Length > 0))
                 {
-                    if (!Properties.Settings.Default.RequirePass)
+                    if (!SettingsAbstraction.Instance.RequirePass)
                     {
                         Program.MasterPassword = null;
                         Program.SkipSessionSave = true;
@@ -146,14 +146,14 @@ namespace XenAdmin
                     {
                         // an error state which can only occur on cancelled clicked
 						SettingsAbstraction.Instance.SaveSession = false;
-                        Properties.Settings.Default.RequirePass = true;
+                        SettingsAbstraction.Instance.RequirePass = true;
                         RestoreSessionWithPassword(null, false);
                     }
                     else
                     {
                         // otherwise make sure we have the correct settings
 						SettingsAbstraction.Instance.SaveSession = true;
-                        Properties.Settings.Default.RequirePass = true;
+                        SettingsAbstraction.Instance.RequirePass = true;
                     }
                     Program.SkipSessionSave = true;
                     Program.MasterPassword = passHash;
@@ -161,7 +161,7 @@ namespace XenAdmin
                 else
                 {
                     // this is where the user comes in if it is the first time connecting
-                    Properties.Settings.Default.RequirePass = false;
+                    SettingsAbstraction.Instance.RequirePass = false;
 					SettingsAbstraction.Instance.SaveSession = false;
                     Program.MasterPassword = null;
                 }
@@ -194,11 +194,11 @@ namespace XenAdmin
             else
             {
                 // user has cancelled, use the ServerAddressList (no usernames or passwords)
-                encServerList = Properties.Settings.Default.ServerAddressList ?? new string[0];
+                encServerList = SettingsAbstraction.Instance.ServerAddressList ?? new string[0];
             }
 
             string[] decryptedList = new string[encServerList.Length];
-            if (!Properties.Settings.Default.RequirePass || !useOriginalList)
+            if (!SettingsAbstraction.Instance.RequirePass || !useOriginalList)
             {
                 int idx = 0;
                 try
@@ -375,7 +375,7 @@ namespace XenAdmin
             {
                 // Ensure the list is empty in the serialized settings file...
 				SettingsAbstraction.Instance.ServerList = new string[0];
-                Properties.Settings.Default.ServerAddressList = new string[0];
+                SettingsAbstraction.Instance.ServerAddressList = new string[0];
                 TrySaveSettings();
                 return;
             }
@@ -402,8 +402,7 @@ namespace XenAdmin
         {
             try
             {
-				//Properties.Settings.Default.Save();
-				SettingsAbstraction.Save();
+				SettingsAbstraction.Instance.Save();            
             }
             catch (ConfigurationErrorsException ex)
             {
@@ -463,7 +462,7 @@ namespace XenAdmin
 
 				if (SettingsAbstraction.Instance.SaveSession)
 					SettingsAbstraction.Instance.ServerList = encServerList.ToArray();
-                Properties.Settings.Default.ServerAddressList = encServerAddressList.ToArray();
+                SettingsAbstraction.Instance.ServerAddressList = encServerAddressList.ToArray();
             }
             catch (Exception exp)
             {
@@ -499,7 +498,7 @@ namespace XenAdmin
                 entryStr += SEPARATOR.ToString();
                 entryStr += members;
             }
-            return Properties.Settings.Default.RequirePass && Program.MasterPassword != null ? EncryptionUtils.EncryptString(entryStr, Program.MasterPassword) : EncryptionUtils.Protect(entryStr);
+            return SettingsAbstraction.Instance.RequirePass && Program.MasterPassword != null ? EncryptionUtils.EncryptString(entryStr, Program.MasterPassword) : EncryptionUtils.Protect(entryStr);
         }
 
         public static AutoCompleteStringCollection GetServerHistory()
@@ -511,7 +510,7 @@ namespace XenAdmin
             }
             catch
             {
-                Properties.Settings.Default.Reset();
+				Properties.Settings.Default.Reset();
             }
 
             if (history == null)
@@ -592,7 +591,7 @@ namespace XenAdmin
             get
             {
                 Dictionary<string, string> known = new Dictionary<string, string>();
-                foreach (string known_host in XenAdmin.Properties.Settings.Default.KnownServers ?? new string[0])
+                foreach (string known_host in XenAdmin.SettingsAbstraction.Instance.KnownServers ?? new string[0])
                 {
                     string[] host_cert = known_host.Split(' ');
                     if (host_cert.Length != 2)
@@ -609,7 +608,7 @@ namespace XenAdmin
                 {
                     known_servers.Add(string.Format("{0} {1}", kvp.Key, kvp.Value));
                 }
-                Properties.Settings.Default.KnownServers = known_servers.ToArray();
+                SettingsAbstraction.Instance.KnownServers = known_servers.ToArray();
                 TrySaveSettings();
 
             }
@@ -624,14 +623,14 @@ namespace XenAdmin
 
         public static void UpdateDisabledPluginsList(List<string> list)
         {
-            Properties.Settings.Default.DisabledPlugins = list.ToArray();
+            SettingsAbstraction.Instance.DisabledPlugins = list.ToArray();
             TrySaveSettings();
         }
 
         public static bool IsPluginEnabled(string name, string org)
         {
             string id = string.Format("{0}::{1}", org, name);
-            foreach (string s in Properties.Settings.Default.DisabledPlugins)
+            foreach (string s in SettingsAbstraction.Instance.DisabledPlugins)
                 if (s == id)
                     return false;
             return true;

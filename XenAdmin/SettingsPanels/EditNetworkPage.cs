@@ -133,7 +133,7 @@ namespace XenAdmin.SettingsPanels
             bool blockDueToManagement = network.Connection.ResolveAll<PIF>(network.PIFs).Exists(
                 delegate(PIF p)
                 {
-                    var isManagementInterface = p.IsManagementInterface(XenAdmin.Properties.Settings.Default.ShowHiddenVMs);
+                    var isManagementInterface = p.IsManagementInterface(XenAdmin.SettingsAbstraction.Instance.ShowHiddenVMs);
                     if (isManagementInterface)
                         managementInterfaceName = p.ManagementInterfaceNameOrUnknown();
                     return isManagementInterface;
@@ -202,7 +202,7 @@ namespace XenAdmin.SettingsPanels
 
             PIF networksPIF = GetSelectedPIF();  // returns null for new VLAN
 
-            if (networksPIF == null || !networksPIF.IsManagementInterface(XenAdmin.Properties.Settings.Default.ShowHiddenVMs))
+            if (networksPIF == null || !networksPIF.IsManagementInterface(XenAdmin.SettingsAbstraction.Instance.ShowHiddenVMs))
             {
                 // non management external (could be bond)
 
@@ -435,8 +435,8 @@ namespace XenAdmin.SettingsPanels
 
                 foreach (PIF pif in network.Connection.Cache.PIFs)
                 {
-                    if (!Properties.Settings.Default.ShowHiddenVMs &&
-                        !pif.Show(Properties.Settings.Default.ShowHiddenVMs))
+                    if (!SettingsAbstraction.Instance.ShowHiddenVMs &&
+                        !pif.Show(SettingsAbstraction.Instance.ShowHiddenVMs))
                         continue;
 
                     if (!pif.IsPhysical() || pif.IsBondSlave())

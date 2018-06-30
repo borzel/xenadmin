@@ -226,14 +226,14 @@ namespace XenAdmin.Wizards.HAWizard_Pages
                 dataGridViewVms.Rows.Clear();
 
                 var newRows = new List<DataGridViewRow>();
-                var vms = connection.Cache.VMs.Where(v => v.HaCanProtect(Properties.Settings.Default.ShowHiddenVMs));
+                var vms = connection.Cache.VMs.Where(v => v.HaCanProtect(SettingsAbstraction.Instance.ShowHiddenVMs));
 
                 // see if HA is being activated for the first time.
                 bool firstTime = IsHaActivatedFirstTime(vms);
 
                 foreach (VM vm in connection.Cache.VMs)
                 {
-                    if (!vm.HaCanProtect(Properties.Settings.Default.ShowHiddenVMs))
+                    if (!vm.HaCanProtect(SettingsAbstraction.Instance.ShowHiddenVMs))
                         continue;
 
                     // Create a new row for this VM.
@@ -350,11 +350,11 @@ namespace XenAdmin.Wizards.HAWizard_Pages
         {
             Program.AssertOnEventThread();
 
-            if (!vm.HaCanProtect(Properties.Settings.Default.ShowHiddenVMs))
+            if (!vm.HaCanProtect(SettingsAbstraction.Instance.ShowHiddenVMs))
                 return;
 
             // see if HA is being activated for the first time
-            var vms = connection.Cache.VMs.Where(v => v.HaCanProtect(Properties.Settings.Default.ShowHiddenVMs));
+            var vms = connection.Cache.VMs.Where(v => v.HaCanProtect(SettingsAbstraction.Instance.ShowHiddenVMs));
             bool firstTime = IsHaActivatedFirstTime(vms);
 
             VM.HA_Restart_Priority? priority = firstTime ? (VM.HA_Restart_Priority?)null : vm.HARestartPriority();

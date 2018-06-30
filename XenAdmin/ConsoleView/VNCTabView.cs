@@ -179,7 +179,7 @@ namespace XenAdmin.ConsoleView
 
             this.insKeyTimer = new System.Threading.Timer(new TimerCallback(notInsKeyPressed));
 
-            Properties.Settings.Default.PropertyChanged += Default_PropertyChanged;
+			Properties.Settings.Default.PropertyChanged += Default_PropertyChanged;
 
             registerShortCutKeys();
 
@@ -211,7 +211,7 @@ namespace XenAdmin.ConsoleView
 
             //If RDP enabled and AutoSwitchToRDP selected, switch RDP connection will be done when VNC already get the correct screen resolution.
             //This change is only for Cream, because RDP port scan was removed in Cream.
-            if ( Helpers.CreamOrGreater(source.Connection) && Properties.Settings.Default.AutoSwitchToRDP && RDPEnabled )
+            if ( Helpers.CreamOrGreater(source.Connection) && SettingsAbstraction.Instance.AutoSwitchToRDP && RDPEnabled )
                 vncScreen.AutoSwitchRDPLater = true;
         }
 
@@ -283,7 +283,7 @@ namespace XenAdmin.ConsoleView
 
         private void UnregisterEventListeners()
         {
-            Properties.Settings.Default.PropertyChanged -= new PropertyChangedEventHandler(Default_PropertyChanged);
+			Properties.Settings.Default.PropertyChanged -= new PropertyChangedEventHandler(Default_PropertyChanged);
 
             if (source == null)
                 return;
@@ -356,22 +356,22 @@ namespace XenAdmin.ConsoleView
             if (vncScreen == null)
                 return;
 
-            if (Properties.Settings.Default.FullScreenShortcutKey == 0)
+            if (SettingsAbstraction.Instance.FullScreenShortcutKey == 0)
             {
                 // Ctrl + Alt
                 KeyHandler.AddKeyHandler(ConsoleShortcutKey.CTRL_ALT, waitForInsKey);
             }
-            else if (Properties.Settings.Default.FullScreenShortcutKey == 1)
+            else if (SettingsAbstraction.Instance.FullScreenShortcutKey == 1)
             {
                 // Ctrl + Alt + F
                 KeyHandler.AddKeyHandler(ConsoleShortcutKey.CTRL_ALT_F, toggleFullscreen);
             }
-            else if (Properties.Settings.Default.FullScreenShortcutKey == 2)
+            else if (SettingsAbstraction.Instance.FullScreenShortcutKey == 2)
             {
                 // F12
                 KeyHandler.AddKeyHandler(ConsoleShortcutKey.F12, toggleFullscreen);
             }
-            else if (Properties.Settings.Default.FullScreenShortcutKey == 3)
+            else if (SettingsAbstraction.Instance.FullScreenShortcutKey == 3)
             {
                 // Ctrl + Enter
                 KeyHandler.AddKeyHandler(ConsoleShortcutKey.CTRL_ENTER, toggleFullscreen);
@@ -380,16 +380,16 @@ namespace XenAdmin.ConsoleView
             UpdateFullScreenButton();
 
             // CA-10943
-            if (Properties.Settings.Default.DockShortcutKey == 1)
+            if (SettingsAbstraction.Instance.DockShortcutKey == 1)
             {
                 // Alt + Shift + U
                 KeyHandler.AddKeyHandler(ConsoleShortcutKey.ALT_SHIFT_U, toggleDockUnDock);}
-            else if (Properties.Settings.Default.DockShortcutKey == 2)
+            else if (SettingsAbstraction.Instance.DockShortcutKey == 2)
             {
                 // F11
                 KeyHandler.AddKeyHandler(ConsoleShortcutKey.F11, toggleDockUnDock); 
             }
-            else if (Properties.Settings.Default.DockShortcutKey == 0)
+            else if (SettingsAbstraction.Instance.DockShortcutKey == 0)
             {
                 // <none>
                 KeyHandler.RemoveKeyHandler(ConsoleShortcutKey.ALT_SHIFT_U);
@@ -399,12 +399,12 @@ namespace XenAdmin.ConsoleView
             UpdateDockButton();
 
             // Uncapture keyboard and mouse Key
-            if (Properties.Settings.Default.UncaptureShortcutKey == 0)
+            if (SettingsAbstraction.Instance.UncaptureShortcutKey == 0)
             {
                 // Right Ctrl
                 KeyHandler.AddKeyHandler(ConsoleShortcutKey.RIGHT_CTRL, ToggleConsoleFocus); 
             }
-            else if (Properties.Settings.Default.UncaptureShortcutKey == 1)
+            else if (SettingsAbstraction.Instance.UncaptureShortcutKey == 1)
             {
                 // Left Alt
                 KeyHandler.AddKeyHandler(ConsoleShortcutKey.LEFT_ALT, ToggleConsoleFocus); 
@@ -418,48 +418,48 @@ namespace XenAdmin.ConsoleView
             if (vncScreen == null)
                 return;
 
-            if (Properties.Settings.Default.FullScreenShortcutKey != 0)
+            if (SettingsAbstraction.Instance.FullScreenShortcutKey != 0)
             {
                 // Ctrl + Alt
                 KeyHandler.RemoveKeyHandler(ConsoleShortcutKey.CTRL_ALT);
             }
 
-            if (Properties.Settings.Default.FullScreenShortcutKey != 1)
+            if (SettingsAbstraction.Instance.FullScreenShortcutKey != 1)
             {
                 // Ctrl + Alt + F
                 KeyHandler.RemoveKeyHandler(ConsoleShortcutKey.CTRL_ALT_F);
             }
 
-            if (Properties.Settings.Default.FullScreenShortcutKey != 2)
+            if (SettingsAbstraction.Instance.FullScreenShortcutKey != 2)
             {
                 // F12
                 KeyHandler.RemoveKeyHandler(ConsoleShortcutKey.F12);
             }
-            if (Properties.Settings.Default.FullScreenShortcutKey != 3)
+            if (SettingsAbstraction.Instance.FullScreenShortcutKey != 3)
             {
                 // Ctrl + Enter
                 KeyHandler.RemoveKeyHandler(ConsoleShortcutKey.CTRL_ENTER); 
             }
 
-            if (Properties.Settings.Default.DockShortcutKey != 1)
+            if (SettingsAbstraction.Instance.DockShortcutKey != 1)
             {
                 // Alt + Shift + U
                 KeyHandler.RemoveKeyHandler(ConsoleShortcutKey.ALT_SHIFT_U); 
             }
 
-            if (Properties.Settings.Default.DockShortcutKey != 2)
+            if (SettingsAbstraction.Instance.DockShortcutKey != 2)
             {
                 // F11
                 KeyHandler.RemoveKeyHandler(ConsoleShortcutKey.F11); 
             }
 
             // Uncapture keyboard and mouse Key
-            if (Properties.Settings.Default.UncaptureShortcutKey != 0)
+            if (SettingsAbstraction.Instance.UncaptureShortcutKey != 0)
             {
                 // Right Ctrl
                 KeyHandler.RemoveKeyHandler(ConsoleShortcutKey.RIGHT_CTRL); 
             }
-            if (Properties.Settings.Default.UncaptureShortcutKey != 1)
+            if (SettingsAbstraction.Instance.UncaptureShortcutKey != 1)
             {
                 // Left Alt
                 KeyHandler.RemoveKeyHandler(ConsoleShortcutKey.LEFT_ALT); 
@@ -469,11 +469,11 @@ namespace XenAdmin.ConsoleView
         public void UpdateDockButton()
         {
             dockButton.Text = parentVNCView.isDocked ? Messages.VNC_UNDOCK : Messages.VNC_REDOCK;
-            if (Properties.Settings.Default.DockShortcutKey == 1)
+            if (SettingsAbstraction.Instance.DockShortcutKey == 1)
             {
                 dockButton.Text += Messages.VNC_DOCK_ALT_SHIFT_U;
             }
-            else if (Properties.Settings.Default.DockShortcutKey == 2)
+            else if (SettingsAbstraction.Instance.DockShortcutKey == 2)
             {
                 dockButton.Text += Messages.VNC_DOCK_F11;
             }
@@ -482,7 +482,7 @@ namespace XenAdmin.ConsoleView
 
         public void UpdateFullScreenButton()
         {
-            switch (Properties.Settings.Default.FullScreenShortcutKey)
+            switch (SettingsAbstraction.Instance.FullScreenShortcutKey)
             {
                 case 0:
                     fullscreenButton.Text = Messages.VNC_FULLSCREEN_CTRL_ALT;
@@ -554,7 +554,7 @@ namespace XenAdmin.ConsoleView
                  // 2. RDP status changed by turned on RDP in-guest and with "Automatically switch to the Remote 
                  //    Desktop console when it becomes available" is on. But if user already choose connection type by click "Turn on/Switch to Remote Desktop"
                  //    or "Switch to Default desktop", we will take AutoSwitchToRDP as no effect
-                    if (vncScreen.UseVNC && (tryToConnectRDP || (!vncScreen.UserWantsToSwitchProtocol && Properties.Settings.Default.AutoSwitchToRDP)))
+                    if (vncScreen.UseVNC && (tryToConnectRDP || (!vncScreen.UserWantsToSwitchProtocol && SettingsAbstraction.Instance.AutoSwitchToRDP)))
                     {
                         tryToConnectRDP = false;
 
@@ -577,7 +577,7 @@ namespace XenAdmin.ConsoleView
 
                 log.DebugFormat( "'{0}' console: Enabling RDP button, because RDP capability has appeared.", source);
 
-                if (Properties.Settings.Default.EnableRDPPolling)
+                if (SettingsAbstraction.Instance.EnableRDPPolling)
                 {
                     log.DebugFormat("'{0}' console: Starting RDP polling. (RDP polling is enabled in settings.)", source);
                     toggleConsoleButton.Visible = true;
@@ -861,7 +861,7 @@ namespace XenAdmin.ConsoleView
             if (vncScreen.DesktopSize.Width > 10 &&
                 contentPanel.Width < vncScreen.DesktopSize.Width)
             {
-                if (!Properties.Settings.Default.PreserveScaleWhenSwitchBackToVNC)
+                if (!SettingsAbstraction.Instance.PreserveScaleWhenSwitchBackToVNC)
                 {
                     scaleCheckBox.Checked = true;
                 }
@@ -871,7 +871,7 @@ namespace XenAdmin.ConsoleView
                     firstTime = false;
                 }
             }
-            else if (Properties.Settings.Default.PreserveScaleWhenSwitchBackToVNC)
+            else if (SettingsAbstraction.Instance.PreserveScaleWhenSwitchBackToVNC)
             {
                 scaleCheckBox.Checked = oldScaleValue;
             }
@@ -1110,7 +1110,7 @@ namespace XenAdmin.ConsoleView
                         this.toggleConsoleButton.Text = UseRDP;
                 this.toggleConsoleButton.Enabled = true;
                 tip.SetToolTip(this.toggleConsoleButton, null);
-                if (!vncScreen.UserWantsToSwitchProtocol&& Properties.Settings.Default.AutoSwitchToRDP)
+                if (!vncScreen.UserWantsToSwitchProtocol&& SettingsAbstraction.Instance.AutoSwitchToRDP)
                 {
                     if (Program.MainWindow.TheTabControl.SelectedTab == Program.MainWindow.TabPageConsole)
                         toggleConsoleButton_Click(null, null);
@@ -1186,7 +1186,7 @@ namespace XenAdmin.ConsoleView
                         }
                     }
 
-                    if (vncScreen.rdpIP == null && vncScreen.UseVNC && Properties.Settings.Default.EnableRDPPolling && (!(Helpers.CreamOrGreater(source.Connection) && RDPControlEnabled) || tryToConnectRDP))
+                    if (vncScreen.rdpIP == null && vncScreen.UseVNC && SettingsAbstraction.Instance.EnableRDPPolling && (!(Helpers.CreamOrGreater(source.Connection) && RDPControlEnabled) || tryToConnectRDP))
                     {
                         toggleConsoleButton.Enabled = false;
                     }
@@ -1202,7 +1202,7 @@ namespace XenAdmin.ConsoleView
                     oldScaleValue = scaleCheckBox.Checked;
                     vncScreen.UseSource = !vncScreen.UseSource;
 
-                    if (vncScreen.vncIP == null && vncScreen.UseSource && Properties.Settings.Default.EnableRDPPolling)
+                    if (vncScreen.vncIP == null && vncScreen.UseSource && SettingsAbstraction.Instance.EnableRDPPolling)
                     {
                         toggleConsoleButton.Enabled = false;
                     }
@@ -1231,7 +1231,7 @@ namespace XenAdmin.ConsoleView
             sendCAD.Enabled = !rdp || vncScreen.UseVNC;
             FocusVNC();
             ignoreScaleChange = true;
-            if (!Properties.Settings.Default.PreserveScaleWhenSwitchBackToVNC)
+            if (!SettingsAbstraction.Instance.PreserveScaleWhenSwitchBackToVNC)
             {
                 scaleCheckBox.Checked = false;
             }

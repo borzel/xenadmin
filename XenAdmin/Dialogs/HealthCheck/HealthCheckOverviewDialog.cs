@@ -299,7 +299,7 @@ namespace XenAdmin.Dialogs.HealthCheck
             {
                 xenConnection.Cache.RegisterBatchCollectionChanged<Pool>(Pool_BatchCollectionChanged);
             }
-            showAgainCheckBox.Checked = Properties.Settings.Default.ShowHealthCheckEnrollmentReminder;
+			showAgainCheckBox.Checked = SettingsAbstraction.Instance.ShowHealthCheckEnrollmentReminder;
         }
 
         private void dataGridView1_SelectionChanged(object sender, EventArgs e)
@@ -378,9 +378,9 @@ namespace XenAdmin.Dialogs.HealthCheck
 
         private void showAgainCheckBox_CheckedChanged(object sender, EventArgs e)
         {
-            if (Properties.Settings.Default.ShowHealthCheckEnrollmentReminder != showAgainCheckBox.Checked)
+			if (SettingsAbstraction.Instance.ShowHealthCheckEnrollmentReminder != showAgainCheckBox.Checked)
             {
-                Properties.Settings.Default.ShowHealthCheckEnrollmentReminder = showAgainCheckBox.Checked;
+				SettingsAbstraction.Instance.ShowHealthCheckEnrollmentReminder = showAgainCheckBox.Checked;
                 Settings.TrySaveSettings();
             }
         }

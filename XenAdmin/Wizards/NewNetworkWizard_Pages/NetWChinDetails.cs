@@ -106,7 +106,7 @@ namespace XenAdmin.Wizards.NewNetworkWizard_Pages
                 if (pool == null && host != null && pif.host.opaque_ref != host.opaque_ref)
                     continue;
 
-                if (pif.IsManagementInterface(XenAdmin.Properties.Settings.Default.ShowHiddenVMs))
+                if (pif.IsManagementInterface(XenAdmin.SettingsAbstraction.Instance.ShowHiddenVMs))
                 {
                     XenAPI.Network network = connection.Resolve(pif.network);
                     if (network != null &&  // this should have been checked already by pif.IsManagementInterface, but...

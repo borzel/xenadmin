@@ -157,7 +157,7 @@ namespace XenAdmin.Commands
             List<AsyncAction> actionsToComplete = new List<AsyncAction>();
             foreach (VDI vdi in selection.AsXenObjects<VDI>())
             {
-                if (vdi.Locked || !vdi.Show(XenAdmin.Properties.Settings.Default.ShowHiddenVMs))
+                if (vdi.Locked || !vdi.Show(XenAdmin.SettingsAbstraction.Instance.ShowHiddenVMs))
                     continue;
 
                 actionsToComplete.AddRange(getDetachVDIAction(vdi));

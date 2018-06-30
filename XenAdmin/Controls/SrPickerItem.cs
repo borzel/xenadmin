@@ -272,7 +272,7 @@ namespace XenAdmin.Controls
         {
             get
             {
-                return TheSR.ShowInVDISRList(Properties.Settings.Default.ShowHiddenVMs);
+                return TheSR.ShowInVDISRList(SettingsAbstraction.Instance.ShowHiddenVMs);
             }
         }
 

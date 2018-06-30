@@ -150,7 +150,7 @@ namespace XenAdmin.Commands
                 DialogResult dr = new InstallToolsWarningDialog(vm.Connection).ShowDialog(Parent);
                 if (dr == DialogResult.Yes)
                 {
-                    var installToolsAction = new InstallPVToolsAction(vm, Properties.Settings.Default.ShowHiddenVMs);
+                    var installToolsAction = new InstallPVToolsAction(vm, SettingsAbstraction.Instance.ShowHiddenVMs);
                     installToolsAction.Completed += InstallToolsActionCompleted;
 
                     installToolsAction.RunAsync();
@@ -213,7 +213,7 @@ namespace XenAdmin.Commands
                 {
                     foreach (VM vm in vms)
                     {
-                        var installToolsAction = new InstallPVToolsAction(vm, Properties.Settings.Default.ShowHiddenVMs);
+                        var installToolsAction = new InstallPVToolsAction(vm, SettingsAbstraction.Instance.ShowHiddenVMs);
 
                         if (vms.IndexOf(vm) == 0)
                         {

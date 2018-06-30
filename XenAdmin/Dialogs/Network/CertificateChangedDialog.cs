@@ -1,4 +1,4 @@
-/* Copyright (c) Citrix Systems, Inc. 
+﻿/* Copyright (c) Citrix Systems, Inc. 
  * All rights reserved. 
  * 
  * Redistribution and use in source and binary forms, 
@@ -78,7 +78,7 @@ namespace XenAdmin.Dialogs.Network
             Settings.ReplaceCertificate(_hostname, NewCertificate);
             if (AlwaysIgnoreCheckBox.Enabled && AlwaysIgnoreCheckBox.Checked)
             {
-                Properties.Settings.Default.WarnChangedCertificate = false;
+                SettingsAbstraction.Instance.WarnChangedCertificate = false;
                 Settings.TrySaveSettings();
             }
         }

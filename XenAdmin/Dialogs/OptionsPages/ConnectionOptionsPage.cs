@@ -64,7 +64,7 @@ namespace XenAdmin.Dialogs.OptionsPages
         private void build()
         {
             // Proxy server
-            switch ((HTTPHelper.ProxyStyle)Properties.Settings.Default.ProxySetting)
+            switch ((HTTPHelper.ProxyStyle)SettingsAbstraction.Instance.ProxySetting)
             {
                 case HTTPHelper.ProxyStyle.DirectConnection:
                     DirectConnectionRadioButton.Checked = true;
@@ -80,13 +80,13 @@ namespace XenAdmin.Dialogs.OptionsPages
                     break;
             }
 
-            ProxyAddressTextBox.Text = Properties.Settings.Default.ProxyAddress;
-            ProxyPortTextBox.Text = Properties.Settings.Default.ProxyPort.ToString();
-            BypassForServersCheckbox.Checked = Properties.Settings.Default.BypassProxyForServers;
+            ProxyAddressTextBox.Text = SettingsAbstraction.Instance.ProxyAddress;
+            ProxyPortTextBox.Text = SettingsAbstraction.Instance.ProxyPort.ToString();
+            BypassForServersCheckbox.Checked = SettingsAbstraction.Instance.BypassProxyForServers;
 
-            AuthenticationCheckBox.Checked = Properties.Settings.Default.ProvideProxyAuthentication;
+            AuthenticationCheckBox.Checked = SettingsAbstraction.Instance.ProvideProxyAuthentication;
                 
-            switch ((HTTP.ProxyAuthenticationMethod)Properties.Settings.Default.ProxyAuthenticationMethod)
+            switch ((HTTP.ProxyAuthenticationMethod)SettingsAbstraction.Instance.ProxyAuthenticationMethod)
             {
                 case HTTP.ProxyAuthenticationMethod.Basic:
                     BasicRadioButton.Checked = true;
@@ -100,12 +100,12 @@ namespace XenAdmin.Dialogs.OptionsPages
             }
 
             // checks for empty default username/password which starts out unencrypted
-            string protectedUsername = Properties.Settings.Default.ProxyUsername;
-            ProxyUsernameTextBox.Text = string.IsNullOrEmpty(protectedUsername) ? "" : EncryptionUtils.Unprotect(Properties.Settings.Default.ProxyUsername);
-            string protectedPassword = Properties.Settings.Default.ProxyPassword;
-            ProxyPasswordTextBox.Text = string.IsNullOrEmpty(protectedPassword) ? "" : EncryptionUtils.Unprotect(Properties.Settings.Default.ProxyPassword);
+            string protectedUsername = SettingsAbstraction.Instance.ProxyUsername;
+            ProxyUsernameTextBox.Text = string.IsNullOrEmpty(protectedUsername) ? "" : EncryptionUtils.Unprotect(SettingsAbstraction.Instance.ProxyUsername);
+            string protectedPassword = SettingsAbstraction.Instance.ProxyPassword;
+            ProxyPasswordTextBox.Text = string.IsNullOrEmpty(protectedPassword) ? "" : EncryptionUtils.Unprotect(SettingsAbstraction.Instance.ProxyPassword);
             
-            ConnectionTimeoutNud.Value = Properties.Settings.Default.ConnectionTimeout / 1000;
+            ConnectionTimeoutNud.Value = SettingsAbstraction.Instance.ConnectionTimeout / 1000;
 
             eventsDisabled = false;
         }
@@ -203,13 +203,13 @@ namespace XenAdmin.Dialogs.OptionsPages
         {
             log.Info(ConnectionTabSettingsHeader);
             // Proxy server
-            log.Info("=== ProxySetting: " + Properties.Settings.Default.ProxySetting.ToString());
-            log.Info("=== ProxyAddress: " + Properties.Settings.Default.ProxyAddress.ToString());
-            log.Info("=== ProxyPort: " + Properties.Settings.Default.ProxyPort.ToString());
-            log.Info("=== ByPassProxyForServers: " + Properties.Settings.Default.BypassProxyForServers.ToString());
-            log.Info("=== ProvideProxyAuthentication: " + Properties.Settings.Default.ProvideProxyAuthentication.ToString());
-            log.Info("=== ProxyAuthenticationMethod: " + Properties.Settings.Default.ProxyAuthenticationMethod.ToString());
-            log.Info("=== ConnectionTimeout: " + Properties.Settings.Default.ConnectionTimeout.ToString());
+            log.Info("=== ProxySetting: " + SettingsAbstraction.Instance.ProxySetting.ToString());
+            log.Info("=== ProxyAddress: " + SettingsAbstraction.Instance.ProxyAddress.ToString());
+            log.Info("=== ProxyPort: " + SettingsAbstraction.Instance.ProxyPort.ToString());
+            log.Info("=== ByPassProxyForServers: " + SettingsAbstraction.Instance.BypassProxyForServers.ToString());
+            log.Info("=== ProvideProxyAuthentication: " + SettingsAbstraction.Instance.ProvideProxyAuthentication.ToString());
+            log.Info("=== ProxyAuthenticationMethod: " + SettingsAbstraction.Instance.ProxyAuthenticationMethod.ToString());
+            log.Info("=== ConnectionTimeout: " + SettingsAbstraction.Instance.ConnectionTimeout.ToString());
         }
 
         #region IOptionsPage Members
@@ -222,40 +222,40 @@ namespace XenAdmin.Dialogs.OptionsPages
                 UseIERadioButton.Checked ? HTTPHelper.ProxyStyle.SystemProxy :
                                                       HTTPHelper.ProxyStyle.SpecifiedProxy;
             
-            if (Properties.Settings.Default.ProxySetting != (int)new_proxy_style)
-                Properties.Settings.Default.ProxySetting = (int)new_proxy_style;
+            if (SettingsAbstraction.Instance.ProxySetting != (int)new_proxy_style)
+                SettingsAbstraction.Instance.ProxySetting = (int)new_proxy_style;
             
-            if (ProxyAddressTextBox.Text != Properties.Settings.Default.ProxyAddress && !string.IsNullOrEmpty(ProxyAddressTextBox.Text))
-                Properties.Settings.Default.ProxyAddress = ProxyAddressTextBox.Text;
+            if (ProxyAddressTextBox.Text != SettingsAbstraction.Instance.ProxyAddress && !string.IsNullOrEmpty(ProxyAddressTextBox.Text))
+                SettingsAbstraction.Instance.ProxyAddress = ProxyAddressTextBox.Text;
 
-            Properties.Settings.Default.ProxyUsername = EncryptionUtils.Protect(ProxyUsernameTextBox.Text);
-            Properties.Settings.Default.ProxyPassword = EncryptionUtils.Protect(ProxyPasswordTextBox.Text);
-            Properties.Settings.Default.ProvideProxyAuthentication = AuthenticationCheckBox.Checked;
+            SettingsAbstraction.Instance.ProxyUsername = EncryptionUtils.Protect(ProxyUsernameTextBox.Text);
+            SettingsAbstraction.Instance.ProxyPassword = EncryptionUtils.Protect(ProxyPasswordTextBox.Text);
+            SettingsAbstraction.Instance.ProvideProxyAuthentication = AuthenticationCheckBox.Checked;
 
             HTTP.ProxyAuthenticationMethod new_auth_method = BasicRadioButton.Checked ?
                 HTTP.ProxyAuthenticationMethod.Basic : HTTP.ProxyAuthenticationMethod.Digest;
-            if (Properties.Settings.Default.ProxyAuthenticationMethod != (int)new_auth_method)
-                Properties.Settings.Default.ProxyAuthenticationMethod = (int)new_auth_method;
+            if (SettingsAbstraction.Instance.ProxyAuthenticationMethod != (int)new_auth_method)
+                SettingsAbstraction.Instance.ProxyAuthenticationMethod = (int)new_auth_method;
 
             try
             {
                 int port = int.Parse(ProxyPortTextBox.Text);
-                if (port != Properties.Settings.Default.ProxyPort)
-                    Properties.Settings.Default.ProxyPort = port;
+                if (port != SettingsAbstraction.Instance.ProxyPort)
+                    SettingsAbstraction.Instance.ProxyPort = port;
             }
             catch
             {
-                Properties.Settings.Default.ProxyPort = 80;
+                SettingsAbstraction.Instance.ProxyPort = 80;
             }
 
-            if (BypassForServersCheckbox.Checked != Properties.Settings.Default.BypassProxyForServers)
-                Properties.Settings.Default.BypassProxyForServers = BypassForServersCheckbox.Checked;
+            if (BypassForServersCheckbox.Checked != SettingsAbstraction.Instance.BypassProxyForServers)
+                SettingsAbstraction.Instance.BypassProxyForServers = BypassForServersCheckbox.Checked;
 
             // timeout settings
             int timeout = (int)ConnectionTimeoutNud.Value;
-            if (timeout * 1000 != Properties.Settings.Default.ConnectionTimeout)
+            if (timeout * 1000 != SettingsAbstraction.Instance.ConnectionTimeout)
             {
-                Properties.Settings.Default.ConnectionTimeout = timeout * 1000;
+                SettingsAbstraction.Instance.ConnectionTimeout = timeout * 1000;
             }
 
             Program.ReconfigureConnectionSettings();

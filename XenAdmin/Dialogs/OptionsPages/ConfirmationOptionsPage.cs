@@ -60,23 +60,23 @@ namespace XenAdmin.Dialogs.OptionsPages
 
         public static void Log()
         {
-            log.InfoFormat("=== DoNotConfirmDismissAlerts: {0}", Properties.Settings.Default.DoNotConfirmDismissAlerts);
-            log.InfoFormat("=== DoNotConfirmDismissUpdates: {0}", Properties.Settings.Default.DoNotConfirmDismissUpdates);
-            log.InfoFormat("=== DoNotConfirmDismissEvents: {0}", Properties.Settings.Default.DoNotConfirmDismissEvents);
+            log.InfoFormat("=== DoNotConfirmDismissAlerts: {0}", SettingsAbstraction.Instance.DoNotConfirmDismissAlerts);
+            log.InfoFormat("=== DoNotConfirmDismissUpdates: {0}", SettingsAbstraction.Instance.DoNotConfirmDismissUpdates);
+            log.InfoFormat("=== DoNotConfirmDismissEvents: {0}", SettingsAbstraction.Instance.DoNotConfirmDismissEvents);
         }
 
         #region IOptionsPage Members
 
         public void Save()
         {
-            if (Properties.Settings.Default.DoNotConfirmDismissAlerts != checkBoxDontConfirmDismissAlerts.Checked)
-                Properties.Settings.Default.DoNotConfirmDismissAlerts = checkBoxDontConfirmDismissAlerts.Checked;
+            if (SettingsAbstraction.Instance.DoNotConfirmDismissAlerts != checkBoxDontConfirmDismissAlerts.Checked)
+                SettingsAbstraction.Instance.DoNotConfirmDismissAlerts = checkBoxDontConfirmDismissAlerts.Checked;
 
-            if (Properties.Settings.Default.DoNotConfirmDismissUpdates != checkBoxDontConfirmDismissUpdates.Checked)
-                Properties.Settings.Default.DoNotConfirmDismissUpdates = checkBoxDontConfirmDismissUpdates.Checked;
+            if (SettingsAbstraction.Instance.DoNotConfirmDismissUpdates != checkBoxDontConfirmDismissUpdates.Checked)
+                SettingsAbstraction.Instance.DoNotConfirmDismissUpdates = checkBoxDontConfirmDismissUpdates.Checked;
 
-            if (Properties.Settings.Default.DoNotConfirmDismissEvents != checkBoxDontConfirmDismissEvents.Checked)
-                Properties.Settings.Default.DoNotConfirmDismissEvents = checkBoxDontConfirmDismissEvents.Checked;
+            if (SettingsAbstraction.Instance.DoNotConfirmDismissEvents != checkBoxDontConfirmDismissEvents.Checked)
+                SettingsAbstraction.Instance.DoNotConfirmDismissEvents = checkBoxDontConfirmDismissEvents.Checked;
         }
 
         #endregion

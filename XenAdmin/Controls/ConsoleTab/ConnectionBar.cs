@@ -170,7 +170,7 @@ namespace XenAdmin.Controls.ConsoleTab
             if (state == Animating.Open)
                 return;
 
-            if (Properties.Settings.Default.PinConnectionBar)
+            if (SettingsAbstraction.Instance.PinConnectionBar)
             {
                 ShowPinned();
                 return;
@@ -184,7 +184,7 @@ namespace XenAdmin.Controls.ConsoleTab
         {
             if (state == Animating.Closed)
                 return;
-            if (Properties.Settings.Default.PinConnectionBar)
+            if (SettingsAbstraction.Instance.PinConnectionBar)
                 return;
             state = Animating.Hiding;
             timer.Stop();
@@ -221,9 +221,9 @@ namespace XenAdmin.Controls.ConsoleTab
 
         private void buttonPin_CheckedChanged(object sender, EventArgs e)
         {
-            if (Properties.Settings.Default.PinConnectionBar != buttonPin.Checked)
+            if (SettingsAbstraction.Instance.PinConnectionBar != buttonPin.Checked)
             {
-                Properties.Settings.Default.PinConnectionBar = buttonPin.Checked;
+                SettingsAbstraction.Instance.PinConnectionBar = buttonPin.Checked;
                 Settings.TrySaveSettings();
             }
             if (buttonPin.Checked)

@@ -1,4 +1,4 @@
-/* Copyright (c) Citrix Systems, Inc. 
+﻿/* Copyright (c) Citrix Systems, Inc. 
  * All rights reserved. 
  * 
  * Redistribution and use in source and binary forms, 
@@ -156,7 +156,7 @@ namespace XenAdmin.Dialogs
                     if (item.Show)
                     {
                         DiskListTreeView.AddNode(item);
-                        foreach (VDI TheVDI in sr.Connection.ResolveAllShownXenModelObjects(sr.VDIs, Properties.Settings.Default.ShowHiddenVMs))
+                        foreach (VDI TheVDI in sr.Connection.ResolveAllShownXenModelObjects(sr.VDIs, SettingsAbstraction.Instance.ShowHiddenVMs))
                         {
                             DiskListVdiItem VDIitem = new DiskListVdiItem(TheVDI);
                             if (VDIitem.Show)
@@ -263,7 +263,7 @@ namespace XenAdmin.Dialogs
             foreach (SR sr in connection.Cache.SRs)
             {
                 sr.PropertyChanged -= new PropertyChangedEventHandler(Server_Changed);
-                foreach (VDI TheVDI in sr.Connection.ResolveAllShownXenModelObjects(sr.VDIs, Properties.Settings.Default.ShowHiddenVMs))
+                foreach (VDI TheVDI in sr.Connection.ResolveAllShownXenModelObjects(sr.VDIs, SettingsAbstraction.Instance.ShowHiddenVMs))
                 {
                     TheVDI.PropertyChanged -= new PropertyChangedEventHandler(Server_Changed);
                 }
@@ -302,7 +302,7 @@ namespace XenAdmin.Dialogs
 
             Host affinity = TheVM.Connection.Resolve<Host>(TheVM.affinity);
             Host activeHost = TheVM.Connection.Resolve<Host>(TheVM.resident_on);
-            if (!TheSR.Show(Properties.Settings.Default.ShowHiddenVMs))
+            if (!TheSR.Show(SettingsAbstraction.Instance.ShowHiddenVMs))
             {
                 Show = false;
             }

@@ -203,7 +203,7 @@ namespace XenAdmin.Dialogs
             List <PIF> result = new List<PIF>();
             foreach (XenAPI.Network network in connection.Cache.Networks)
             {
-                if (network.Show(include_invisible || Properties.Settings.Default.ShowHiddenVMs))
+                if (network.Show(include_invisible || SettingsAbstraction.Instance.ShowHiddenVMs))
                 {
                     PIF pif = FindPIFForThisHost(network.PIFs);
                     if (pif != null)
@@ -242,7 +242,7 @@ namespace XenAdmin.Dialogs
 
             foreach (XenAPI.Network network in connection.Cache.Networks)
             {
-                if (network.Show(Properties.Settings.Default.ShowHiddenVMs))
+                if (network.Show(SettingsAbstraction.Instance.ShowHiddenVMs))
                 {
                     if (connection.ResolveAll(network.PIFs).Find(p => !p.IsTunnelAccessPIF()) == null)  // no PIFs, or all the PIFs are tunnel access PIFs so the network is a CHIN
                         continue;
@@ -442,7 +442,7 @@ namespace XenAdmin.Dialogs
 
             foreach (PIF pif in AllPIFs)
             {
-                if (pif.IsManagementInterface(XenAdmin.Properties.Settings.Default.ShowHiddenVMs))
+                if (pif.IsManagementInterface(XenAdmin.SettingsAbstraction.Instance.ShowHiddenVMs))
                     downPIFs.Add(pif);
             }
 

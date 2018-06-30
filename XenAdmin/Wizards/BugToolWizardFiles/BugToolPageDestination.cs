@@ -1,4 +1,4 @@
-/* Copyright (c) Citrix Systems, Inc. 
+﻿/* Copyright (c) Citrix Systems, Inc. 
  * All rights reserved. 
  * 
  * Redistribution and use in source and binary forms, 
@@ -62,7 +62,7 @@ namespace XenAdmin.Wizards.BugToolWizardFiles
 
             try
             {
-                string initialDirectory = Path.GetDirectoryName(Properties.Settings.Default.ServerStatusPath);
+                string initialDirectory = Path.GetDirectoryName(SettingsAbstraction.Instance.ServerStatusPath);
 
                 if (!string.IsNullOrEmpty(initialDirectory) && Directory.Exists(initialDirectory))
                     m_textBoxLocation.Text = initialDirectory;

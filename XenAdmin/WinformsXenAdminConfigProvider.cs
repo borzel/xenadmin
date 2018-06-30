@@ -57,7 +57,7 @@ namespace XenAdmin
 
         public int ConnectionTimeout
         {
-            get { return Properties.Settings.Default.ConnectionTimeout; }
+            get { return SettingsAbstraction.Instance.ConnectionTimeout; }
         }
 
         public Session CreateActionSession(Session session, IXenConnection connection)
@@ -97,20 +97,20 @@ namespace XenAdmin
                 if (connection != null && connection.Session != null && connection.Session.uuid == "dummy")
                     return new XenAdminSimulatorWebProxy(DbProxy.proxys[connection]);
 
-                switch ((HTTPHelper.ProxyStyle)XenAdmin.Properties.Settings.Default.ProxySetting)
+                switch ((HTTPHelper.ProxyStyle)XenAdmin.SettingsAbstraction.Instance.ProxySetting)
                 {
                     case HTTPHelper.ProxyStyle.SpecifiedProxy:
-                        if (isForXenServer && Properties.Settings.Default.BypassProxyForServers)
+                        if (isForXenServer && SettingsAbstraction.Instance.BypassProxyForServers)
                             return null;
 
                         string address = string.Format("http://{0}:{1}",
-                            XenAdmin.Properties.Settings.Default.ProxyAddress,
-                            XenAdmin.Properties.Settings.Default.ProxyPort);
+                            XenAdmin.SettingsAbstraction.Instance.ProxyAddress,
+                            XenAdmin.SettingsAbstraction.Instance.ProxyPort);
 
-                        if (XenAdmin.Properties.Settings.Default.ProvideProxyAuthentication)
+                        if (XenAdmin.SettingsAbstraction.Instance.ProvideProxyAuthentication)
                         {
-                            string protectedUsername = XenAdmin.Properties.Settings.Default.ProxyUsername;
-                            string protectedPassword = XenAdmin.Properties.Settings.Default.ProxyPassword;
+                            string protectedUsername = XenAdmin.SettingsAbstraction.Instance.ProxyUsername;
+                            string protectedPassword = XenAdmin.SettingsAbstraction.Instance.ProxyPassword;
                             return new WebProxy(address, false, null, new NetworkCredential(
                                 // checks for empty default username/password which starts out unencrypted
                                 string.IsNullOrEmpty(protectedUsername) ? "" : EncryptionUtils.Unprotect(protectedUsername),
@@ -143,7 +143,7 @@ namespace XenAdmin
 
         public int GetProxyTimeout(bool timeout)
         {
-            return timeout ? XenAdmin.Properties.Settings.Default.HttpTimeout : 0;
+            return timeout ? XenAdmin.SettingsAbstraction.Instance.HttpTimeout : 0;
         }
 
         public void ShowObject(string newVMRef)
@@ -195,7 +195,7 @@ namespace XenAdmin
 
         public bool ShowHiddenVMs
         {
-            get { return XenAdmin.Properties.Settings.Default.ShowHiddenVMs; }
+            get { return XenAdmin.SettingsAbstraction.Instance.ShowHiddenVMs; }
         }
 
         public PluginManager PluginManager;

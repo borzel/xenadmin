@@ -52,7 +52,7 @@ namespace XenAdmin.Commands
 
         protected override bool CanExecuteCore(SelectedItemCollection selection)
         {
-            if (XenAdmin.Properties.Settings.Default.RequirePass && Program.MasterPassword == null)
+            if (XenAdmin.SettingsAbstraction.Instance.RequirePass && Program.MasterPassword == null)
             {
                 // A master password is set, but they didn't enter it. Don't let them fiddle with the saved mater password session
                 return false;
@@ -62,7 +62,7 @@ namespace XenAdmin.Commands
 
         protected override string GetCantExecuteReasonCore(SelectedItem item)
         {
-            if (XenAdmin.Properties.Settings.Default.RequirePass && Program.MasterPassword == null)
+            if (XenAdmin.SettingsAbstraction.Instance.RequirePass && Program.MasterPassword == null)
                 return Messages.ENTER_MASTER_PASSWORD_TO_ACCESS_SETTINGS_TT;
 
             return base.GetCantExecuteReasonCore(item);
