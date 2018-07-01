@@ -1261,9 +1261,6 @@
     <Compile Include="Dialogs\XenDialogBase.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="LicenseTimer.cs">
-      <SubType>Component</SubType>
-    </Compile>
     <Compile Include="SettingsPanels\BootDevice.cs" />
     <Compile Include="SettingsPanels\CPUMemoryEditPage.cs">
       <SubType>UserControl</SubType>
@@ -2640,7 +2637,6 @@
     <Compile Include="Actions\GUIActions\MeddlingActionManager.cs" />
     <Compile Include="Actions\GUIActions\MeddlingActionTaskSpecifications.cs" />
     <Compile Include="Alerts\AlertExtensions.cs" />
-    <Compile Include="Alerts\Types\LicenseAlert.cs" />
     <Compile Include="Alerts\Types\IqnAlert.cs" />
     <Compile Include="Commands\ApplyLicenseEditionCommand.cs" />
     <Compile Include="Commands\BaseVIFCommand.cs" />
@@ -2842,10 +2838,6 @@
     <Compile Include="Dialogs\ConnectionRefusedDialog.Designer.cs">
       <DependentUpon>ConnectionRefusedDialog.cs</DependentUpon>
     </Compile>
-    <Compile Include="Dialogs\LicenseManager\LicenseCheckableDataGridView\ILicenseCheckableDataGridViewView.cs" />
-    <Compile Include="Dialogs\LicenseManager\LicenseCheckableDataGridView\LicenseCheckableDataGridView.cs">
-      <SubType>Component</SubType>
-    </Compile>
     <Compile Include="Controls\SummaryPanel\SummaryPanel.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -2984,29 +2976,6 @@
     <Compile Include="Dialogs\IscsiDeviceConfigDialog.Designer.cs">
       <DependentUpon>IscsiDeviceConfigDialog.cs</DependentUpon>
     </Compile>
-    <Compile Include="Dialogs\LicenseManager\ILicenseManagerView.cs" />
-    <Compile Include="Dialogs\LicenseManager\LicenseCheckableDataGridView\LicenseCheckableDataGridViewController.cs" />
-    <Compile Include="Dialogs\LicenseManager\LicenseDataGridViewRow.cs" />
-    <Compile Include="Dialogs\LicenseManager\LicenseManager.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Dialogs\LicenseManager\LicenseManager.Designer.cs">
-      <DependentUpon>LicenseManager.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Dialogs\LicenseManager\LicenseManagerController.cs" />
-    <Compile Include="Dialogs\LicenseManager\LicenseManagerLauncher.cs" />
-    <Compile Include="Dialogs\LicenseManager\LicenseRowComparers\ExpiryComparer.cs" />
-    <Compile Include="Dialogs\LicenseManager\LicenseRowComparers\NameColumnComparer.cs" />
-    <Compile Include="Dialogs\LicenseManager\LicenseRowComparers\ProductColumnComparer.cs" />
-    <Compile Include="Dialogs\LicenseManager\SelectionVerifiers\CanUseLicenseServerVerifier.cs" />
-    <Compile Include="Dialogs\LicenseManager\SelectionVerifiers\HaOnVerifier.cs" />
-    <Compile Include="Dialogs\LicenseManager\SelectionVerifiers\LicenseSelectionVerifier.cs" />
-    <Compile Include="Dialogs\LicenseManager\SelectionVerifiers\NotLiveVerifier.cs" />
-    <Compile Include="Dialogs\LicenseManager\SelectionVerifiers\OlderServerVerifier.cs" />
-    <Compile Include="Dialogs\LicenseManager\SelectionVerifiers\SelectionVerifierFactory.cs" />
-    <Compile Include="Dialogs\LicenseManager\SummaryPanelDecorators\LicenseManagerSummaryComponent.cs" />
-    <Compile Include="Dialogs\LicenseManager\LicenseStatus.cs" />
-    <Compile Include="Dialogs\LicenseManager\SummaryPanelDecorators\LicenseManagerSummaryDecorators.cs" />
     <Compile Include="SettingsPanels\PoolGpuEditPage.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -5231,9 +5200,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Dialogs\LegalNoticesDialog.zh-CN.resx">
       <DependentUpon>LegalNoticesDialog.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Dialogs\LicenseManager\LicenseManager.resx">
-      <DependentUpon>LicenseManager.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Dialogs\LoadSessionDialog.ja.resx">
       <DependentUpon>LoadSessionDialog.cs</DependentUpon>

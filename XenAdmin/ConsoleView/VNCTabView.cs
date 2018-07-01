@@ -179,7 +179,7 @@ namespace XenAdmin.ConsoleView
 
             this.insKeyTimer = new System.Threading.Timer(new TimerCallback(notInsKeyPressed));
 
-			Properties.Settings.Default.PropertyChanged += Default_PropertyChanged;
+			SettingsAbstraction.Instance.PropertyChanged += Default_PropertyChanged;
 
             registerShortCutKeys();
 
@@ -283,7 +283,7 @@ namespace XenAdmin.ConsoleView
 
         private void UnregisterEventListeners()
         {
-			Properties.Settings.Default.PropertyChanged -= new PropertyChangedEventHandler(Default_PropertyChanged);
+			SettingsAbstraction.Instance.PropertyChanged -= new PropertyChangedEventHandler(Default_PropertyChanged);
 
             if (source == null)
                 return;

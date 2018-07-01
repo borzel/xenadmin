@@ -41,10 +41,6 @@ namespace XenAdmin
             if (disposing && (components != null))
             {
                 components.Dispose();
-
-                log.Debug("MainWindow disoposing license timer");
-                if (licenseTimer != null)
-                    licenseTimer.Dispose();
             }
 
             log.Debug("Before MainWindow base.Dispose()");
@@ -1713,12 +1709,6 @@ namespace XenAdmin
             // 
             this.toolStripSeparator14.Name = "toolStripSeparator14";
             resources.ApplyResources(this.toolStripSeparator14, "toolStripSeparator14");
-            // 
-            // LicenseManagerMenuItem
-            // 
-            this.LicenseManagerMenuItem.Name = "LicenseManagerMenuItem";
-            resources.ApplyResources(this.LicenseManagerMenuItem, "LicenseManagerMenuItem");
-            this.LicenseManagerMenuItem.Click += new System.EventHandler(this.LicenseManagerMenuItem_Click);
             // 
             // toolStripSeparator13
             // 

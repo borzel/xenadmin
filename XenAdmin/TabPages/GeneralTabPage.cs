@@ -62,11 +62,7 @@ namespace XenAdmin.TabPages
         /// </summary>
         private bool refreshNeeded = false;
 
-        private LicenseStatus licenseStatus;
-
         private List<PDSection> sections;
-
-        public LicenseManagerLauncher LicenseLauncher { private get; set; }
 
         public GeneralTabPage()
         {
@@ -96,41 +92,38 @@ namespace XenAdmin.TabPages
             }            
         }
 
-        private void licenseStatus_ItemUpdated(object sender, EventArgs e)
-        {
-            if (pdSectionLicense == null || licenseStatus == null)
-                return;
+        //private void licenseStatus_ItemUpdated(object sender, EventArgs e)
+        //{
+        //    GeneralTabLicenseStatusStringifier ss = new GeneralTabLicenseStatusStringifier();
+        //    Program.Invoke(Program.MainWindow, () => 
+        //    {
+        //        pdSectionLicense.UpdateEntryValueWithKey(
+        //            FriendlyName("host.license_params-expiry"),
+        //            ss.ExpiryDate, 
+        //            ss.ShowExpiryDate);
+        //    });
 
-            GeneralTabLicenseStatusStringifier ss = new GeneralTabLicenseStatusStringifier(licenseStatus);
-            Program.Invoke(Program.MainWindow, () => 
-            {
-                pdSectionLicense.UpdateEntryValueWithKey(
-                    FriendlyName("host.license_params-expiry"),
-                    ss.ExpiryDate, 
-                    ss.ShowExpiryDate);
-            });
+        //    Program.Invoke(Program.MainWindow, () =>
+        //    {
+        //        pdSectionLicense.UpdateEntryValueWithKey(
+        //            Messages.LICENSE_STATUS,
+        //            ss.ExpiryStatus,
+        //            true);
+        //    });
 
-            Program.Invoke(Program.MainWindow, () =>
-            {
-                pdSectionLicense.UpdateEntryValueWithKey(
-                    Messages.LICENSE_STATUS,
-                    ss.ExpiryStatus,
-                    true);
-            });
-
-            Pool p = xenObject as Pool;
-            if (p != null)
-                Program.Invoke(Program.MainWindow, () =>
-                {
-                    var additionalString = PoolAdditionalLicenseString();
-                    pdSectionGeneral.UpdateEntryValueWithKey(
-                        Messages.POOL_LICENSE,
-                        additionalString != string.Empty
-                            ? string.Format(Messages.MAINWINDOW_CONTEXT_REASON, p.LicenseString(), additionalString)
-                            : p.LicenseString(),
-                        true);
-                });
-        }
+        //    Pool p = xenObject as Pool;
+        //    if (p != null)
+        //        Program.Invoke(Program.MainWindow, () =>
+        //        {
+        //            var additionalString = PoolAdditionalLicenseString();
+        //            pdSectionGeneral.UpdateEntryValueWithKey(
+        //                Messages.POOL_LICENSE,
+        //                additionalString != string.Empty
+        //                    ? string.Format(Messages.MAINWINDOW_CONTEXT_REASON, p.LicenseString(), additionalString)
+        //                    : p.LicenseString(),
+        //                true);
+        //        });
+        //}
 
         void s_contentReceivedFocus(PDSection s)
         {
@@ -179,8 +172,6 @@ namespace XenAdmin.TabPages
                 if (value == null)
                     return;
 
-                RegisterLicenseStatusUpdater(value);
-
                 if (xenObject != value)
                 {
                     UnregisterHandlers();
@@ -198,19 +189,6 @@ namespace XenAdmin.TabPages
                 {
                     BuildList();
                 }
-            }
-        }
-
-        private void RegisterLicenseStatusUpdater(IXenObject xenObject)
-        {
-            if (licenseStatus != null)
-                licenseStatus.ItemUpdated -= licenseStatus_ItemUpdated;
-
-            if (xenObject is Host || xenObject is Pool)
-            {
-                licenseStatus = new LicenseStatus(xenObject);
-                licenseStatus.ItemUpdated += licenseStatus_ItemUpdated;
-                licenseStatus.BeginUpdate();
             }
         }
 
@@ -403,8 +381,6 @@ namespace XenAdmin.TabPages
                     // Atm we are rebuilding on almost any property changed event. 
                     // As long as we are just clearing and readding the rows in the PDSections this seems to be super quick. 
                     // If it gets slower we should update specific boxes for specific property changes.
-                    if (licenseStatus != null && licenseStatus.Updated)
-                        licenseStatus.BeginUpdate();
                     BuildList();
                     EnableDisableEdit();
                 }
@@ -505,7 +481,6 @@ namespace XenAdmin.TabPages
                 generateInterfaceBox();
                 generateMemoryBox();
                 generateVersionBox();
-                generateLicenseBox();
                 generateCPUBox();
                 generateHostPatchesBox();
                 generateBootBox();
@@ -975,90 +950,90 @@ namespace XenAdmin.TabPages
             }
         }
 
-        private void generateLicenseBox()
-        {
-            Host host = xenObject as Host;
-            if (host == null)
-                return;
+        //private void generateLicenseBox()
+        //{
+        //    Host host = xenObject as Host;
+        //    if (host == null)
+        //        return;
 
-            PDSection s = pdSectionLicense;
+        //    PDSection s = pdSectionLicense;
 
-            if (host.license_params == null)
-                return;
+        //    if (host.license_params == null)
+        //        return;
 
-            Dictionary<string, string> info = new Dictionary<string, string>(host.license_params);
+        //    Dictionary<string, string> info = new Dictionary<string, string>(host.license_params);
 
-            // This field is now supressed as it has no meaning under the current license scheme, and was never
-            // enforced anyway.
-            info.Remove("sockets");
+        //    // This field is now supressed as it has no meaning under the current license scheme, and was never
+        //    // enforced anyway.
+        //    info.Remove("sockets");
 
-            // Remove "expiry" field for "basic" license
-            if (!string.IsNullOrEmpty(host.edition) && host.edition == "basic")
-                info.Remove("expiry");
+        //    // Remove "expiry" field for "basic" license
+        //    if (!string.IsNullOrEmpty(host.edition) && host.edition == "basic")
+        //        info.Remove("expiry");
 
-            if (info.ContainsKey("expiry"))
-            {
-                ToolStripMenuItem editItem = new ToolStripMenuItem(Messages.LAUNCH_LICENSE_MANAGER);
-                editItem.Click += delegate
-                    {
-                        if (LicenseLauncher != null)
-                        {
-                            LicenseLauncher.Parent = Program.MainWindow;
-                            LicenseLauncher.LaunchIfRequired(false, ConnectionsManager.XenConnections);
-                        }
-                    };
+        //    if (info.ContainsKey("expiry"))
+        //    {
+        //        ToolStripMenuItem editItem = new ToolStripMenuItem(Messages.LAUNCH_LICENSE_MANAGER);
+        //        editItem.Click += delegate
+        //            {
+        //                if (LicenseLauncher != null)
+        //                {
+        //                    LicenseLauncher.Parent = Program.MainWindow;
+        //                    LicenseLauncher.LaunchIfRequired(false, ConnectionsManager.XenConnections);
+        //                }
+        //            };
 
-                GeneralTabLicenseStatusStringifier ss = new GeneralTabLicenseStatusStringifier(licenseStatus);
-                s.AddEntry(Messages.LICENSE_STATUS, ss.ExpiryStatus, editItem);
-                s.AddEntry(FriendlyName("host.license_params-expiry"), ss.ExpiryDate, editItem, ss.ShowExpiryDate);
-                info.Remove("expiry");
-            }
+        //        GeneralTabLicenseStatusStringifier ss = new GeneralTabLicenseStatusStringifier(licenseStatus);
+        //        s.AddEntry(Messages.LICENSE_STATUS, ss.ExpiryStatus, editItem);
+        //        s.AddEntry(FriendlyName("host.license_params-expiry"), ss.ExpiryDate, editItem, ss.ShowExpiryDate);
+        //        info.Remove("expiry");
+        //    }
 
-            if (!string.IsNullOrEmpty(host.edition))
-            {
-                s.AddEntry(FriendlyName("host.edition"), Helpers.GetFriendlyLicenseName(host));
-            }
+        //    if (!string.IsNullOrEmpty(host.edition))
+        //    {
+        //        s.AddEntry(FriendlyName("host.edition"), Helpers.GetFriendlyLicenseName(host));
+        //    }
 
-            s.AddEntry(Messages.NUMBER_OF_SOCKETS, host.CpuSockets().ToString());
+        //    s.AddEntry(Messages.NUMBER_OF_SOCKETS, host.CpuSockets().ToString());
 
-            if (host.license_server.ContainsKey("address"))
-            {
-                var licenseServerAddress = host.license_server["address"].Trim();
-                if (licenseServerAddress == "" || licenseServerAddress.ToLower() == "localhost")
-                    s.AddEntry(FriendlyName(String.Format("host.license_server-address")), host.license_server["address"]);
-                else
-                {
-                    var openUrl = new ToolStripMenuItem(Messages.LICENSE_SERVER_WEB_CONSOLE_GOTO);
-                    openUrl.Click += (sender, args) => Program.OpenURL(string.Format(Messages.LICENSE_SERVER_WEB_CONSOLE_FORMAT, licenseServerAddress, Host.LicenseServerWebConsolePort));
-                    s.AddEntryLink(FriendlyName(String.Format("host.license_server-address")),
-                                   host.license_server["address"],
-                                   new[] {openUrl},
-                                   openUrl.PerformClick);
-                }
-            }
-            if (host.license_server.ContainsKey("port"))
-            {
-                s.AddEntry(FriendlyName(String.Format("host.license_server-port")), host.license_server["port"]);
-            }
+        //    if (host.license_server.ContainsKey("address"))
+        //    {
+        //        var licenseServerAddress = host.license_server["address"].Trim();
+        //        if (licenseServerAddress == "" || licenseServerAddress.ToLower() == "localhost")
+        //            s.AddEntry(FriendlyName(String.Format("host.license_server-address")), host.license_server["address"]);
+        //        else
+        //        {
+        //            var openUrl = new ToolStripMenuItem(Messages.LICENSE_SERVER_WEB_CONSOLE_GOTO);
+        //            openUrl.Click += (sender, args) => Program.OpenURL(string.Format(Messages.LICENSE_SERVER_WEB_CONSOLE_FORMAT, licenseServerAddress, Host.LicenseServerWebConsolePort));
+        //            s.AddEntryLink(FriendlyName(String.Format("host.license_server-address")),
+        //                           host.license_server["address"],
+        //                           new[] {openUrl},
+        //                           openUrl.PerformClick);
+        //        }
+        //    }
+        //    if (host.license_server.ContainsKey("port"))
+        //    {
+        //        s.AddEntry(FriendlyName(String.Format("host.license_server-port")), host.license_server["port"]);
+        //    }
 
-            foreach (string key in new string[] { "productcode", "serialnumber" })
-            {
-                if (info.ContainsKey(key))
-                {
-                    string row_name = string.Format("host.license_params-{0}", key);
-                    string k = key;
-                    if (host.license_params[k] != string.Empty)
-                        s.AddEntry(FriendlyName(row_name), host.license_params[k]);
-                    info.Remove(key);
-                }
-            }
+        //    foreach (string key in new string[] { "productcode", "serialnumber" })
+        //    {
+        //        if (info.ContainsKey(key))
+        //        {
+        //            string row_name = string.Format("host.license_params-{0}", key);
+        //            string k = key;
+        //            if (host.license_params[k] != string.Empty)
+        //                s.AddEntry(FriendlyName(row_name), host.license_params[k]);
+        //            info.Remove(key);
+        //        }
+        //    }
 
-            string restrictions = Helpers.GetHostRestrictions(host);
-            if (restrictions != "")
-            {
-                s.AddEntry(Messages.RESTRICTIONS, restrictions);
-            }
-        }
+        //    string restrictions = Helpers.GetHostRestrictions(host);
+        //    if (restrictions != "")
+        //    {
+        //        s.AddEntry(Messages.RESTRICTIONS, restrictions);
+        //    }
+        //}
 
         private void generateVersionBox()
         {
@@ -1299,7 +1274,7 @@ namespace XenAdmin.TabPages
             Pool p = xenObject as Pool;
             if (p != null)
             {
-                var additionalString = PoolAdditionalLicenseString();
+				var additionalString = ""; //PoolAdditionalLicenseString();
                 s.AddEntry(Messages.POOL_LICENSE,
                     additionalString != string.Empty
                         ? string.Format(Messages.MAINWINDOW_CONTEXT_REASON, p.LicenseString(), additionalString)
@@ -1346,15 +1321,15 @@ namespace XenAdmin.TabPages
             s.AddEntry(FriendlyName("host.uuid"), GetUUID(xenObject));
         }
 
-        private string PoolAdditionalLicenseString()
-        {
-            if (licenseStatus.CurrentState == LicenseStatus.HostState.Expired)
-                return Messages.LICENSE_EXPIRED;
-            else if (licenseStatus.CurrentState == LicenseStatus.HostState.Free)
-                return Messages.LICENSE_UNLICENSED;
-            else   
-                return string.Empty;
-        }
+        //private string PoolAdditionalLicenseString()
+        //{
+        //    if (licenseStatus.CurrentState == LicenseStatus.HostState.Expired)
+        //        return Messages.LICENSE_EXPIRED;
+        //    else if (licenseStatus.CurrentState == LicenseStatus.HostState.Free)
+        //        return Messages.LICENSE_UNLICENSED;
+        //    else   
+        //        return string.Empty;
+        //}
 
         private static void GenerateVirtualisationStatusForGeneralBox(PDSection s, VM vm)
         {

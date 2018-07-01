@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Runtime.Serialization;
 using System.Collections.Generic;
+using System.ComponentModel;
 
 namespace XenAdmin
 {
@@ -8,183 +9,183 @@ namespace XenAdmin
 	{
 		public bool ToolbarsEnabled
 		{
-			get{return _getValue<bool>("ToolbarsEnabled");}
-			set{_setValue("ToolbarsEnabled", value);}
+			get { return _getValue<bool>("ToolbarsEnabled"); }
+			set { _setValue("ToolbarsEnabled", value); }
 		}
 
 		public bool SaveSession
 		{
-			get{return _getValue<bool>("SaveSession");}
-			set{_setValue("SaveSession", value);}
+			get { return _getValue<bool>("SaveSession"); }
+			set { _setValue("SaveSession", value); }
 		}
 
 		public global::System.Windows.Forms.AutoCompleteStringCollection ServerHistory
 		{
-			get{return _getValue<global::System.Windows.Forms.AutoCompleteStringCollection>("ServerHistory");}
-			set{_setValue<global::System.Windows.Forms.AutoCompleteStringCollection>("ServerHistory", value);}
+			get { return _getValue<global::System.Windows.Forms.AutoCompleteStringCollection>("ServerHistory"); }
+			set { _setValue<global::System.Windows.Forms.AutoCompleteStringCollection>("ServerHistory", value); }
 		}
 
 		public string[] ServerList
 		{
-			get{return _getValue<string[]>("ServerList");}
-			set{_setValue<string[]>("ServerList", value);}
+			get { return _getValue<string[]>("ServerList"); }
+			set { _setValue<string[]>("ServerList", value); }
 		}
 
 		public bool LocalSRsVisible
-        {
+		{
 			get { return _getValue<bool>("LocalSRsVisible"); }
 			set { _setValue<bool>("LocalSRsVisible", value); }
-        }
+		}
 
 		public bool DefaultTemplatesVisible
-        {
+		{
 			get { return _getValue<bool>("DefaultTemplatesVisible"); }
 			set { _setValue<bool>("DefaultTemplatesVisible", value); }
-        }
+		}
 
 		public bool UserTemplatesVisible
-        {
+		{
 			get { return _getValue<bool>("UserTemplatesVisible"); }
 			set { _setValue<bool>("UserTemplatesVisible", value); }
-        }
+		}
 
 		public bool DebugHelp
-        {
+		{
 			get { return _getValue<bool>("DebugHelp"); }
 			set { _setValue<bool>("DebugHelp", value); }
-        }
+		}
 
 		public global::System.Drawing.Size WindowSize
-        {
+		{
 			get { return _getValue<global::System.Drawing.Size>("WindowSize"); }
 			set { _setValue<global::System.Drawing.Size>("WindowSize", value); }
-        }
+		}
 
 		public global::System.Drawing.Point WindowLocation
-        {
+		{
 			get { return _getValue<global::System.Drawing.Point>("WindowLocation"); }
 			set { _setValue<global::System.Drawing.Point>("WindowLocation", value); }
-        }
+		}
 
 		public bool RequirePass
 		{
-			get{return _getValue<bool>("RequirePass");}
-			set{_setValue<bool>("RequirePass", value);}
+			get { return _getValue<bool>("RequirePass"); }
+			set { _setValue<bool>("RequirePass", value); }
 		}
 
 		public int FullScreenShortcutKey
-        {
+		{
 			get { return _getValue<int>("FullScreenShortcutKey"); }
 			set { _setValue<int>("FullScreenShortcutKey", value); }
-        }
+		}
 
 		public bool WindowsShortcuts
-        {
+		{
 			get { return _getValue<bool>("WindowsShortcuts"); }
 			set { _setValue<bool>("WindowsShortcuts", value); }
-        }
+		}
 
 		public bool ReceiveSoundFromRDP
-        {
+		{
 			get { return _getValue<bool>("ReceiveSoundFromRDP"); }
 			set { _setValue<bool>("ReceiveSoundFromRDP", value); }
-        }
+		}
 
 		public bool AutoSwitchToRDP
-        {
+		{
 			get { return _getValue<bool>("AutoSwitchToRDP"); }
 			set { _setValue<bool>("AutoSwitchToRDP", value); }
-        }
+		}
 
 		public bool PreserveScaleWhenUndocked
-        {
+		{
 			get { return _getValue<bool>("PreserveScaleWhenUndocked"); }
 			set { _setValue<bool>("PreserveScaleWhenUndocked", value); }
-        }
+		}
 
 		public int ProxySetting
-        {
+		{
 			get { return _getValue<int>("ProxySetting"); }
 			set { _setValue<int>("ProxySetting", value); }
-        }
+		}
 
 		public string ProxyAddress
-        {
+		{
 			get { return _getValue<string>("ProxyAddress"); }
 			set { _setValue<string>("ProxyAddress", value); }
-        }
+		}
 
 		public int ProxyPort
-        {
+		{
 			get { return _getValue<int>("ProxyPort"); }
 			set { _setValue<int>("ProxyPort", value); }
-        }
+		}
 
 		public bool PreserveScaleWhenSwitchBackToVNC
-        {
+		{
 			get { return _getValue<bool>("PreserveScaleWhenSwitchBackToVNC"); }
 			set { _setValue<bool>("PreserveScaleWhenSwitchBackToVNC", value); }
-        }
+		}
 
 		public int ConnectionTimeout
-        {
+		{
 			get { return _getValue<int>("ConnectionTimeout"); }
 			set { _setValue<int>("ConnectionTimeout", value); }
-        }
+		}
 
 		public int HttpTimeout
-        {
+		{
 			get { return _getValue<int>("HttpTimeout"); }
 			set { _setValue<int>("HttpTimeout", value); }
-        }
+		}
 
 		public bool ShowHiddenVMs
-        {
+		{
 			get { return _getValue<bool>("ShowHiddenVMs"); }
 			set { _setValue<bool>("ShowHiddenVMs", value); }
 		}
 
 		public bool ClipboardAndPrterRedirection
-        {
+		{
 			get { return _getValue<bool>("ClipboardAndPrinterRedirection"); }
 			set { _setValue<bool>("ClipboardAndPrinterRedirection", value); }
-        }
+		}
 
 		public int DockShortcutKey
-        {
+		{
 			get { return _getValue<int>("DockShortcutKey"); }
 			set { _setValue<int>("DockShorutKey", value); }
-        }
-      
+		}
+
 		public string[] ServerAddressList
 		{
-			get{return _getValue<string[]>("ServerAddressList");}
-			set{_setValue<string[]>("ServerAddressList", value);}
+			get { return _getValue<string[]>("ServerAddressList"); }
+			set { _setValue<string[]>("ServerAddressList", value); }
 		}
 
 		public bool ConnectToServerConsole
-        {
+		{
 			get { return _getValue<bool>("ConnectToServerConsole"); }
 			set { _setValue<bool>("ConnectToServerConsole", value); }
-        }
+		}
 
 		public bool WarnUnrecognizedCertificate
-        {
+		{
 			get { return _getValue<bool>("WarnUnrecognizedCertificate"); }
 			set { _setValue<bool>("WarnUnrecognizedCertificate", value); }
-        }      
+		}
 
 		public string[] KnownServers
 		{
-			get{ return _getValue<string[]>("KnownServers");}
-			set{ _setValue<string[]>("KnownServers", value);}
+			get { return _getValue<string[]>("KnownServers"); }
+			set { _setValue<string[]>("KnownServers", value); }
 		}
 
 		public bool WarnChangedCertificate
-        {
+		{
 			get { return _getValue<bool>("WarnChangedCertificate"); }
 			set { _setValue<bool>("WarnChangedCertificate", value); }
-        }
+		}
 
 		public bool AllowXenCenterUpdates
 		{
@@ -193,112 +194,112 @@ namespace XenAdmin
 		}
 
 		public bool AllowPatchesUpdates
-        {
+		{
 			get { return _getValue<bool>("AllowPatchesUpdates"); }
 			set { _setValue<bool>("AllowPatchesUpdates", value); }
-        }
+		}
 
 		public bool AllowXenServerUpdates
-        {
+		{
 			get { return _getValue<bool>("AllowXenServerUpdates"); }
 			set { _setValue<bool>("AllowXenServerUpdates", value); }
-        }
+		}
 
 		public string LatestXenCenterSeen
-        {
+		{
 			get { return _getValue<string>("LatestXenCenterSeen"); }
 			set { _setValue<string>("LatestXenCenterSeen", value); }
-        }      
+		}
 
 		public bool SeenAllowUpdatesDialog
-        {
+		{
 			get { return _getValue<bool>("SeenAllowUpdatesDialog"); }
 			set { _setValue<bool>("SeenAllowUpdatesDialog", value); }
-        }
+		}
 
 		public bool FillAreaUnderGraphs
-        {
+		{
 			get { return _getValue<bool>("FillAreaUnderGraphs"); }
 			set { _setValue<bool>("FillAreaUnderGraphs", value); }
-        }
+		}
 
 		public string DefaultSearch
-        {
+		{
 			get { return _getValue<string>("DefaultSearch"); }
 			set { _setValue<string>("DefaultSearch", value); }
-        }
+		}
 
 		public bool LoadPlugins
-        {
+		{
 			get { return _getValue<bool>("LoadPlugins"); }
 			set { _setValue<bool>("LoadPlugins", value); }
-        }
+		}
 
 		public string[] DisabledPlugins
-        {
+		{
 			get { return _getValue<string[]>("DisabledPlugins"); }
 			set { _setValue<string[]>("DisabledPlugins", value); }
-        }
+		}
 
 		public string[] CslgCredentials
-        {
+		{
 			get { return _getValue<string[]>("CslgCredentials"); }
 			set { _setValue<string[]>("CslgCredentials", value); }
-        }
+		}
 
 		public string[] IgnoreFirstRunWizards
-        {
+		{
 			get { return _getValue<string[]>("IgnoreFirstRunWizards"); }
 			set { _setValue<string[]>("IgnoreFirstRunWizards", value); }
-        }
+		}
 
 		public string ServerStatusPath
-        {
+		{
 			get { return _getValue<string>("ServerStatusPath"); }
 			set { _setValue<string>("ServerStatusPath", value); }
-        }
+		}
 
 		public bool RollingUpgradeWizardShowFirstPage
-        {
+		{
 			get { return _getValue<bool>("RollingUpgradeWizardShowFirstPage"); }
 			set { _setValue<bool>("RollingUpgradeWizardShowFirstPage", value); }
-        }
+		}
 
 		public bool EnableRDPPolling
-        {
+		{
 			get { return _getValue<bool>("EnableRDPPolling"); }
 			set { _setValue<bool>("EnableRDPPolling", value); }
-        }
+		}
 
 		public string ApplicationVersion
-        {
+		{
 			get { return _getValue<string>("ApplicationVersion"); }
 			set { _setValue<string>("ApplicationVersion", value); }
-        }
+		}
 
 		public int UncaptureShortcutKey
-        {
+		{
 			get { return _getValue<int>("UncaptureShortcutKey"); }
 			set { _setValue<int>("UncaptureShortcutKey", value); }
-        }
+		}
 
 		public bool DRFailoverWizardShowFirstPage
-        {
+		{
 			get { return _getValue<bool>("DRFailoverWizardShowFirstPage"); }
 			set { _setValue<bool>("DRFailoverWizardShowFirstPage", value); }
-        }
+		}
 
 		public bool PinConnectionBar
-        {
+		{
 			get { return _getValue<bool>("PinConnectionBar"); }
 			set { _setValue<bool>("PinConnectionBar", value); }
-        }
+		}
 
 		public bool ShowHealthCheckEnrollmentReminder
-        {
+		{
 			get { return _getValue<bool>("ShowHealthCheckEnrollmentReminder"); }
 			set { _setValue<bool>("ShowHealthCheckEnrollmentReminder", value); }
-        }
+		}
 
 		public bool ShowJustHostInSearch
 		{
@@ -307,76 +308,76 @@ namespace XenAdmin
 		}
 
 		public bool ShowAboutDialog
-        {
+		{
 			get { return _getValue<bool>("ShowAboutDialog"); }
 			set { _setValue<bool>("ShowAboutDialog", value); }
-        }
+		}
 
 		public bool ProvideProxyAuthentication
-        {
+		{
 			get { return _getValue<bool>("ProvideProxyAuthentication"); }
 			set { _setValue<bool>("ProvideProxyAuthentication", value); }
-        }
+		}
 
 		public string ProxyUsername
-        {
+		{
 			get { return _getValue<string>("ProxyUsername"); }
 			set { _setValue<string>("ProxyUsername", value); }
-        }
+		}
 
 		public string ProxyPassword
-        {
+		{
 			get { return _getValue<string>("ProxyPassword"); }
 			set { _setValue<string>("ProxyPassword", value); }
-        }
+		}
 
 		public bool BypassProxyForServers
-        {
+		{
 			get { return _getValue<bool>("BypassProxyForServers"); }
 			set { _setValue<bool>("BypassProxyForServers", value); }
-        }
+		}
 
 		public int ProxyAuthenticationMethod
-        {
+		{
 			get { return _getValue<int>("ProxyAuthenticationMethod"); }
 			set { _setValue<int>("ProxyAuthenticationMethod", value); }
-        }
+		}
 
 		public bool DoNotConfirmDismissAlerts
-        {
+		{
 			get { return _getValue<bool>("DoNotConfirmDismissAlerts"); }
 			set { _setValue<bool>("DoNotConfirmDismissAlerts", value); }
-        }
+		}
 
 		public bool DoNotConfirmDismissEvents
-        {
+		{
 			get { return _getValue<bool>("DoNotConfirmDismissEvents"); }
 			set { _setValue<bool>("DoNotConfirmDismissEvents", value); }
-        }
+		}
 
 		public bool DoNotConfirmDismissUpdates
-        {
+		{
 			get { return _getValue<bool>("DoNotConfirmDismissUpdates"); }
 			set { _setValue<bool>("DoNotConfirmDismissUpdates", value); }
-        }
+		}
 
 		public string HelpLastUsed
-        {
+		{
 			get { return _getValue<string>("HelpLastUsed"); }
 			set { _setValue<string>("HelpLastUsed", value); }
-        }
+		}
 
 		public bool EjectSharedIsoOnUpdate
-        {
+		{
 			get { return _getValue<bool>("EjectSharedIsoOnUpdate"); }
 			set { _setValue<bool>("EjectSharedIsoOnUpdate", value); }
-        }
+		}
 
 		public bool ClipboardAndPrinterRedirection
-        {
+		{
 			get { return _getValue<bool>("ClipboardAndPrinterRedirection"); }
 			set { _setValue<bool>("ClipboardAndPrinterRedirection", value); }
-        }
+		}
 
 
 		// ######################################################################################
@@ -435,6 +436,19 @@ namespace XenAdmin
 
 		}
 
+		public void Reset()
+		{
+			if (_isMono)
+			{
+				_settings.Clear();
+				Save();
+			}
+			else
+			{
+				Properties.Settings.Default.Reset();
+			}
+		}
+
 		t _getValue<t>(string key)
 		{
 			if (_isMono)
@@ -454,6 +468,15 @@ namespace XenAdmin
 			}
 		}
 
+		public event PropertyChangedEventHandler PropertyChanged;
+
+		protected virtual void OnPropertyChanged(PropertyChangedEventArgs e)
+		{
+			if (PropertyChanged != null)
+				PropertyChanged(this, e);
+		}
+
+
 		void _setValue<t>(string key, t value)
 		{
 			if (_isMono)
@@ -466,6 +489,8 @@ namespace XenAdmin
 				{
 					_settings.Add(key, value);
 				}
+
+				OnPropertyChanged(new PropertyChangedEventArgs(key));
 			}
 			else
 			{

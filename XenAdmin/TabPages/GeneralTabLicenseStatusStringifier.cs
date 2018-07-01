@@ -37,24 +37,10 @@ namespace XenAdmin.TabPages
 {
     public class GeneralTabLicenseStatusStringifier
     {
-        public ILicenseStatus Status { private get; set; }
-
-        public GeneralTabLicenseStatusStringifier(ILicenseStatus status) 
-        {
-            Status = status;
-        }
-
         public string ExpiryDate
         {
             get
             {
-                if (Status != null && Status.LicencedHost != null && Status.LicenseExpiresIn != null
-                    && !LicenseStatus.IsInfinite(Status.LicenseExpiresIn))
-                {
-                    return HelpersGUI.DateTimeToString(Status.LicencedHost.LicenseExpiryUTC().ToLocalTime(),
-                        Messages.DATEFORMAT_DMY_LONG, true);
-                }
-
                 return Messages.LICENSE_NEVER;
             }
         }
@@ -63,40 +49,6 @@ namespace XenAdmin.TabPages
         {
             get
             {
-                if (Status == null || !Status.Updated)
-                    return Messages.GENERAL_UNKNOWN;
-
-                if (Status.ExpiryDate.HasValue)
-                {
-                    if (Status.CurrentState == LicenseStatus.HostState.Unavailable)
-                        return Messages.LICENSE_EXPIRED_NO_LICENSES_AVAILABLE;
-
-                    if (Status.CurrentState == LicenseStatus.HostState.Expired)
-                    {
-
-                        return Status.PoolLicensingModel == LicenseStatus.LicensingModel.Clearwater ? Messages.LICENSE_UNSUPPORTED : Messages.LICENSE_UNLICENSED;
-                    }
-
-                    if (Status.CurrentState == LicenseStatus.HostState.Free)
-                    {
-                        return Status.PoolLicensingModel == LicenseStatus.LicensingModel.Clearwater ? Messages.LICENSE_UNSUPPORTED : Messages.LICENSE_UNLICENSED;
-                    }
-
-                    TimeSpan s = Status.LicenseExpiresExactlyIn;
-                    if (s.TotalMinutes < 2)
-                        return Messages.LICENSE_EXPIRES_ONE_MIN;
-
-                    if (s.TotalHours < 2)
-                        return String.Format(Messages.LICENSE_EXPIRES_MINUTES, Math.Floor(s.TotalMinutes));
-
-                    if (s.TotalDays < 2)
-                        return String.Format(Messages.LICENSE_EXPIRES_HOURS, Math.Floor(s.TotalHours));
-
-                    if (s.TotalDays < 30)
-                        return String.Format(Messages.LICENSE_EXPIRES_DAYS, s.Days);
-
-                    return Messages.LICENSE_LICENSED;
-                }
                 return Messages.GENERAL_UNKNOWN;
             }
         }
@@ -105,9 +57,7 @@ namespace XenAdmin.TabPages
         {
             get
             {
-                if (Status != null && Status.CurrentState == LicenseStatus.HostState.Free)
-                    return false;
-                return true;
+                return false;
             }
         }
     }

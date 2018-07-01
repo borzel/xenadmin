@@ -61,10 +61,10 @@ namespace XenAdmin.Dialogs
             get { return ReferenceTime - LastCloseTime; }
         }
 
-        protected virtual bool ModalDialogVisible
-        {
-            get { return Win32Window.ModalDialogIsVisible(); }
-        }
+        //protected virtual bool ModalDialogVisible
+        //{
+        //    get { return Win32Window.ModalDialogIsVisible(); }
+        //}
 
         protected virtual DialogResult LaunchDialog(IEnumerable<IXenObject> selectedObjects)
         {
@@ -125,12 +125,12 @@ namespace XenAdmin.Dialogs
                         return;
                     }
 
-                    if (nag && ModalDialogVisible)
-                    {
-                        // if the add-server dialog is visible, then don't nag with the health check dialog as it
-                        // will appear above it.
-                        return;
-                    }
+                    //if (nag && ModalDialogVisible)
+                    //{
+                    //    // if the add-server dialog is visible, then don't nag with the health check dialog as it
+                    //    // will appear above it.
+                    //    return;
+                    //}
                     healthCheckOverviewVisible = true;
                     log.Info("Health Check Overview not showing. Show it now.");
 

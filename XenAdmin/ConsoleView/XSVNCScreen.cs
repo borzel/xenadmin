@@ -167,7 +167,7 @@ namespace XenAdmin.ConsoleView
             //We're going to try and catch when the IP address changes for the VM, and re-scan for ports.
             if (source == null)
                 return;
-			Properties.Settings.Default.PropertyChanged += Default_PropertyChanged;
+			SettingsAbstraction.Instance.PropertyChanged += Default_PropertyChanged;
             VM_guest_metrics guestMetrics = Source.Connection.Resolve<VM_guest_metrics>(Source.guest_metrics);
             if (guestMetrics == null)
                 return;

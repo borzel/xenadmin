@@ -510,7 +510,7 @@ namespace XenAdmin
             }
             catch
             {
-				Properties.Settings.Default.Reset();
+				SettingsAbstraction.Instance.Reset();
             }
 
             if (history == null)

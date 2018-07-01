@@ -54,10 +54,14 @@ namespace XenAdmin.Controls.NetworkingTab
 
 		public NetworkList()
 		{
-			InitializeComponent();
-			// TODO: Properties.Settings.Default
-			Properties.Settings.Default.PropertyChanged += Default_PropertyChanged;
+			InitializeComponent();         
+			SettingsAbstraction.Instance.PropertyChanged += Default_PropertyChanged;         
 		}
+
+		void Instance_PropertyChanged(object sender, EventArgs e)
+		{
+		}
+
 
 		private IXenObject _xenObject = null;
 		public IXenObject XenObject

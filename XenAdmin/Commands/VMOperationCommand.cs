@@ -229,11 +229,12 @@ namespace XenAdmin.Commands
                 string title = Messages.ERROR_DIALOG_START_VM_TITLE;
                 string text = string.Format(Messages.ERROR_DIALOG_START_VM_TEXT, vm);
 
-                if (Win32Window.GetWindowWithText(title) != null)
-                {
-                    // don't bother showing this if there's one already up.
-                    return;
-                }
+				//TODO: Implement alternative way to do this
+                //if (Win32Window.GetWindowWithText(title) != null)
+                //{
+                //    // don't bother showing this if there's one already up.
+                //    return;
+                //}
 
                 IXenConnection connection = vm.Connection;
                 Session session = connection.DuplicateSession();

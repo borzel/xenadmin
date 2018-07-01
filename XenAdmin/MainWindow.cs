@@ -131,9 +131,6 @@ namespace XenAdmin
         private readonly PluginManager pluginManager;
         private readonly ContextMenuBuilder contextMenuBuilder;
 
-        private readonly LicenseManagerLauncher licenseManagerLauncher;
-        private readonly LicenseTimer licenseTimer;
-
         public readonly HealthCheckOverviewLauncher HealthCheckOverviewLauncher;
         private readonly System.Windows.Forms.Timer healthCheckResultTimer = new System.Windows.Forms.Timer();
 
@@ -145,7 +142,6 @@ namespace XenAdmin
         public MainWindow(ArgType argType, string[] args)
         {
             Program.MainWindow = this;
-            licenseManagerLauncher = new LicenseManagerLauncher(Program.MainWindow);
             HealthCheckOverviewLauncher = new HealthCheckOverviewLauncher(Program.MainWindow);
             InvokeHelper.Initialize(this);
 
@@ -245,10 +241,7 @@ namespace XenAdmin
             SelectionManager.BindTo(ToolStrip.Items, this);
 			// TODO: Properties.Settings.Default
 			Properties.Settings.Default.SettingChanging += Default_SettingChanging;
-
-            licenseTimer = new LicenseTimer(licenseManagerLauncher);
-            GeneralPage.LicenseLauncher = licenseManagerLauncher;
-
+           
             toolStripSeparator7.Visible = xenSourceOnTheWebToolStripMenuItem.Visible = xenCenterPluginsOnlineToolStripMenuItem.Visible = !HiddenFeatures.ToolStripMenuItemHidden;
             healthCheckToolStripMenuItem1.Visible = !HiddenFeatures.HealthCheckHidden;
         }
@@ -971,9 +964,6 @@ namespace XenAdmin
 
             if (HelpersGUI.iSCSIisUsed())
                 HelpersGUI.PerformIQNCheck();
-
-            if(licenseTimer != null)
-                licenseTimer.CheckActiveServerLicense(connection, false);
 
 			if (SettingsAbstraction.Instance.ShowHealthCheckEnrollmentReminder)
                 ThreadPool.QueueUserWorkItem(CheckHealthCheckEnrollment, connection);
@@ -3154,12 +3144,6 @@ namespace XenAdmin
                 return;
 
             History.PopulateForwardDropDown(button);
-        }
-
-
-        private void LicenseManagerMenuItem_Click(object sender, EventArgs e)
-        {
-            licenseManagerLauncher.LaunchIfRequired(false, ConnectionsManager.XenConnections, SelectionManager.Selection);
         }
 
         private void MainWindow_KeyDown(object sender, KeyEventArgs e)
