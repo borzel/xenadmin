@@ -57,7 +57,7 @@
             this.labelConnection.BackColor = System.Drawing.Color.Transparent;
             this.labelConnection.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.labelConnection.ForeColor = System.Drawing.Color.WhiteSmoke;
-            this.labelConnection.Margin = new System.Windows.Forms.Padding(2, 1, 2, 2);
+            //this.labelConnection.Margin = new System.Windows.Forms.Padding(2, 1, 2, 2);
             this.labelConnection.Name = "labelConnection";
             // 
             // buttonPin
@@ -66,7 +66,7 @@
             this.buttonPin.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.buttonPin.Image = global::XenAdmin.Properties.Resources._001_Pin_h32bit_16;
             resources.ApplyResources(this.buttonPin, "buttonPin");
-            this.buttonPin.Margin = new System.Windows.Forms.Padding(2, 1, 2, 2);
+            //this.buttonPin.Margin = new System.Windows.Forms.Padding(2, 1, 2, 2);
             this.buttonPin.Name = "buttonPin";
             this.buttonPin.CheckedChanged += new System.EventHandler(this.buttonPin_CheckedChanged);
             // 
@@ -76,7 +76,7 @@
             this.buttonExitFullScreen.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.buttonExitFullScreen.Image = global::XenAdmin.Properties.Resources._001_WindowView_h32bit_16;
             resources.ApplyResources(this.buttonExitFullScreen, "buttonExitFullScreen");
-            this.buttonExitFullScreen.Margin = new System.Windows.Forms.Padding(2, 1, 1, 2);
+            //this.buttonExitFullScreen.Margin = new System.Windows.Forms.Padding(2, 1, 1, 2);
             this.buttonExitFullScreen.Name = "buttonExitFullScreen";
             this.buttonExitFullScreen.Click += new System.EventHandler(this.buttonExitFullScreen_Click);
             // 

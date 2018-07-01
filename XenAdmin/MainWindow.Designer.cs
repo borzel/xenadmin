@@ -636,7 +636,7 @@ namespace XenAdmin
             // 
             this.forwardButton.Image = global::XenAdmin.Properties.Resources._001_Forward_h32bit_24;
             resources.ApplyResources(this.forwardButton, "forwardButton");
-            this.forwardButton.Margin = new System.Windows.Forms.Padding(0, 2, 0, 2);
+            //this.forwardButton.Margin = new System.Windows.Forms.Padding(0, 2, 0, 2);
             this.forwardButton.Name = "forwardButton";
             this.forwardButton.Overflow = System.Windows.Forms.ToolStripItemOverflow.Never;
             this.forwardButton.ButtonClick += new System.EventHandler(this.forwardButton_Click);
@@ -645,7 +645,7 @@ namespace XenAdmin
             // toolStripSeparator17
             // 
             resources.ApplyResources(this.toolStripSeparator17, "toolStripSeparator17");
-            this.toolStripSeparator17.Margin = new System.Windows.Forms.Padding(2, 0, 7, 0);
+            //this.toolStripSeparator17.Margin = new System.Windows.Forms.Padding(2, 0, 7, 0);
             this.toolStripSeparator17.Name = "toolStripSeparator17";
             this.toolStripSeparator17.Overflow = System.Windows.Forms.ToolStripItemOverflow.Never;
             // 
@@ -660,7 +660,7 @@ namespace XenAdmin
             // toolStripSeparator11
             // 
             resources.ApplyResources(this.toolStripSeparator11, "toolStripSeparator11");
-            this.toolStripSeparator11.Margin = new System.Windows.Forms.Padding(2, 0, 7, 0);
+            //this.toolStripSeparator11.Margin = new System.Windows.Forms.Padding(2, 0, 7, 0);
             this.toolStripSeparator11.Name = "toolStripSeparator11";
             this.toolStripSeparator11.Overflow = System.Windows.Forms.ToolStripItemOverflow.Never;
             // 
@@ -691,7 +691,7 @@ namespace XenAdmin
             // toolStripSeparator12
             // 
             resources.ApplyResources(this.toolStripSeparator12, "toolStripSeparator12");
-            this.toolStripSeparator12.Margin = new System.Windows.Forms.Padding(2, 0, 7, 0);
+            //this.toolStripSeparator12.Margin = new System.Windows.Forms.Padding(2, 0, 7, 0);
             this.toolStripSeparator12.Name = "toolStripSeparator12";
             // 
             // shutDownToolStripButton
@@ -1878,7 +1878,7 @@ namespace XenAdmin
             // statusProgressBar
             // 
             resources.ApplyResources(this.statusProgressBar, "statusProgressBar");
-            this.statusProgressBar.Margin = new System.Windows.Forms.Padding(5);
+            //this.statusProgressBar.Margin = new System.Windows.Forms.Padding(5);
             this.statusProgressBar.Name = "statusProgressBar";
             this.statusProgressBar.Overflow = System.Windows.Forms.ToolStripItemOverflow.Never;
             // 

@@ -122,7 +122,7 @@ namespace XenAdmin.Dialogs.WarningDialogs
             this.columnExpander.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
             dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopCenter;
             dataGridViewCellStyle1.NullValue = ((object)(resources.GetObject("dataGridViewCellStyle1.NullValue")));
-            dataGridViewCellStyle1.Padding = new System.Windows.Forms.Padding(0, 5, 0, 0);
+            //dataGridViewCellStyle1.Padding = new System.Windows.Forms.Padding(0, 5, 0, 0);
             this.columnExpander.DefaultCellStyle = dataGridViewCellStyle1;
             resources.ApplyResources(this.columnExpander, "columnExpander");
             this.columnExpander.Name = "columnExpander";
@@ -132,7 +132,7 @@ namespace XenAdmin.Dialogs.WarningDialogs
             this.columnStatus.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
             dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopLeft;
             dataGridViewCellStyle2.NullValue = ((object)(resources.GetObject("dataGridViewCellStyle2.NullValue")));
-            dataGridViewCellStyle2.Padding = new System.Windows.Forms.Padding(0, 2, 0, 0);
+            //dataGridViewCellStyle2.Padding = new System.Windows.Forms.Padding(0, 2, 0, 0);
             this.columnStatus.DefaultCellStyle = dataGridViewCellStyle2;
             resources.ApplyResources(this.columnStatus, "columnStatus");
             this.columnStatus.Name = "columnStatus";

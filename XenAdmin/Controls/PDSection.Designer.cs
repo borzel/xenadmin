@@ -119,7 +119,7 @@ namespace XenAdmin.Controls
             this.dataGridViewEx1.HideSelection = true;
             this.dataGridViewEx1.Name = "dataGridViewEx1";
             this.dataGridViewEx1.ReadOnly = true;
-            dataGridViewCellStyle4.Padding = new System.Windows.Forms.Padding(5);
+            //dataGridViewCellStyle4.Padding = new System.Windows.Forms.Padding(5);
             this.dataGridViewEx1.RowsDefaultCellStyle = dataGridViewCellStyle4;
             this.dataGridViewEx1.ShowCellToolTips = false;
             this.dataGridViewEx1.MouseClick += new System.Windows.Forms.MouseEventHandler(this.dataGridViewEx1_MouseClick);

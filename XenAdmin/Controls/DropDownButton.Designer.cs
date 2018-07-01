@@ -32,7 +32,7 @@ namespace XenAdmin.Controls
             // 
             // DropDownButton
             // 
-            this.Padding = new System.Windows.Forms.Padding(0, 0, 3, 0);
+            //this.Padding = new System.Windows.Forms.Padding(0, 0, 3, 0);
             this.ResumeLayout(false);
 
         }
