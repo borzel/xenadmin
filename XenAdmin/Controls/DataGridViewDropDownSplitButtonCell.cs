@@ -125,105 +125,105 @@ namespace XenAdmin.Controls
             DefaultItem = e.ClickedItem;
         }
 
-        //protected override void Paint(Graphics graphics, Rectangle clipBounds, Rectangle cellBounds, int rowIndex, DataGridViewElementStates cellState, object value, object formattedValue, string errorText, DataGridViewCellStyle cellStyle, DataGridViewAdvancedBorderStyle advancedBorderStyle, DataGridViewPaintParts paintParts)
-        //{
-        //    cellStyle.Alignment = DataGridViewContentAlignment.TopLeft;
+        protected override void Paint(Graphics graphics, Rectangle clipBounds, Rectangle cellBounds, int rowIndex, DataGridViewElementStates cellState, object value, object formattedValue, string errorText, DataGridViewCellStyle cellStyle, DataGridViewAdvancedBorderStyle advancedBorderStyle, DataGridViewPaintParts paintParts)
+        {
+            cellStyle.Alignment = DataGridViewContentAlignment.TopLeft;
 
-        //    base.Paint(graphics, clipBounds, cellBounds, rowIndex, cellState, value, formattedValue, errorText, cellStyle, advancedBorderStyle, paintParts);
+            base.Paint(graphics, clipBounds, cellBounds, rowIndex, cellState, value, formattedValue, errorText, cellStyle, advancedBorderStyle, paintParts);
             
-        //    if (active)
-        //    {
-        //        var mode = graphics.SmoothingMode;
-        //        graphics.SmoothingMode = SmoothingMode.AntiAlias;
+            if (active)
+            {
+                var mode = graphics.SmoothingMode;
+                graphics.SmoothingMode = SmoothingMode.AntiAlias;
 
-        //        var rec = new Rectangle(cellBounds.Left + cellStyle.Padding.Left,
-        //                                cellBounds.Top + cellStyle.Padding.Top,
-        //                                cellBounds.Width - cellStyle.Padding.Left - cellStyle.Padding.Right,
-        //                                CELL_HEIGHT);
+                var rec = new Rectangle(cellBounds.Left + cellStyle.Padding.Left,
+                                        cellBounds.Top + cellStyle.Padding.Top,
+                                        cellBounds.Width - cellStyle.Padding.Left - cellStyle.Padding.Right,
+                                        CELL_HEIGHT);
 
-        //        var innerRec = new Rectangle(rec.Location, rec.Size);
-        //        innerRec.Inflate(-1, -1);
+                var innerRec = new Rectangle(rec.Location, rec.Size);
+                innerRec.Inflate(-1, -1);
 
-        //        using (GraphicsPath path = new GraphicsPath())
-        //        {
-        //            int diameter = 4;
-        //            var arc = new Rectangle(rec.Location, new Size(diameter, diameter));
+                using (GraphicsPath path = new GraphicsPath())
+                {
+                    int diameter = 4;
+                    var arc = new Rectangle(rec.Location, new Size(diameter, diameter));
 
-        //            //top left corner
-        //            path.AddArc(arc, 180, 90);
+                    //top left corner
+                    path.AddArc(arc, 180, 90);
 
-        //            // top right corner
-        //            arc.X = rec.Right - diameter;
-        //            path.AddArc(arc, 270, 90);
+                    // top right corner
+                    arc.X = rec.Right - diameter;
+                    path.AddArc(arc, 270, 90);
 
-        //            // bottom right corner 
-        //            arc.Y = rec.Bottom - diameter;
-        //            path.AddArc(arc, 0, 90);
+                    // bottom right corner 
+                    arc.Y = rec.Bottom - diameter;
+                    path.AddArc(arc, 0, 90);
 
-        //            // bottom left corner
-        //            arc.X = rec.Left;
-        //            path.AddArc(arc, 90, 90);
+                    // bottom left corner
+                    arc.X = rec.Left;
+                    path.AddArc(arc, 90, 90);
 
-        //            path.CloseFigure();
+                    path.CloseFigure();
 
-        //            using (var brush = new LinearGradientBrush(rec, BUTTON_FACE_TOP, BUTTON_FACE_BOTTOM, LinearGradientMode.Vertical))
-        //            {
-        //                ColorBlend cb = new ColorBlend();
-        //                cb.Positions = new[] { 0, 1 / 2f, 1 / 2f, 1 };
-        //                cb.Colors = new[] { BUTTON_FACE_TOP, BUTTON_FACE_MIDDLE_TOP, BUTTON_FACE_MIDDLE_BOTTOM, BUTTON_FACE_BOTTOM };
-        //                brush.InterpolationColors = cb;
-        //                graphics.FillPath(brush, path);
-        //            }
+                    using (var brush = new LinearGradientBrush(rec, BUTTON_FACE_TOP, BUTTON_FACE_BOTTOM, LinearGradientMode.Vertical))
+                    {
+                        ColorBlend cb = new ColorBlend();
+                        cb.Positions = new[] { 0, 1 / 2f, 1 / 2f, 1 };
+                        cb.Colors = new[] { BUTTON_FACE_TOP, BUTTON_FACE_MIDDLE_TOP, BUTTON_FACE_MIDDLE_BOTTOM, BUTTON_FACE_BOTTOM };
+                        brush.InterpolationColors = cb;
+                        graphics.FillPath(brush, path);
+                    }
 
-        //            using (Pen pen = new Pen(BUTTON_BORDER_OUTER, 1))
-        //                graphics.DrawPath(pen, path);
-        //        }
+                    using (Pen pen = new Pen(BUTTON_BORDER_OUTER, 1))
+                        graphics.DrawPath(pen, path);
+                }
 
-        //        using (GraphicsPath path = new GraphicsPath())
-        //        {
-        //            int diameter = 4;
-        //            var arc = new Rectangle(innerRec.Location, new Size(diameter, diameter));
+                using (GraphicsPath path = new GraphicsPath())
+                {
+                    int diameter = 4;
+                    var arc = new Rectangle(innerRec.Location, new Size(diameter, diameter));
 
-        //            //top left corner
-        //            path.AddArc(arc, 180, 90);
+                    //top left corner
+                    path.AddArc(arc, 180, 90);
 
-        //            // top right corner
-        //            arc.X = innerRec.Right - diameter;
-        //            path.AddArc(arc, 270, 90);
+                    // top right corner
+                    arc.X = innerRec.Right - diameter;
+                    path.AddArc(arc, 270, 90);
 
-        //            // bottom right corner 
-        //            arc.Y = innerRec.Bottom - diameter;
-        //            path.AddArc(arc, 0, 90);
+                    // bottom right corner 
+                    arc.Y = innerRec.Bottom - diameter;
+                    path.AddArc(arc, 0, 90);
 
-        //            // bottom left corner
-        //            arc.X = innerRec.Left;
-        //            path.AddArc(arc, 90, 90);
+                    // bottom left corner
+                    arc.X = innerRec.Left;
+                    path.AddArc(arc, 90, 90);
 
-        //            path.CloseFigure();
+                    path.CloseFigure();
 
-        //            using (Pen pen = new Pen(BUTTON_BORDER_INNER, 1))
-        //                graphics.DrawPath(pen, path);
-        //        }
+                    using (Pen pen = new Pen(BUTTON_BORDER_INNER, 1))
+                        graphics.DrawPath(pen, path);
+                }
 
-        //        using (var font = new Font(DataGridView.DefaultCellStyle.Font, FontStyle.Regular))
-        //            graphics.DrawString(value as string, font, SystemBrushes.ControlText, cellBounds);
+                using (var font = new Font(DataGridView.DefaultCellStyle.Font, FontStyle.Regular))
+                    graphics.DrawString(value as string, font, SystemBrushes.ControlText, cellBounds);
 
-        //        using (Pen pen = new Pen(BUTTON_BORDER_OUTER, 1))
-        //            graphics.DrawLine(pen,
-        //                              cellBounds.Right - cellStyle.Padding.Right - SPLITTER_FROM_RIGHT,
-        //                              cellBounds.Top + cellStyle.Padding.Top + 2,
-        //                              cellBounds.Right - cellStyle.Padding.Right - SPLITTER_FROM_RIGHT,
-        //                              cellBounds.Top + cellStyle.Padding.Top + CELL_HEIGHT - 2);
+                using (Pen pen = new Pen(BUTTON_BORDER_OUTER, 1))
+                    graphics.DrawLine(pen,
+                                      cellBounds.Right - cellStyle.Padding.Right - SPLITTER_FROM_RIGHT,
+                                      cellBounds.Top + cellStyle.Padding.Top + 2,
+                                      cellBounds.Right - cellStyle.Padding.Right - SPLITTER_FROM_RIGHT,
+                                      cellBounds.Top + cellStyle.Padding.Top + CELL_HEIGHT - 2);
 
-        //        //reset graphics mode
-        //        graphics.SmoothingMode = mode;
-        //    }
+                //reset graphics mode
+                graphics.SmoothingMode = mode;
+            }
 
-        //    var img = Properties.Resources.expanded_triangle;
-        //    graphics.DrawImage(img,
-        //        cellBounds.Right - cellStyle.Padding.Right - img.Width - (SPLITTER_FROM_RIGHT - img.Width) / 2,
-        //        cellBounds.Top + (CELL_HEIGHT - img.Height) / 2);
-        //}
+            var img = Properties.Resources.expanded_triangle;
+            graphics.DrawImage(img,
+                cellBounds.Right - cellStyle.Padding.Right - img.Width - (SPLITTER_FROM_RIGHT - img.Width) / 2,
+                cellBounds.Top + (CELL_HEIGHT - img.Height) / 2);
+        }
 
         protected override void OnMouseEnter(int rowIndex)
         {
