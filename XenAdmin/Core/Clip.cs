@@ -59,43 +59,43 @@ namespace XenAdmin.Core
 			// TODO: CrossPlatform ClipboardViewer
 			return;
 			
-            Program.AssertOnEventThread();
+   //         Program.AssertOnEventThread();
 
-            UnregisterClipboardViewer();
+   //         UnregisterClipboardViewer();
 
-            // Register ourselves at the front of the chain.
-			NativeCalls.Instance.SetLastError(0);
-            registeredClipboardHandle = Program.MainWindow.Handle;
-			// TODO: CrossPlatform ClipboardViewer
-			//nextClipboardViewer = Win32.SetClipboardViewer(registeredClipboardHandle);
+   //         // Register ourselves at the front of the chain.
+			//NativeCalls.Instance.SetLastError(0);
+   //         registeredClipboardHandle = Program.MainWindow.Handle;
+			//// TODO: CrossPlatform ClipboardViewer
+			////nextClipboardViewer = Win32.SetClipboardViewer(registeredClipboardHandle);
 
-            int err = Marshal.GetLastWin32Error();
-            if (err != 0)
-            {
-                log.ErrorFormat("SetClipboardViewer failed with code {0}: {1}", err, Win32.GetMessageString((uint)err));
-                registeredClipboardHandle = IntPtr.Zero;
-                nextClipboardViewer = IntPtr.Zero;
-                return;
-            }
+            //int err = Marshal.GetLastWin32Error();
+            //if (err != 0)
+            //{
+            //    log.ErrorFormat("SetClipboardViewer failed with code {0}: {1}", err, Win32.GetMessageString((uint)err));
+            //    registeredClipboardHandle = IntPtr.Zero;
+            //    nextClipboardViewer = IntPtr.Zero;
+            //    return;
+            //}
 
-            // Sanity check -- I can't see why this should ever happen, but xorg/cygwin checks.
-            if (nextClipboardViewer == Program.MainWindow.Handle)
-            {
-                log.Error("SetClipboardViewer has given us our Handle back!");
-                try
-                {
-                    Win32.ChangeClipboardChain(registeredClipboardHandle, IntPtr.Zero);
-                }
-                catch (Exception)
-                {
-                    log.WarnFormat("ChangeClipboardChain failed");
-                }
-                registeredClipboardHandle = IntPtr.Zero;
-                nextClipboardViewer = IntPtr.Zero;
-                return;
-            }
+            //// Sanity check -- I can't see why this should ever happen, but xorg/cygwin checks.
+            //if (nextClipboardViewer == Program.MainWindow.Handle)
+            //{
+            //    log.Error("SetClipboardViewer has given us our Handle back!");
+            //    try
+            //    {
+            //        Win32.ChangeClipboardChain(registeredClipboardHandle, IntPtr.Zero);
+            //    }
+            //    catch (Exception)
+            //    {
+            //        log.WarnFormat("ChangeClipboardChain failed");
+            //    }
+            //    registeredClipboardHandle = IntPtr.Zero;
+            //    nextClipboardViewer = IntPtr.Zero;
+            //    return;
+            //}
 				
-            StartGetClipboard();
+            //StartGetClipboard();
         }
 
         internal static void UnregisterClipboardViewer()
@@ -103,20 +103,20 @@ namespace XenAdmin.Core
 			// TODO: CrossPlatform ClipboardViewer
 			return;
 
-            if (registeredClipboardHandle != IntPtr.Zero)
-            {
-                // Remove existing registration from chain, if any.
-				NativeCalls.Instance.SetLastError(0);
-				Win32.ChangeClipboardChain(registeredClipboardHandle, nextClipboardViewer);
-                int err = Marshal.GetLastWin32Error();
-                if (err != 0)
-                {
-                    log.ErrorFormat("ChangeClipboardChain failed with code {0}: {1}", err, Win32.GetMessageString((uint)err));
-                }
+    //        if (registeredClipboardHandle != IntPtr.Zero)
+    //        {
+    //            // Remove existing registration from chain, if any.
+				//NativeCalls.Instance.SetLastError(0);
+				//Win32.ChangeClipboardChain(registeredClipboardHandle, nextClipboardViewer);
+            //    int err = Marshal.GetLastWin32Error();
+            //    if (err != 0)
+            //    {
+            //        log.ErrorFormat("ChangeClipboardChain failed with code {0}: {1}", err, Win32.GetMessageString((uint)err));
+            //    }
 
-                registeredClipboardHandle = IntPtr.Zero;
-                nextClipboardViewer = IntPtr.Zero;
-            }
+            //    registeredClipboardHandle = IntPtr.Zero;
+            //    nextClipboardViewer = IntPtr.Zero;
+            //}
         }
 
         internal static void ProcessWMChangeCBChain(Message e)
@@ -200,19 +200,19 @@ namespace XenAdmin.Core
 			// TODO: CrossPlatform ClipboardViewer
 			return;
 			
-            Program.AssertOnEventThread();
+            //Program.AssertOnEventThread();
 
-            if (nextClipboardViewer == IntPtr.Zero)
-                return;
+   //         if (nextClipboardViewer == IntPtr.Zero)
+   //             return;
 
-			NativeCalls.Instance.SetLastError(0);
-            Win32.SendMessage(nextClipboardViewer, e.Msg, e.WParam, e.LParam);
-            int err = Marshal.GetLastWin32Error();
-            if (err != 0)
-            {
-                log.ErrorFormat("SendMessage({0}) failed with code {1}: {2}",
-                    Win32.GetWindowsMessageName(e.Msg), err, Win32.GetMessageString((uint)err));
-            }
+			//NativeCalls.Instance.SetLastError(0);
+            //Win32.SendMessage(nextClipboardViewer, e.Msg, e.WParam, e.LParam);
+            //int err = Marshal.GetLastWin32Error();
+            //if (err != 0)
+            //{
+            //    log.ErrorFormat("SendMessage({0}) failed with code {1}: {2}",
+            //        Win32.GetWindowsMessageName(e.Msg), err, Win32.GetMessageString((uint)err));
+            //}
         }
 
         private static void StartGetClipboard()
@@ -220,16 +220,16 @@ namespace XenAdmin.Core
 			// TODO: CrossPlatform ClipboardViewer
 			return;
 			
-            Program.AssertOnEventThread();
+            //Program.AssertOnEventThread();
 
-            if (!GettingClipboard)
-            {
-                GettingClipboard = true;
-                Thread clipboardThread = new Thread(GetClipboard);
-                clipboardThread.SetApartmentState(ApartmentState.STA);
-                clipboardThread.IsBackground = true;
-                clipboardThread.Start();
-            }
+            //if (!GettingClipboard)
+            //{
+            //    GettingClipboard = true;
+            //    Thread clipboardThread = new Thread(GetClipboard);
+            //    clipboardThread.SetApartmentState(ApartmentState.STA);
+            //    clipboardThread.IsBackground = true;
+            //    clipboardThread.Start();
+            //}
         }
 
         private static void GetClipboard()
@@ -237,24 +237,24 @@ namespace XenAdmin.Core
 			// TODO: CrossPlatform ClipboardViewer
 			return;
 
-            Program.AssertOffEventThread();
+            //Program.AssertOffEventThread();
 
-            try
-            {
-                if (Clipboard.ContainsText())
-                {
-                    string s = Clipboard.GetText();
-                    if (s != ClipboardText)
-                    {
-                        ClipboardText = s;
-                        Program.Invoke(Program.MainWindow, OnClipboardChanged);
-                    }
-                }
-            }
-            catch
-            {
-            }
-            GettingClipboard = false;
+            //try
+            //{
+            //    if (Clipboard.ContainsText())
+            //    {
+            //        string s = Clipboard.GetText();
+            //        if (s != ClipboardText)
+            //        {
+            //            ClipboardText = s;
+            //            Program.Invoke(Program.MainWindow, OnClipboardChanged);
+            //        }
+            //    }
+            //}
+            //catch
+            //{
+            //}
+            //GettingClipboard = false;
         }
 
         private static void OnClipboardChanged()
@@ -262,10 +262,10 @@ namespace XenAdmin.Core
 			// TODO: CrossPlatform ClipboardViewer
 			return;
 
-            Program.AssertOnEventThread();
+            //Program.AssertOnEventThread();
 
-            if (ClipboardChanged != null)
-                ClipboardChanged(null, null);
+            //if (ClipboardChanged != null)
+                //ClipboardChanged(null, null);
         }
 
         internal static void SetClipboardText(string text)
@@ -273,17 +273,17 @@ namespace XenAdmin.Core
 			// TODO: CrossPlatform ClipboardViewer
 			return;
 
-            Program.AssertOnEventThread();
+            //Program.AssertOnEventThread();
 
-            try
-            {
-                Clipboard.SetText(text);
-            }
-            catch (Exception ex)
-            {
-                log.Error("Exception while trying to set clipboard text.", ex);
-                log.Error(ex, ex);
-            }
+            //try
+            //{
+            //    Clipboard.SetText(text);
+            //}
+            //catch (Exception ex)
+            //{
+            //    log.Error("Exception while trying to set clipboard text.", ex);
+            //    log.Error(ex, ex);
+            //}
         }
     }
 }

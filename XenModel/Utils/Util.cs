@@ -502,5 +502,13 @@ namespace XenAdmin
             return null;
         }
 
+        /// <summary>
+		/// Replacemend for "Win32.GetHResult(e) == Win32.ERROR_DISK_FULL"
+        /// </summary>
+		public static bool IsWin32DiskFull(Exception e)
+		{
+			return false;
+		}
+
     }
 }

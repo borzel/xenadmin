@@ -347,11 +347,11 @@ namespace XenAdmin.Controls
                 dest.Name = src.Name;
             }
 
-            if (dest.ShowCheckBox != src.ShowCheckBox)
-            {
-                DoBeginUpdateIfRequired(ref doneBeginUpdate);
-                dest.ShowCheckBox = src.ShowCheckBox;
-            }
+            //if (dest.ShowCheckBox != src.ShowCheckBox)
+            //{
+            //    DoBeginUpdateIfRequired(ref doneBeginUpdate);
+            //    dest.ShowCheckBox = src.ShowCheckBox;
+            //}
 
             if (dest.Checked != src.Checked)
             {

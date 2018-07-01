@@ -552,7 +552,7 @@ namespace XenAdmin
             catch (ConfigurationErrorsException ex)
             {
                 log.Error("Could not load settings.", ex);
-                Program.CloseSplash();
+                //Program.CloseSplash();
                 using (var dlg = new ThreeButtonDialog(
                    new ThreeButtonDialog.Details(
                        SystemIcons.Error,

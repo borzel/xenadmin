@@ -81,114 +81,117 @@ namespace XenAdmin.Commands
         /// <param name="host">Used for filtering purposes. May be null.</param>
         private void Execute(IXenConnection connection, VM vm, Host host)
         {
-            /*
-             * These properties have not been copied over to the new save file dialog.
-             *  
-            dlg.AddExtension = true;
-            dlg.CheckPathExists = true;
-            dlg.CreatePrompt = false;
-            dlg.CheckFileExists = false;
-            dlg.OverwritePrompt = true;
-            dlg.ValidateNames = true;*/
+			// TODO: Implement VM Export
+			return;
 
-            string filename;
-            bool verify;
+            ///*
+            // * These properties have not been copied over to the new save file dialog.
+            // *  
+            //dlg.AddExtension = true;
+            //dlg.CheckPathExists = true;
+            //dlg.CreatePrompt = false;
+            //dlg.CheckFileExists = false;
+            //dlg.OverwritePrompt = true;
+            //dlg.ValidateNames = true;*/
 
-            // Showing this dialog has the (undocumented) side effect of changing the working directory
-            // to that of the file selected. This means a handle to the directory persists, making
-            // it undeletable until the program exits, or the working dir moves on. So, save and
-            // restore the working dir...
-            String oldDir = "";
-            try
-            {
-                oldDir = Directory.GetCurrentDirectory();
-                while (true)
-                {
-                    ExportVMDialog dlg = new ExportVMDialog();
-                    dlg.DefaultExt = "xva";
-                    dlg.Filter = Messages.MAINWINDOW_XVA_BLURB;
-                    dlg.Title = Messages.MAINWINDOW_XVA_TITLE;
+            //string filename;
+            //bool verify;
 
-                    if (dlg.ShowDialog(Parent) != DialogResult.OK)
-                        return;
+            //// Showing this dialog has the (undocumented) side effect of changing the working directory
+            //// to that of the file selected. This means a handle to the directory persists, making
+            //// it undeletable until the program exits, or the working dir moves on. So, save and
+            //// restore the working dir...
+            //String oldDir = "";
+            //try
+            //{
+            //    oldDir = Directory.GetCurrentDirectory();
+            //    while (true)
+            //    {
+            //        ExportVMDialog dlg = new ExportVMDialog();
+            //        dlg.DefaultExt = "xva";
+            //        dlg.Filter = Messages.MAINWINDOW_XVA_BLURB;
+            //        dlg.Title = Messages.MAINWINDOW_XVA_TITLE;
 
-                    filename = dlg.FileName;
-                    verify = dlg.Verify;
+            //        if (dlg.ShowDialog(Parent) != DialogResult.OK)
+            //            return;
 
-                    // CA-12975: Warn the user if the export operation does not have enough disk space to
-                    // complete.  This is an approximation only.
-                    Win32.DiskSpaceInfo diskSpaceInfo = Win32.GetDiskSpaceInfo(dlg.FileName);
+            //        filename = dlg.FileName;
+            //        verify = dlg.Verify;
 
-                    if (diskSpaceInfo == null)
-                    {
-                        // Could not determine free disk space. Carry on regardless.
-                        break;
-                    }
-                    else
-                    {
-                        ulong freeSpace = diskSpaceInfo.FreeBytesAvailable;
-                        decimal neededSpace = vm.GetRecommendedExportSpace(SettingsAbstraction.Instance.ShowHiddenVMs);
-                        ulong spaceLeft = 100 * Util.BINARY_MEGA; // We want the user to be left with some disk space afterwards
-                        if (neededSpace >= freeSpace - spaceLeft)
-                        {
-                            string msg = string.Format(Messages.CONFIRM_EXPORT_NOT_ENOUGH_MEMORY, Util.DiskSizeString((long)neededSpace),
-                                Util.DiskSizeString((long)freeSpace), vm.Name());
+            //        // CA-12975: Warn the user if the export operation does not have enough disk space to
+            //        // complete.  This is an approximation only.
+            //        Win32.DiskSpaceInfo diskSpaceInfo = Win32.GetDiskSpaceInfo(dlg.FileName);
 
-                            DialogResult dr;
-                            using (var d = new ThreeButtonDialog(
-                                new ThreeButtonDialog.Details(SystemIcons.Warning, msg),
-                                "ExportVmDialogInsufficientDiskSpace",
-                                new ThreeButtonDialog.TBDButton(Messages.CONTINUE_WITH_EXPORT, DialogResult.OK),
-                                new ThreeButtonDialog.TBDButton(Messages.CHOOSE_ANOTHER_DESTINATION, DialogResult.Retry),
-                                ThreeButtonDialog.ButtonCancel))
-                            {
-                                dr = d.ShowDialog(Parent);
-                            }
+            //        if (diskSpaceInfo == null)
+            //        {
+            //            // Could not determine free disk space. Carry on regardless.
+            //            break;
+            //        }
+            //        else
+            //        {
+            //            ulong freeSpace = diskSpaceInfo.FreeBytesAvailable;
+            //            decimal neededSpace = vm.GetRecommendedExportSpace(SettingsAbstraction.Instance.ShowHiddenVMs);
+            //            ulong spaceLeft = 100 * Util.BINARY_MEGA; // We want the user to be left with some disk space afterwards
+            //            if (neededSpace >= freeSpace - spaceLeft)
+            //            {
+            //                string msg = string.Format(Messages.CONFIRM_EXPORT_NOT_ENOUGH_MEMORY, Util.DiskSizeString((long)neededSpace),
+            //                    Util.DiskSizeString((long)freeSpace), vm.Name());
 
-                            if (dr == DialogResult.Retry)
-                            {
-                                continue;
-                            }
-                            else if (dr == DialogResult.Cancel)
-                            {
-                                return;
-                            }
-                        }
-                        if (diskSpaceInfo.IsFAT && neededSpace > (4 * Util.BINARY_GIGA) - 1)
-                        {
-                            string msg = string.Format(Messages.CONFIRM_EXPORT_FAT, Util.DiskSizeString((long)neededSpace),
-                                Util.DiskSizeString(4 * Util.BINARY_GIGA), vm.Name());
+            //                DialogResult dr;
+            //                using (var d = new ThreeButtonDialog(
+            //                    new ThreeButtonDialog.Details(SystemIcons.Warning, msg),
+            //                    "ExportVmDialogInsufficientDiskSpace",
+            //                    new ThreeButtonDialog.TBDButton(Messages.CONTINUE_WITH_EXPORT, DialogResult.OK),
+            //                    new ThreeButtonDialog.TBDButton(Messages.CHOOSE_ANOTHER_DESTINATION, DialogResult.Retry),
+            //                    ThreeButtonDialog.ButtonCancel))
+            //                {
+            //                    dr = d.ShowDialog(Parent);
+            //                }
 
-                            DialogResult dr;
-                            using (var d = new ThreeButtonDialog(
-                                new ThreeButtonDialog.Details(SystemIcons.Warning, msg),
-                                "ExportVmDialogFSLimitExceeded",
-                                new ThreeButtonDialog.TBDButton(Messages.CONTINUE_WITH_EXPORT, DialogResult.OK),
-                                new ThreeButtonDialog.TBDButton(Messages.CHOOSE_ANOTHER_DESTINATION, DialogResult.Retry),
-                                ThreeButtonDialog.ButtonCancel))
-                            {
-                                dr = d.ShowDialog(Parent);
-                            }
+            //                if (dr == DialogResult.Retry)
+            //                {
+            //                    continue;
+            //                }
+            //                else if (dr == DialogResult.Cancel)
+            //                {
+            //                    return;
+            //                }
+            //            }
+            //            if (diskSpaceInfo.IsFAT && neededSpace > (4 * Util.BINARY_GIGA) - 1)
+            //            {
+            //                string msg = string.Format(Messages.CONFIRM_EXPORT_FAT, Util.DiskSizeString((long)neededSpace),
+            //                    Util.DiskSizeString(4 * Util.BINARY_GIGA), vm.Name());
+
+            //                DialogResult dr;
+            //                using (var d = new ThreeButtonDialog(
+            //                    new ThreeButtonDialog.Details(SystemIcons.Warning, msg),
+            //                    "ExportVmDialogFSLimitExceeded",
+            //                    new ThreeButtonDialog.TBDButton(Messages.CONTINUE_WITH_EXPORT, DialogResult.OK),
+            //                    new ThreeButtonDialog.TBDButton(Messages.CHOOSE_ANOTHER_DESTINATION, DialogResult.Retry),
+            //                    ThreeButtonDialog.ButtonCancel))
+            //                {
+            //                    dr = d.ShowDialog(Parent);
+            //                }
  
-                            if (dr == DialogResult.Retry)
-                            {
-                                continue;
-                            }
-                            else if (dr == DialogResult.Cancel)
-                            {
-                                return;
-                            }
-                        }
-                        break;
-                    }
-                }
-            }
-            finally
-            {
-                Directory.SetCurrentDirectory(oldDir);
-            }
+            //                if (dr == DialogResult.Retry)
+            //                {
+            //                    continue;
+            //                }
+            //                else if (dr == DialogResult.Cancel)
+            //                {
+            //                    return;
+            //                }
+            //            }
+            //            break;
+            //        }
+            //    }
+            //}
+            //finally
+            //{
+            //    Directory.SetCurrentDirectory(oldDir);
+            //}
 
-            new ExportVmAction(connection, host, vm, filename, verify).RunAsync();
+            //new ExportVmAction(connection, host, vm, filename, verify).RunAsync();
         }
 
         protected override void ExecuteCore(SelectedItemCollection selection)

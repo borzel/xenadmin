@@ -254,8 +254,8 @@ namespace XenAPI
             {
                 log.DebugFormat("Caught exception doing HTTP GET from {0} to {1}", hostname, path);
                 log.Debug(e, e);
-
-                if (e is WebException && e.InnerException is IOException && Win32.GetHResult(e.InnerException as IOException) == Win32.ERROR_DISK_FULL)
+                           
+				if (e is WebException && e.InnerException is IOException && Util.IsWin32DiskFull(e.InnerException as IOException))
                     throw e.InnerException;
                 else if (e is CancelledException || e.InnerException is CancelledException)
                     throw new XenAdmin.CancelledException();

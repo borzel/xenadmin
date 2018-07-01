@@ -91,7 +91,10 @@ namespace DotNetVnc
 
         public static int translateKey(Keys key)
         {
-            return IsMapped(key) ? map[key] : UnicodeOfKey(key);
+
+			// TODO: reinplement UnicodeOfKey()
+			//return IsMapped(key) ? map[key] : UnicodeOfKey(key);
+			return map[key];
         }
 
         public static bool IsMapped(Keys key)
@@ -99,39 +102,39 @@ namespace DotNetVnc
             return map.ContainsKey(key);
         }
 
-        private static IntPtr keyboard_state = Marshal.AllocHGlobal(256);
-        private static StringBuilder char_buffer = new StringBuilder(Win32.TO_UNICODE_BUFFER_SIZE);
+        //private static IntPtr keyboard_state = Marshal.AllocHGlobal(256);
+        //private static StringBuilder char_buffer = new StringBuilder(Win32.TO_UNICODE_BUFFER_SIZE);
 
-        private static int UnicodeOfKey(Keys key)
-        {
-            try
-            {
-                Win32.GetKeyboardState(keyboard_state);
-                int n = Win32.ToUnicode((uint)key, 0, keyboard_state, char_buffer, Win32.TO_UNICODE_BUFFER_SIZE, 0);
+        //private static int UnicodeOfKey(Keys key)
+        //{
+        //    try
+        //    {
+        //        //Win32.GetKeyboardState(keyboard_state);
+        //        int n = Win32.ToUnicode((uint)key, 0, keyboard_state, char_buffer, Win32.TO_UNICODE_BUFFER_SIZE, 0);
 
-                if (n == 1)
-                {
-                    int k = char_buffer[0];
+        //        if (n == 1)
+        //        {
+        //            int k = char_buffer[0];
 
-                    if (k < 0x20)
-                    {
-                        return k + 0x60;
-                    }
-                    else
-                    {
-                        return k;
-                    }
-                }
-                else
-                {
-                    return -1;
-                }
-            }
-            catch
-            {
-                return -1;
-            }
-        }
+        //            if (k < 0x20)
+        //            {
+        //                return k + 0x60;
+        //            }
+        //            else
+        //            {
+        //                return k;
+        //            }
+        //        }
+        //        else
+        //        {
+        //            return -1;
+        //        }
+        //    }
+        //    catch
+        //    {
+        //        return -1;
+        //    }
+        //}
     }
 
     public unsafe class InterceptKeys

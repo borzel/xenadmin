@@ -52,19 +52,19 @@ namespace XenAdmin.Controls
         public void AddRange(MultiSelectTreeNode[] nodes)
         {
             _owner.Nodes.AddRange(nodes);
-            Array.ForEach(nodes, UpdateCheckBoxVisiblity);
+            //Array.ForEach(nodes, UpdateCheckBoxVisiblity);
         }
 
-        private void UpdateCheckBoxVisiblity(MultiSelectTreeNode node)
-        {
-            if (node.TreeView != null && node.TreeView.CheckBoxes && node.Handle != IntPtr.Zero && node.TreeView != null && node.TreeView.Handle != IntPtr.Zero)
-            {
-                node.TreeView.UpdateCheckboxVisibility(node);
+        //private void UpdateCheckBoxVisiblity(MultiSelectTreeNode node)
+        //{
+        //    if (node.TreeView != null && node.TreeView.CheckBoxes && node.Handle != IntPtr.Zero && node.TreeView != null && node.TreeView.Handle != IntPtr.Zero)
+        //    {
+        //        node.TreeView.UpdateCheckboxVisibility(node);
 
-                // recurse down all descendants
-                node.Nodes.ForEach(UpdateCheckBoxVisiblity);
-            }
-        }
+        //        // recurse down all descendants
+        //        node.Nodes.ForEach(UpdateCheckBoxVisiblity);
+        //    }
+        //}
 
         public void ForEach(Action<MultiSelectTreeNode> action)
         {
@@ -84,7 +84,7 @@ namespace XenAdmin.Controls
         public void Insert(int index, MultiSelectTreeNode item)
         {
             _owner.Nodes.Insert(index, item);
-            UpdateCheckBoxVisiblity(item);
+            //UpdateCheckBoxVisiblity(item);
         }
 
         public void RemoveAt(int index)
@@ -101,7 +101,7 @@ namespace XenAdmin.Controls
             set
             {
                 _owner.Nodes[index] = value;
-                UpdateCheckBoxVisiblity(value);
+                //UpdateCheckBoxVisiblity(value);
             }
         }
 
@@ -112,7 +112,7 @@ namespace XenAdmin.Controls
         public void Add(MultiSelectTreeNode item)
         {
             _owner.Nodes.Add(item);
-            UpdateCheckBoxVisiblity(item);
+            //UpdateCheckBoxVisiblity(item);
         }
 
         public void Clear()

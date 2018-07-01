@@ -720,55 +720,56 @@ namespace XenAdmin.Controls.MainWindowControls
 
         private void treeView_DragOver(object sender, DragEventArgs e)
         {
-            // CA-11457: When dragging in resource tree, view doesn't scroll
-            // http://www.fmsinc.com/freE/NewTips/NET/NETtip21.asp
+			// TODO: Implement new somehow!
+            //// CA-11457: When dragging in resource tree, view doesn't scroll
+            //// http://www.fmsinc.com/freE/NewTips/NET/NETtip21.asp
 
-            const int SCROLL_REGION = 20;
+            //const int SCROLL_REGION = 20;
 
-            Point pt = treeView.PointToClient(Cursor.Position);
-            VirtualTreeNode targetNode = treeView.GetNodeAt(treeView.PointToClient(new Point(e.X, e.Y)));
+            //Point pt = treeView.PointToClient(Cursor.Position);
+            //VirtualTreeNode targetNode = treeView.GetNodeAt(treeView.PointToClient(new Point(e.X, e.Y)));
 
-            if ((pt.Y + SCROLL_REGION) > treeView.Height)
-            {
-                Win32.SendMessage(treeView.Handle, Win32.WM_VSCROLL, new IntPtr(1), IntPtr.Zero);
-            }
-            else if (pt.Y < SCROLL_REGION)
-            {
-                Win32.SendMessage(treeView.Handle, Win32.WM_VSCROLL, IntPtr.Zero, IntPtr.Zero);
-            }
+            //if ((pt.Y + SCROLL_REGION) > treeView.Height)
+            //{
+            //    Win32.SendMessage(treeView.Handle, Win32.WM_VSCROLL, new IntPtr(1), IntPtr.Zero);
+            //}
+            //else if (pt.Y < SCROLL_REGION)
+            //{
+            //    Win32.SendMessage(treeView.Handle, Win32.WM_VSCROLL, IntPtr.Zero, IntPtr.Zero);
+            //}
 
-            VirtualTreeNode targetToHighlight = null;
+            //VirtualTreeNode targetToHighlight = null;
             
-            string statusBarText = null;
-            foreach (DragDropCommand cmd in GetDragDropCommands(targetNode, e.Data))
-            {
-                if (cmd.CanExecute())
-                    targetToHighlight = cmd.HighlightNode;
+            //string statusBarText = null;
+            //foreach (DragDropCommand cmd in GetDragDropCommands(targetNode, e.Data))
+            //{
+            //    if (cmd.CanExecute())
+            //        targetToHighlight = cmd.HighlightNode;
 
-                if (cmd.StatusBarText != null)
-                    statusBarText = cmd.StatusBarText;
-            }
+            //    if (cmd.StatusBarText != null)
+            //        statusBarText = cmd.StatusBarText;
+            //}
 
-            if (DragDropCommandActivated != null)
-                DragDropCommandActivated(statusBarText);
+            //if (DragDropCommandActivated != null)
+            //    DragDropCommandActivated(statusBarText);
 
-            if (targetToHighlight != null)
-            {
-                if (_highlightedDragTarget != targetToHighlight)
-                {
-                    ClearHighlightedDragTarget();
-                    treeBuilder.HighlightedDragTarget = targetToHighlight.Tag;
-                    _highlightedDragTarget = targetToHighlight;
-                    _highlightedDragTarget.BackColor = SystemColors.Highlight;
-                    _highlightedDragTarget.ForeColor = SystemColors.HighlightText;
-                }
-                e.Effect = DragDropEffects.Move;
-            }
-            else
-            {
-                ClearHighlightedDragTarget();
-                e.Effect = DragDropEffects.None;
-            }
+            //if (targetToHighlight != null)
+            //{
+            //    if (_highlightedDragTarget != targetToHighlight)
+            //    {
+            //        ClearHighlightedDragTarget();
+            //        treeBuilder.HighlightedDragTarget = targetToHighlight.Tag;
+            //        _highlightedDragTarget = targetToHighlight;
+            //        _highlightedDragTarget.BackColor = SystemColors.Highlight;
+            //        _highlightedDragTarget.ForeColor = SystemColors.HighlightText;
+            //    }
+            //    e.Effect = DragDropEffects.Move;
+            //}
+            //else
+            //{
+            //    ClearHighlightedDragTarget();
+            //    e.Effect = DragDropEffects.None;
+            //}
         }
 
         private void treeView_KeyUp(object sender, KeyEventArgs e)

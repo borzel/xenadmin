@@ -330,20 +330,20 @@ namespace XenAdmin
             {
                 argType = ParseFileArgs(sanitizedArgs, out args);
 
-                if (argType == ArgType.Passwords)
-                {
-                    log.DebugFormat("Handling password request using '{0}'", args[0]);
-                    try
-                    {
-                        PasswordsRequest.HandleRequest(args[0]);
-                    }
-                    catch (Exception exn)
-                    {
-                        log.Fatal(exn, exn);
-                    }
-                    Application.Exit();
-                    return;
-                }
+                //if (argType == ArgType.Passwords)
+                //{
+                //    log.DebugFormat("Handling password request using '{0}'", args[0]);
+                //    try
+                //    {
+                //        PasswordsRequest.HandleRequest(args[0]);
+                //    }
+                //    catch (Exception exn)
+                //    {
+                //        log.Fatal(exn, exn);
+                //    }
+                //    Application.Exit();
+                //    return;
+                //}
             }
             else if (sanitizedArgs.Count == 1 && sanitizedArgs[0] == "messageboxtest")
             {
@@ -1058,23 +1058,23 @@ namespace XenAdmin
             XenAPI.HTTP.CurrentProxyAuthenticationMethod = authSetting;
         }
 
-        private const string SplashWindowClass = "XenCenterSplash0001";
+        //private const string SplashWindowClass = "XenCenterSplash0001";
 
-        internal static void CloseSplash()
-        {
-            IntPtr hWnd = Win32.FindWindow(SplashWindowClass, null);
+        //internal static void CloseSplash()
+        //{
+        //    IntPtr hWnd = Win32.FindWindow(SplashWindowClass, null);
 
-            if (hWnd == IntPtr.Zero)
-            {
-                //log.Warn("Couldn't find splash screen in CloseSplash()", new System.ComponentModel.Win32Exception());
-                return;
-            }
+        //    if (hWnd == IntPtr.Zero)
+        //    {
+        //        //log.Warn("Couldn't find splash screen in CloseSplash()", new System.ComponentModel.Win32Exception());
+        //        return;
+        //    }
 
-            if (!Win32.PostMessage(hWnd, Win32.WM_DESTROY, IntPtr.Zero, IntPtr.Zero))
-            {
-                log.Warn("PostMessage WM_DESTROY failed in CloseSplash()", new System.ComponentModel.Win32Exception());
-            }
-        }
+        //    if (!Win32.PostMessage(hWnd, Win32.WM_DESTROY, IntPtr.Zero, IntPtr.Zero))
+        //    {
+        //        log.Warn("PostMessage WM_DESTROY failed in CloseSplash()", new System.ComponentModel.Win32Exception());
+        //    }
+        //}
 
         public static void OpenURL(string url)
         {

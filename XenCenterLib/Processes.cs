@@ -42,80 +42,80 @@ namespace XenAdmin.Core
     {
         private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
-        /*
-         * Based upon
-         * http://blogs.msdn.com/jasonz/archive/2007/05/11/code-sample-is-your-process-using-the-silverlight-clr.aspx
-         * and http://www.csharpfriends.com/Forums/ShowPost.aspx?PostID=27395.
-         */
-        /// <summary>
-        /// Returns the parent Process of the given one, or null on failure.
-        /// </summary>
-        /// <returns></returns>
-        public static Process FindParent(Process process)
-        {
-            int procid = process.Id;
+        ///*
+        // * Based upon
+        // * http://blogs.msdn.com/jasonz/archive/2007/05/11/code-sample-is-your-process-using-the-silverlight-clr.aspx
+        // * and http://www.csharpfriends.com/Forums/ShowPost.aspx?PostID=27395.
+        // */
+        ///// <summary>
+        ///// Returns the parent Process of the given one, or null on failure.
+        ///// </summary>
+        ///// <returns></returns>
+        //public static Process FindParent(Process process)
+        //{
+        //    int procid = process.Id;
 
-            Win32.PROCESSENTRY32 pe32 = new Win32.PROCESSENTRY32();
-            pe32.dwSize = (uint)Marshal.SizeOf(pe32);
+        //    Win32.PROCESSENTRY32 pe32 = new Win32.PROCESSENTRY32();
+        //    pe32.dwSize = (uint)Marshal.SizeOf(pe32);
 
-            Win32.ToolHelpHandle thh = Win32.CreateToolhelp32Snapshot(Win32.SnapshotFlags.Process, 0);
-            try
-            {
-                if (thh.IsInvalid)
-                {
-                    log.Error("CreateToolhelp32Snapshot failed");
-                    return null;
-                }
+        //    Win32.ToolHelpHandle thh = Win32.CreateToolhelp32Snapshot(Win32.SnapshotFlags.Process, 0);
+        //    try
+        //    {
+        //        if (thh.IsInvalid)
+        //        {
+        //            log.Error("CreateToolhelp32Snapshot failed");
+        //            return null;
+        //        }
 
-                if (Win32.Process32First(thh, ref pe32))
-                {
-                    do
-                    {
-                        if (pe32.th32ProcessID == procid)
-                        {
-                            return Process.GetProcessById(Convert.ToInt32(pe32.th32ParentProcessID));
-                        }
-                    }
-                    while (Win32.Process32Next(thh, ref pe32));
+        //        if (Win32.Process32First(thh, ref pe32))
+        //        {
+        //            do
+        //            {
+        //                if (pe32.th32ProcessID == procid)
+        //                {
+        //                    return Process.GetProcessById(Convert.ToInt32(pe32.th32ParentProcessID));
+        //                }
+        //            }
+        //            while (Win32.Process32Next(thh, ref pe32));
 
-                    // Maybe the given process has gone away?  I don't know if it's possible for a process
-                    // to have no parent.
-                    return null;
-                }
-                else
-                {
-                    log.Error("Process32First failed");
-                    return null;
-                }
-            }
-            finally
-            {
-                thh.Close();
-            }
-        }
+        //            // Maybe the given process has gone away?  I don't know if it's possible for a process
+        //            // to have no parent.
+        //            return null;
+        //        }
+        //        else
+        //        {
+        //            log.Error("Process32First failed");
+        //            return null;
+        //        }
+        //    }
+        //    finally
+        //    {
+        //        thh.Close();
+        //    }
+        //}
 
-        public static WindowsIdentity GetWindowsIdentity(Process process)
-        {
-            IntPtr token;
-            try
-            {
-                if (Win32.OpenProcessToken(process.Handle, Win32.TOKEN_ACCESS.TOKEN_QUERY, out token))
-                    return new WindowsIdentity(token);
-                else
-                    return null;
-            }
-            catch (Exception exn)
-            {
-                log.Warn("OpenProcessToken failed", exn);
-                return null;
-            }
-        }
+        //public static WindowsIdentity GetWindowsIdentity(Process process)
+        //{
+        //    IntPtr token;
+        //    try
+        //    {
+        //        if (Win32.OpenProcessToken(process.Handle, Win32.TOKEN_ACCESS.TOKEN_QUERY, out token))
+        //            return new WindowsIdentity(token);
+        //        else
+        //            return null;
+        //    }
+        //    catch (Exception exn)
+        //    {
+        //        log.Warn("OpenProcessToken failed", exn);
+        //        return null;
+        //    }
+        //}
 
-        public static string GetExePath(Process proc)
-        {
-            StringBuilder sb = new StringBuilder();
-            Win32.GetModuleFileNameEx(proc.Handle, IntPtr.Zero, sb, 1024);
-            return sb.ToString();
-        }
+        //public static string GetExePath(Process proc)
+        //{
+        //    StringBuilder sb = new StringBuilder();
+        //    Win32.GetModuleFileNameEx(proc.Handle, IntPtr.Zero, sb, 1024);
+        //    return sb.ToString();
+        //}
     }
 }

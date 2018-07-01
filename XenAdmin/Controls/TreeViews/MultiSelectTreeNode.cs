@@ -275,28 +275,28 @@ namespace XenAdmin.Controls
             }
         }
 
-        /// <summary>
-        /// Gets or sets a value indicating whether a CheckBox should be shown on this node. This
-        /// only takes effect if TreeView.ShowCheckBoxes is set to true.
-        /// </summary>
-        public bool ShowCheckBox
-        {
-            get
-            {
-                return _showCheckBox;
-            }
-            set
-            {
-                if (_showCheckBox != value)
-                {
-                    _showCheckBox = value;
-                    if (TreeView != null)
-                    {
-                        TreeView.UpdateCheckboxVisibility(this);
-                    }
-                }
-            }
-        }
+        ///// <summary>
+        ///// Gets or sets a value indicating whether a CheckBox should be shown on this node. This
+        ///// only takes effect if TreeView.ShowCheckBoxes is set to true.
+        ///// </summary>
+        //public bool ShowCheckBox
+        //{
+        //    get
+        //    {
+        //        return _showCheckBox;
+        //    }
+        //    set
+        //    {
+        //        if (_showCheckBox != value)
+        //        {
+        //            _showCheckBox = value;
+        //            if (TreeView != null)
+        //            {
+        //                TreeView.UpdateCheckboxVisibility(this);
+        //            }
+        //        }
+        //    }
+        //}
 
         /// <summary>
         /// Iterates through all the descendants of this <see cref="VirtualTreeNode"/>.

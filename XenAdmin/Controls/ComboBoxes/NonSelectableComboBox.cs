@@ -133,50 +133,51 @@ namespace XenAdmin.Controls
             base.OnSelectedIndexChanged(e);
         }
 
-        /// <summary>
-        /// We need to prevent the mouse click from occuring when the user clicks
-        /// on certain objects. The combo box creates another window for the dropdown
-        /// list so we cannot use it's wndproc. When this other window is created
-        /// at run time, we are told the window handle (LParam on WM_PARENTNOTIFY),
-        /// so we then replace this window's wndproc with our own (ReplacementWndProc)
-        /// </summary>
-        /// <param name="m"></param>
-        protected override void WndProc(ref Message m)
-        {
-            switch (m.Msg)
-            {
-                case Win32.WM_PARENTNOTIFY:
-                    DropDownHandle = m.LParam;
-                    oldWndProc = Win32.GetWindowLong(DropDownHandle, Win32.GWL_WNDPROC);
-                    newWndProc = new Win32.WndProcDelegate(ReplacementWndProc);
-                    Win32.SetWindowLong(DropDownHandle, Win32.GWL_WNDPROC, Marshal.GetFunctionPointerForDelegate(newWndProc));
-                    break;
-            }
+		// TODO: Implement new!
+        ///// <summary>
+        ///// We need to prevent the mouse click from occuring when the user clicks
+        ///// on certain objects. The combo box creates another window for the dropdown
+        ///// list so we cannot use it's wndproc. When this other window is created
+        ///// at run time, we are told the window handle (LParam on WM_PARENTNOTIFY),
+        ///// so we then replace this window's wndproc with our own (ReplacementWndProc)
+        ///// </summary>
+        ///// <param name="m"></param>
+        //protected override void WndProc(ref Message m)
+        //{
+        //    switch (m.Msg)
+        //    {
+        //        case Win32.WM_PARENTNOTIFY:
+        //            DropDownHandle = m.LParam;
+        //            oldWndProc = Win32.GetWindowLong(DropDownHandle, Win32.GWL_WNDPROC);
+        //            newWndProc = new Win32.WndProcDelegate(ReplacementWndProc);
+        //            Win32.SetWindowLong(DropDownHandle, Win32.GWL_WNDPROC, Marshal.GetFunctionPointerForDelegate(newWndProc));
+        //            break;
+        //    }
 
-            base.WndProc(ref m);
-        }
+        //    base.WndProc(ref m);
+        //}
 
-        private IntPtr ReplacementWndProc(IntPtr hWnd, uint msg, IntPtr wParam, IntPtr lParam)
-        {
-            if (msg == Win32.WM_LBUTTONDOWN || msg == Win32.WM_LBUTTONDBLCLK)
-            {
-                Win32.POINT loc = new Win32.POINT();
-                loc.X = MousePosition.X;
-                loc.Y = MousePosition.Y;
-                Win32.ScreenToClient(DropDownHandle, ref loc);
-                Win32.RECT dropdown_rect = new Win32.RECT();
-                Win32.GetClientRect(DropDownHandle, out dropdown_rect);
-                if (dropdown_rect.Left <= loc.X && loc.X < dropdown_rect.Right && dropdown_rect.Top <= loc.Y && loc.Y < dropdown_rect.Bottom)
-                {
-                    int index = (int)Win32.SendMessage(DropDownHandle, Win32.LB_ITEMFROMPOINT, IntPtr.Zero, (IntPtr)(loc.X + (loc.Y << 16)));
-                    if (index >> 16 == 0)
-                    {
-                        if (IsItemNonSelectable(Items[index]))
-                            return IntPtr.Zero;
-                    }
-                }
-            }
-            return Win32.CallWindowProc(oldWndProc, hWnd, msg, wParam, lParam);
-        }
+        //private IntPtr ReplacementWndProc(IntPtr hWnd, uint msg, IntPtr wParam, IntPtr lParam)
+        //{
+        //    if (msg == Win32.WM_LBUTTONDOWN || msg == Win32.WM_LBUTTONDBLCLK)
+        //    {
+        //        Win32.POINT loc = new Win32.POINT();
+        //        loc.X = MousePosition.X;
+        //        loc.Y = MousePosition.Y;
+        //        Win32.ScreenToClient(DropDownHandle, ref loc);
+        //        Win32.RECT dropdown_rect = new Win32.RECT();
+        //        Win32.GetClientRect(DropDownHandle, out dropdown_rect);
+        //        if (dropdown_rect.Left <= loc.X && loc.X < dropdown_rect.Right && dropdown_rect.Top <= loc.Y && loc.Y < dropdown_rect.Bottom)
+        //        {
+        //            int index = (int)Win32.SendMessage(DropDownHandle, Win32.LB_ITEMFROMPOINT, IntPtr.Zero, (IntPtr)(loc.X + (loc.Y << 16)));
+        //            if (index >> 16 == 0)
+        //            {
+        //                if (IsItemNonSelectable(Items[index]))
+        //                    return IntPtr.Zero;
+        //            }
+        //        }
+        //    }
+        //    return Win32.CallWindowProc(oldWndProc, hWnd, msg, wParam, lParam);
+        //}
     }
 }

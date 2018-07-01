@@ -123,7 +123,8 @@ namespace XenAdmin.Dialogs
 
             if (!ServerNameComboBox.Enabled && connection != null && !string.IsNullOrEmpty(connection.Username))
             {
-                Win32.SetFocus(PasswordTextBox.Handle);
+				//Win32.SetFocus(PasswordTextBox.Handle);
+				PasswordTextBox.Focus();
             }
         }
 

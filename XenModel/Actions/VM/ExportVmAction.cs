@@ -142,13 +142,14 @@ namespace XenAdmin.Actions
 
             using (FileStream fs = new FileStream(tmpFile, FileMode.Append))
             {
-                // Flush written data to disk
-                if (!Win32.FlushFileBuffers(fs.SafeFileHandle))
-                {
-                    Win32Exception exn = new Win32Exception(System.Runtime.InteropServices.Marshal.GetLastWin32Error());
-                    log.ErrorFormat("FlushFileBuffers failed in ExportVmAction.\nNativeErrorCode={0}\nMessage={1}\nToString={2}",
-                        exn.NativeErrorCode, exn.Message, exn.ToString());
-                }
+				// TODO: Implement on MONO
+                //// Flush written data to disk
+                //if (!Win32.FlushFileBuffers(fs.SafeFileHandle))
+                //{
+                //    Win32Exception exn = new Win32Exception(System.Runtime.InteropServices.Marshal.GetLastWin32Error());
+                //    log.ErrorFormat("FlushFileBuffers failed in ExportVmAction.\nNativeErrorCode={0}\nMessage={1}\nToString={2}",
+                //        exn.NativeErrorCode, exn.Message, exn.ToString());
+                //}
             }
 
             if (verify && _exception == null)
@@ -206,7 +207,7 @@ namespace XenAdmin.Actions
                     this.Description = Messages.ACTION_EXPORT_DESCRIPTION_HEADER_CHECKSUM_FAILED;
                 else if (_exception is BlockChecksumFailed)
                     this.Description = Messages.ACTION_EXPORT_DESCRIPTION_BLOCK_CHECKSUM_FAILED;
-                else if (_exception is IOException && Win32.GetHResult(_exception) == Win32.ERROR_DISK_FULL)
+				else if (_exception is IOException && Util.IsWin32DiskFull(_exception))
                     this.Description = Messages.ACTION_EXPORT_DESCRIPTION_DISK_FULL;
                 else if (_exception is Failure && ((Failure)_exception).ErrorDescription[0] == Failure.VDI_IN_USE)
                     this.Description = Messages.ACTION_EXPORT_DESCRIPTION_VDI_IN_USE;

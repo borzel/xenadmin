@@ -92,10 +92,6 @@
     <Compile Include="ToStringWrapper.cs" />
     <Compile Include="Win32.cs" />
     <Compile Include="XSVersionAttribute.cs" />
-    <Compile Include="NativeCalls.cs" />
-    <Compile Include="INativeCalls.cs" />
-    <Compile Include="NativeCallsWin32.cs" />
-    <Compile Include="NativeCallsLinux.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

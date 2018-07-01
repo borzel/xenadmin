@@ -1077,16 +1077,16 @@ namespace XenAdmin.Controls
 
         private int ScrollInfo(Win32.ScrollBarConstants fnBar)
         {
-			//DEBUG: GetScrollInfo
-			//return 0;
+			//TODO: DEBUG: GetScrollInfo
+			return 0;
 
-            Win32.ScrollInfo si = new Win32.ScrollInfo();
-            si.cbSize = (uint)Marshal.SizeOf(si);
-            si.fMask = (int)Win32.ScrollInfoMask.SIF_POS;
-			if (!NativeCalls.Instance.GetScrollInfo(Handle, (int)fnBar, ref si))
-                return 0;
+   //         Win32.ScrollInfo si = new Win32.ScrollInfo();
+   //         si.cbSize = (uint)Marshal.SizeOf(si);
+   //         si.fMask = (int)Win32.ScrollInfoMask.SIF_POS;
+			//if (!NativeCalls.Instance.GetScrollInfo(Handle, (int)fnBar, ref si))
+            //    return 0;
 
-            return si.nPos;
+            //return si.nPos;
         }
 
         public int HScrollPos
@@ -1099,7 +1099,7 @@ namespace XenAdmin.Controls
             }
             set
             {
-                Win32.SendMessage(Handle, Win32.WM_HSCROLL, (IntPtr)(((int)Win32.ScrollBarCommands.SB_THUMBPOSITION) | (value << 16)), (IntPtr)0);
+                //Win32.SendMessage(Handle, Win32.WM_HSCROLL, (IntPtr)(((int)Win32.ScrollBarCommands.SB_THUMBPOSITION) | (value << 16)), (IntPtr)0);
             }
         }
 
@@ -1130,40 +1130,40 @@ namespace XenAdmin.Controls
             }
         }
 
-        protected override void OnHandleCreated(EventArgs e)
-        {
-            base.OnHandleCreated(e);
+        //protected override void OnHandleCreated(EventArgs e)
+        //{
+        //    base.OnHandleCreated(e);
             
-            foreach (MultiSelectTreeNode node in AllNodes)
-            {
-                UpdateCheckboxVisibility(node);
-            }
-        }
+        //    foreach (MultiSelectTreeNode node in AllNodes)
+        //    {
+        //        UpdateCheckboxVisibility(node);
+        //    }
+        //}
 
-        public void UpdateCheckboxVisibility(MultiSelectTreeNode treeNode)
-        {
-            if (CheckBoxes && treeNode.Handle != IntPtr.Zero && Handle != IntPtr.Zero)
-            {
-                NativeMethods.TVITEM tvItem = new NativeMethods.TVITEM();
-                tvItem.hItem = treeNode.Handle;
-                tvItem.mask = NativeMethods.TVIF_STATE;
-                tvItem.stateMask = NativeMethods.TVIS_STATEIMAGEMASK;
-                tvItem.state = 0;
+        //public void UpdateCheckboxVisibility(MultiSelectTreeNode treeNode)
+        //{
+        //    if (CheckBoxes && treeNode.Handle != IntPtr.Zero && Handle != IntPtr.Zero)
+        //    {
+        //        NativeMethods.TVITEM tvItem = new NativeMethods.TVITEM();
+        //        tvItem.hItem = treeNode.Handle;
+        //        tvItem.mask = NativeMethods.TVIF_STATE;
+        //        tvItem.stateMask = NativeMethods.TVIS_STATEIMAGEMASK;
+        //        tvItem.state = 0;
 
-                if (treeNode.ShowCheckBox && treeNode.Checked)
-                {
-                    tvItem.state = 2 << 12;
-                }
-                else if (treeNode.ShowCheckBox)
-                {
-                    tvItem.state = 1 << 12;
-                }
+        //        if (treeNode.ShowCheckBox && treeNode.Checked)
+        //        {
+        //            tvItem.state = 2 << 12;
+        //        }
+        //        else if (treeNode.ShowCheckBox)
+        //        {
+        //            tvItem.state = 1 << 12;
+        //        }
 
-                IntPtr lparam = Marshal.AllocHGlobal(Marshal.SizeOf(tvItem));
-                Marshal.StructureToPtr(tvItem, lparam, false);
-                Win32.SendMessage(Handle, NativeMethods.TVM_SETITEM, IntPtr.Zero, lparam);
-            }
-        }
+        //        IntPtr lparam = Marshal.AllocHGlobal(Marshal.SizeOf(tvItem));
+        //        Marshal.StructureToPtr(tvItem, lparam, false);
+        //        Win32.SendMessage(Handle, NativeMethods.TVM_SETITEM, IntPtr.Zero, lparam);
+        //    }
+        //}
 
         #region NativeMethods class
 

@@ -43,37 +43,27 @@ namespace XenAdmin.Core
     {
         private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
-        [DllImport("kernel32.dll", CharSet = CharSet.Auto, SetLastError = true)]
-        public static extern IntPtr GetModuleHandle(string lpModuleName);
+    //    [DllImport("kernel32.dll", CharSet = CharSet.Auto, SetLastError = true)]
+    //    public static extern IntPtr GetModuleHandle(string lpModuleName);
 
-        public static int GetGuiResourcesGDICount(IntPtr processHandle)
-        {
-			return NativeCalls.Instance.GetGuiResources(processHandle, 0);
-        }
+    //            public const int TO_UNICODE_BUFFER_SIZE = 64;
+    //    [DllImport("user32.dll")]
+    //    public extern static int ToUnicode(uint wVirtKey, uint wScanCode, IntPtr lpKeyState,
+    //                                       [Out, MarshalAs(UnmanagedType.LPWStr, SizeConst = TO_UNICODE_BUFFER_SIZE)] StringBuilder pwszBuff,
+    //                                       int cchBuff, uint wFlags);
 
-        public static int GetGuiResourcesUserCount(IntPtr processHandle)
-        {
-			return NativeCalls.Instance.GetGuiResources(processHandle, 1);
-        }
+    //    [DllImport("kernel32.dll", SetLastError = true)]
+    //    [return: MarshalAs(UnmanagedType.Bool)]
+    //    public static extern bool FlushFileBuffers(Microsoft.Win32.SafeHandles.SafeFileHandle hFile);
 
-        public const int TO_UNICODE_BUFFER_SIZE = 64;
-        [DllImport("user32.dll")]
-        public extern static int ToUnicode(uint wVirtKey, uint wScanCode, IntPtr lpKeyState,
-                                           [Out, MarshalAs(UnmanagedType.LPWStr, SizeConst = TO_UNICODE_BUFFER_SIZE)] StringBuilder pwszBuff,
-                                           int cchBuff, uint wFlags);
+    //    [DllImport("user32.dll")]
+    //    public extern static bool GetKeyboardState(IntPtr lpKeyState);
 
-        [DllImport("kernel32.dll", SetLastError = true)]
-        [return: MarshalAs(UnmanagedType.Bool)]
-        public static extern bool FlushFileBuffers(Microsoft.Win32.SafeHandles.SafeFileHandle hFile);
-
-        [DllImport("user32.dll")]
-        public extern static bool GetKeyboardState(IntPtr lpKeyState);
-
-        // So we can flash minimized windows in the taskbar to alert the user.
-        // See http://pinvoke.net/default.aspx/user32.FlashWindowEx and
-        // http://blogs.msdn.com/hippietim/archive/2006/03/28/563094.aspx
-        [DllImport("user32.dll")]
-        public static extern Int32 FlashWindowEx(ref FLASHWINFO pwfi);
+    //    // So we can flash minimized windows in the taskbar to alert the user.
+    //    // See http://pinvoke.net/default.aspx/user32.FlashWindowEx and
+    //    // http://blogs.msdn.com/hippietim/archive/2006/03/28/563094.aspx
+    //    [DllImport("user32.dll")]
+    //    public static extern Int32 FlashWindowEx(ref FLASHWINFO pwfi);
 
         [StructLayout(LayoutKind.Sequential)]
         public struct FLASHWINFO
@@ -110,42 +100,42 @@ namespace XenAdmin.Core
         /// </summary>
         public const UInt32 FLASHW_TIMERNOFG = 12;
 
-        /// <summary>
-        /// Flash the taskbar button for the given window.
-        /// </summary>
-        public static void FlashTaskbar(IntPtr hwnd)
-        {
-            FLASHWINFO fwi = new FLASHWINFO();
-            fwi.cbSize = (UInt32)Marshal.SizeOf(typeof(FLASHWINFO));
-            fwi.dwFlags = FLASHW_TRAY;
-            fwi.dwTimeout = 0; // The default, which is the caret blink rate
-            fwi.uCount = 3;
-            fwi.hwnd = hwnd;
-            FlashWindowEx(ref fwi);
-        }
+    //    /// <summary>
+    //    /// Flash the taskbar button for the given window.
+    //    /// </summary>
+    //    public static void FlashTaskbar(IntPtr hwnd)
+    //    {
+    //        FLASHWINFO fwi = new FLASHWINFO();
+    //        fwi.cbSize = (UInt32)Marshal.SizeOf(typeof(FLASHWINFO));
+    //        fwi.dwFlags = FLASHW_TRAY;
+    //        fwi.dwTimeout = 0; // The default, which is the caret blink rate
+    //        fwi.uCount = 3;
+    //        fwi.hwnd = hwnd;
+    //        FlashWindowEx(ref fwi);
+    //    }
 
-        /// <summary>
-        /// Stop the given window flashing.
-        /// </summary>
-        public static void StopFlashing(IntPtr hwnd)
-        {
-            FLASHWINFO fwi = new FLASHWINFO();
-            fwi.cbSize = (UInt32)Marshal.SizeOf(typeof(FLASHWINFO));
-            fwi.dwFlags = FLASHW_STOP;
-            fwi.dwTimeout = 0;
-            fwi.uCount = 0;
-            fwi.hwnd = hwnd;
-            FlashWindowEx(ref fwi);
-        }
+    //    /// <summary>
+    //    /// Stop the given window flashing.
+    //    /// </summary>
+    //    public static void StopFlashing(IntPtr hwnd)
+    //    {
+    //        FLASHWINFO fwi = new FLASHWINFO();
+    //        fwi.cbSize = (UInt32)Marshal.SizeOf(typeof(FLASHWINFO));
+    //        fwi.dwFlags = FLASHW_STOP;
+    //        fwi.dwTimeout = 0;
+    //        fwi.uCount = 0;
+    //        fwi.hwnd = hwnd;
+    //        FlashWindowEx(ref fwi);
+    //    }
 
-        [DllImport("user32.dll")]
-        public extern static IntPtr GetClipboardViewer();
+    //    [DllImport("user32.dll")]
+    //    public extern static IntPtr GetClipboardViewer();
 
-        [DllImport("user32.dll", SetLastError = true)]
-        public extern static IntPtr SetClipboardViewer(IntPtr hWnd);
+    //    [DllImport("user32.dll", SetLastError = true)]
+    //    public extern static IntPtr SetClipboardViewer(IntPtr hWnd);
 
-        [DllImport("user32.dll", SetLastError = true)]
-        public extern static bool ChangeClipboardChain(IntPtr hWnd, IntPtr hWndNext);
+    //    [DllImport("user32.dll", SetLastError = true)]
+    //    public extern static bool ChangeClipboardChain(IntPtr hWnd, IntPtr hWndNext);
 
         /// <summary>
         /// There is not enough space on the disk. See winerror.h.
@@ -240,14 +230,14 @@ namespace XenAdmin.Core
         public const int CDN_FILEOK = -606;
         public const int CDN_HELP = -605;
 
-        [DllImport("user32.dll", CharSet = CharSet.Auto)]
-        public static extern IntPtr GetDlgItem(IntPtr hDlg, int nIDDlgItem);
+    //    [DllImport("user32.dll", CharSet = CharSet.Auto)]
+    //    public static extern IntPtr GetDlgItem(IntPtr hDlg, int nIDDlgItem);
 
-        [DllImport("user32.dll", CharSet = CharSet.Auto)]
-        public static extern IntPtr CreateWindowEx(uint dwExStyle, string lpClassName, string lpWindowName, uint dwStyle, int x, int y, int nWidth, int nHeight, IntPtr hWndParent, IntPtr hMenu, IntPtr hInstance, IntPtr lpParam);
+    //    [DllImport("user32.dll", CharSet = CharSet.Auto)]
+    //    public static extern IntPtr CreateWindowEx(uint dwExStyle, string lpClassName, string lpWindowName, uint dwStyle, int x, int y, int nWidth, int nHeight, IntPtr hWndParent, IntPtr hMenu, IntPtr hInstance, IntPtr lpParam);
 
-        [DllImport("user32.dll")]
-        public static extern bool SetWindowPos(IntPtr hWnd, IntPtr hWndInsertAfter, int X, int Y, int cx, int cy, uint uFlags);
+    //    [DllImport("user32.dll")]
+    //    public static extern bool SetWindowPos(IntPtr hWnd, IntPtr hWndInsertAfter, int X, int Y, int cx, int cy, uint uFlags);
 
         public struct RECT
         {
@@ -258,158 +248,158 @@ namespace XenAdmin.Core
         }
 
         public struct POINT
-        {
+       {
             public int X;
-            public int Y;
+           public int Y;
         }
 
-        [DllImport("user32.dll")]
-        public static extern bool ScreenToClient(IntPtr hWnd, ref POINT lpPoint);
+    //    [DllImport("user32.dll")]
+    //    public static extern bool ScreenToClient(IntPtr hWnd, ref POINT lpPoint);
 
-        [DllImport("user32.dll")]
-        public static extern bool GetWindowRect(IntPtr hWnd, ref RECT lpRect);
+    //    [DllImport("user32.dll")]
+    //    public static extern bool GetWindowRect(IntPtr hWnd, ref RECT lpRect);
 
-        [DllImport("user32.dll")]
-        public static extern IntPtr GetParent(IntPtr hWnd);
+    //    [DllImport("user32.dll")]
+    //    public static extern IntPtr GetParent(IntPtr hWnd);
 
-        [DllImport("user32.dll", CharSet = CharSet.Auto)]
-        public static extern bool SetWindowText(int hWnd, string lpString);
+    //    [DllImport("user32.dll", CharSet = CharSet.Auto)]
+    //    public static extern bool SetWindowText(int hWnd, string lpString);
 
-        [DllImport("user32.dll")]
-        public static extern bool DestroyWindow(IntPtr hwnd);
+    //    [DllImport("user32.dll")]
+    //    public static extern bool DestroyWindow(IntPtr hwnd);
 
-        [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = false)]
-        public static extern IntPtr SendMessage(IntPtr hWnd, int Msg, IntPtr wParam, IntPtr lParam);
+    //    [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = false)]
+    //    public static extern IntPtr SendMessage(IntPtr hWnd, int Msg, IntPtr wParam, IntPtr lParam);
 
-        [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = false)]
-        public static extern IntPtr SendMessage(IntPtr hWnd, int Msg, IntPtr wParam, string lParam);
+    //    [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = false)]
+    //    public static extern IntPtr SendMessage(IntPtr hWnd, int Msg, IntPtr wParam, string lParam);
 
-        [DllImport("user32.dll")]
-        public static extern IntPtr SetFocus(IntPtr hwnd);
+    //    [DllImport("user32.dll")]
+    //    public static extern IntPtr SetFocus(IntPtr hwnd);
 
-        /// <summary>
-        /// Get the _HResult field from the given exception.
-        /// </summary>
-        public static int GetHResult(Exception exn)
-        {
-            /* Since there are no useful subclasses of IOException
-             * (e.g. DiskFullException), in order to detect a disk full error we have to extract the
-             * (hidden) HRESULT code from the exception using reflection and manually compare the
-             * error code bits with the error as defined in winerror.h.
-             */
-            try
-            {
-                int hresult = (int)exn.GetType().GetField("_HResult",
-                    BindingFlags.Instance | BindingFlags.NonPublic)
-                    .GetValue(exn);
-                // The error code is stored in just the lower 16 bits
-                return hresult & 0xFFFF;
-            }
-            catch
-            {
-                return 0;
-            }
-        }
+    //    /// <summary>
+    //    /// Get the _HResult field from the given exception.
+    //    /// </summary>
+    //    public static int GetHResult(Exception exn)
+    //    {
+    //        /* Since there are no useful subclasses of IOException
+    //         * (e.g. DiskFullException), in order to detect a disk full error we have to extract the
+    //         * (hidden) HRESULT code from the exception using reflection and manually compare the
+    //         * error code bits with the error as defined in winerror.h.
+    //         */
+    //        try
+    //        {
+    //            int hresult = (int)exn.GetType().GetField("_HResult",
+    //                BindingFlags.Instance | BindingFlags.NonPublic)
+    //                .GetValue(exn);
+    //            // The error code is stored in just the lower 16 bits
+    //            return hresult & 0xFFFF;
+    //        }
+    //        catch
+    //        {
+    //            return 0;
+    //        }
+    //    }
 
-        // Thank you, pinvoke.net!
-        // http://www.pinvoke.net/default.aspx/kernel32/FormatMessage.html
-        [DllImport("Kernel32.dll", SetLastError = true)]
-        static extern uint FormatMessage(uint dwFlags, IntPtr lpSource,
-            uint dwMessageId, uint dwLanguageId, ref IntPtr lpBuffer,
-            uint nSize, IntPtr pArguments);
+    //    // Thank you, pinvoke.net!
+    //    // http://www.pinvoke.net/default.aspx/kernel32/FormatMessage.html
+    //    [DllImport("Kernel32.dll", SetLastError = true)]
+    //    static extern uint FormatMessage(uint dwFlags, IntPtr lpSource,
+    //        uint dwMessageId, uint dwLanguageId, ref IntPtr lpBuffer,
+    //        uint nSize, IntPtr pArguments);
 
-        [DllImport("kernel32.dll", SetLastError = true)]
-        static extern IntPtr LocalFree(IntPtr hMem);
+    //    [DllImport("kernel32.dll", SetLastError = true)]
+    //    static extern IntPtr LocalFree(IntPtr hMem);
 
-        const uint FORMAT_MESSAGE_ALLOCATE_BUFFER = 0x00000100;
-        const uint FORMAT_MESSAGE_IGNORE_INSERTS = 0x00000200;
-        const uint FORMAT_MESSAGE_FROM_SYSTEM = 0x00001000;
+    //    const uint FORMAT_MESSAGE_ALLOCATE_BUFFER = 0x00000100;
+    //    const uint FORMAT_MESSAGE_IGNORE_INSERTS = 0x00000200;
+    //    const uint FORMAT_MESSAGE_FROM_SYSTEM = 0x00001000;
 
-        public static string GetMessageString(uint message)
-        {
-            IntPtr lpMsgBuf = IntPtr.Zero;
+    //    public static string GetMessageString(uint message)
+    //    {
+    //        IntPtr lpMsgBuf = IntPtr.Zero;
 
-            uint dwChars = FormatMessage(
-                FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM | FORMAT_MESSAGE_IGNORE_INSERTS,
-                IntPtr.Zero,
-                message,
-                0, // Default language
-                ref lpMsgBuf,
-                0,
-                IntPtr.Zero);
+    //        uint dwChars = FormatMessage(
+    //            FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM | FORMAT_MESSAGE_IGNORE_INSERTS,
+    //            IntPtr.Zero,
+    //            message,
+    //            0, // Default language
+    //            ref lpMsgBuf,
+    //            0,
+    //            IntPtr.Zero);
 
-            if (dwChars == 0)
-            {
-                return "";
-            }
+    //        if (dwChars == 0)
+    //        {
+    //            return "";
+    //        }
 
-            string sRet = Marshal.PtrToStringAnsi(lpMsgBuf);
-            lpMsgBuf = LocalFree(lpMsgBuf);
-            return sRet;
-        }
+    //        string sRet = Marshal.PtrToStringAnsi(lpMsgBuf);
+    //        lpMsgBuf = LocalFree(lpMsgBuf);
+    //        return sRet;
+    //    }
 
-        public static string GetWindowsMessageName(int msg)
-        {
-            Type t = typeof(Core.Win32);
-            foreach (FieldInfo f in t.GetFields())
-            {
-                object i = f.GetValue(null);
-                if (i is Int32 && ((Int32)i) == msg)
-                {
-                    return f.Name;
-                }
-            }
-            return msg.ToString();
-        }
+    //    public static string GetWindowsMessageName(int msg)
+    //    {
+    //        Type t = typeof(Core.Win32);
+    //        foreach (FieldInfo f in t.GetFields())
+    //        {
+    //            object i = f.GetValue(null);
+    //            if (i is Int32 && ((Int32)i) == msg)
+    //            {
+    //                return f.Name;
+    //            }
+    //        }
+    //        return msg.ToString();
+    //    }
 
-        public delegate bool EnumUILanguagesProc(string lpUILanguageString, IntPtr lParam);
+    //    public delegate bool EnumUILanguagesProc(string lpUILanguageString, IntPtr lParam);
 
-        [DllImport("kernel32.dll")]
-        public static extern bool EnumUILanguages(EnumUILanguagesProc pUILanguageEnumProc,
-           uint dwFlags, IntPtr lParam);
+    //    [DllImport("kernel32.dll")]
+    //    public static extern bool EnumUILanguages(EnumUILanguagesProc pUILanguageEnumProc,
+    //       uint dwFlags, IntPtr lParam);
 
-        #region Window scrolling functions
+    //    #region Window scrolling functions
 
-        [StructLayout(LayoutKind.Sequential)]
-        public struct ScrollInfo
-        {
-            public uint cbSize;
-            public uint fMask;
-            public int nMin;
-            public int nMax;
-            public uint nPage;
-            public int nPos;
-            public int nTrackPos;
-        }
+    //    [StructLayout(LayoutKind.Sequential)]
+    //    public struct ScrollInfo
+    //    {
+    //        public uint cbSize;
+    //        public uint fMask;
+    //        public int nMin;
+    //        public int nMax;
+    //        public uint nPage;
+    //        public int nPos;
+    //        public int nTrackPos;
+    //    }
 
-        public enum ScrollInfoMask
-        {
-            SIF_RANGE = 0x1,
-            SIF_PAGE = 0x2,
-            SIF_POS = 0x4,
-            SIF_DISABLENOSCROLL = 0x8,
-            SIF_TRACKPOS = 0x10,
-            SIF_ALL = SIF_RANGE + SIF_PAGE + SIF_POS + SIF_TRACKPOS
-        }
+    //    public enum ScrollInfoMask
+    //    {
+    //        SIF_RANGE = 0x1,
+    //        SIF_PAGE = 0x2,
+    //        SIF_POS = 0x4,
+    //        SIF_DISABLENOSCROLL = 0x8,
+    //        SIF_TRACKPOS = 0x10,
+    //        SIF_ALL = SIF_RANGE + SIF_PAGE + SIF_POS + SIF_TRACKPOS
+    //    }
 
-        public enum ScrollBarCommands
-        {
-            SB_LINEUP = 0,
-            SB_LINELEFT = 0,
-            SB_LINEDOWN = 1,
-            SB_LINERIGHT = 1,
-            SB_PAGEUP = 2,
-            SB_PAGELEFT = 2,
-            SB_PAGEDOWN = 3,
-            SB_PAGERIGHT = 3,
-            SB_THUMBPOSITION = 4,
-            SB_THUMBTRACK = 5,
-            SB_TOP = 6,
-            SB_LEFT = 6,
-            SB_BOTTOM = 7,
-            SB_RIGHT = 7,
-            SB_ENDSCROLL = 8
-        }
+    //    public enum ScrollBarCommands
+    //    {
+    //        SB_LINEUP = 0,
+    //        SB_LINELEFT = 0,
+    //        SB_LINEDOWN = 1,
+    //        SB_LINERIGHT = 1,
+    //        SB_PAGEUP = 2,
+    //        SB_PAGELEFT = 2,
+    //        SB_PAGEDOWN = 3,
+    //        SB_PAGERIGHT = 3,
+    //        SB_THUMBPOSITION = 4,
+    //        SB_THUMBTRACK = 5,
+    //        SB_TOP = 6,
+    //        SB_LEFT = 6,
+    //        SB_BOTTOM = 7,
+    //        SB_RIGHT = 7,
+    //        SB_ENDSCROLL = 8
+    //    }
 
         public enum ScrollBarConstants
         {
@@ -431,272 +421,272 @@ namespace XenAdmin.Core
             SB_BOTH = 3
         }
 
-        public enum ScrollState
-        {
-            AutoScrolling = 0x0001,
-            HScrollVisible = 0x0002,
-            VScrollVisible = 0x0004,
-            UserHasScrolled = 0x0008,
-            FullDrag = 0x0010
-        }
+    //    public enum ScrollState
+    //    {
+    //        AutoScrolling = 0x0001,
+    //        HScrollVisible = 0x0002,
+    //        VScrollVisible = 0x0004,
+    //        UserHasScrolled = 0x0008,
+    //        FullDrag = 0x0010
+    //    }
 
-        /// <summary>
-        /// See http://msdn2.microsoft.com/en-us/library/e14hhbe6(VS.80).aspx
-        /// </summary>
-        public const int SB_THUMBTRACK = 5;
+    //    /// <summary>
+    //    /// See http://msdn2.microsoft.com/en-us/library/e14hhbe6(VS.80).aspx
+    //    /// </summary>
+    //    public const int SB_THUMBTRACK = 5;
 
 
-        [DllImport("user32.dll")]
-        public static extern int SetScrollInfo(IntPtr hwnd, int fnBar, [In] ref ScrollInfo lpsi, bool fRedraw);
+    //    [DllImport("user32.dll")]
+    //    public static extern int SetScrollInfo(IntPtr hwnd, int fnBar, [In] ref ScrollInfo lpsi, bool fRedraw);
 
-        #endregion
+    //    #endregion
 
-        [DllImport("user32.dll", SetLastError = true)]
-        public static extern IntPtr FindWindow(string lpClassName, string lpWindowName);
+    //    [DllImport("user32.dll", SetLastError = true)]
+    //    public static extern IntPtr FindWindow(string lpClassName, string lpWindowName);
 
-        [return: MarshalAs(UnmanagedType.Bool)]
-        [DllImport("user32.dll", SetLastError = true)]
-        public static extern bool PostMessage(IntPtr hWnd, uint Msg, IntPtr wParam, IntPtr lParam);
+    //    [return: MarshalAs(UnmanagedType.Bool)]
+    //    [DllImport("user32.dll", SetLastError = true)]
+    //    public static extern bool PostMessage(IntPtr hWnd, uint Msg, IntPtr wParam, IntPtr lParam);
 
-        #region Disk space functions
+    //    #region Disk space functions
 
-        /// <summary>
-        /// Will return null if the disk parameters could not be determined.
-        /// </summary>
-        /// <param name="path">An absolute path</param>
-        /// <returns></returns>
-        public static DiskSpaceInfo GetDiskSpaceInfo(string path)
-        {
-            try
-            {
-                string DriveLetter = Path.GetPathRoot(path).TrimEnd(new char[] { '\\' });
-                System.Management.ManagementObject o = new System.Management.ManagementObject(
-                    string.Format("Win32_LogicalDisk.DeviceID=\"{0}\"", DriveLetter));
-                string fsType = o.Properties["FileSystem"].Value.ToString();
-                bool isFAT = (fsType == "FAT" || fsType == "FAT32");
-                UInt64 freeBytes = UInt64.Parse(o.Properties["FreeSpace"].Value.ToString());
-                UInt64 totalBytes = UInt64.Parse(o.Properties["Size"].Value.ToString());
-                return new DiskSpaceInfo(freeBytes, totalBytes, isFAT);
-            }
-            catch (Exception exn)
-            {
-                log.Warn(exn, exn);
-                return null;
-            }
-        }
+    //    /// <summary>
+    //    /// Will return null if the disk parameters could not be determined.
+    //    /// </summary>
+    //    /// <param name="path">An absolute path</param>
+    //    /// <returns></returns>
+    //    public static DiskSpaceInfo GetDiskSpaceInfo(string path)
+    //    {
+    //        try
+    //        {
+    //            string DriveLetter = Path.GetPathRoot(path).TrimEnd(new char[] { '\\' });
+    //            System.Management.ManagementObject o = new System.Management.ManagementObject(
+    //                string.Format("Win32_LogicalDisk.DeviceID=\"{0}\"", DriveLetter));
+    //            string fsType = o.Properties["FileSystem"].Value.ToString();
+    //            bool isFAT = (fsType == "FAT" || fsType == "FAT32");
+    //            UInt64 freeBytes = UInt64.Parse(o.Properties["FreeSpace"].Value.ToString());
+    //            UInt64 totalBytes = UInt64.Parse(o.Properties["Size"].Value.ToString());
+    //            return new DiskSpaceInfo(freeBytes, totalBytes, isFAT);
+    //        }
+    //        catch (Exception exn)
+    //        {
+    //            log.Warn(exn, exn);
+    //            return null;
+    //        }
+    //    }
 
-        public class DiskSpaceInfo
-        {
-            public readonly UInt64 FreeBytesAvailable;
-            public readonly UInt64 TotalBytes;
-            public readonly bool IsFAT;
+    //    public class DiskSpaceInfo
+    //    {
+    //        public readonly UInt64 FreeBytesAvailable;
+    //        public readonly UInt64 TotalBytes;
+    //        public readonly bool IsFAT;
 
-            public DiskSpaceInfo(UInt64 freeBytesAvailable, UInt64 totalBytes, bool isFAT)
-            {
-                FreeBytesAvailable = freeBytesAvailable;
-                TotalBytes = totalBytes;
-                IsFAT = isFAT;
-            }
-        }
+    //        public DiskSpaceInfo(UInt64 freeBytesAvailable, UInt64 totalBytes, bool isFAT)
+    //        {
+    //            FreeBytesAvailable = freeBytesAvailable;
+    //            TotalBytes = totalBytes;
+    //            IsFAT = isFAT;
+    //        }
+    //    }
 
-        public const int CP_NOCLOSE_BUTTON = 0x200;
+    //    public const int CP_NOCLOSE_BUTTON = 0x200;
 
-        public const int GWL_WNDPROC = -4;
+    //    public const int GWL_WNDPROC = -4;
 
-        public delegate IntPtr WndProcDelegate(IntPtr hWnd, uint msg, IntPtr wParam, IntPtr lParam);
+    public delegate IntPtr WndProcDelegate(IntPtr hWnd, uint msg, IntPtr wParam, IntPtr lParam);
 
-        [DllImport("user32.dll", EntryPoint = "GetWindowLong")]
-        public static extern IntPtr GetWindowLong(IntPtr hWnd, int nIndex);
+    //    [DllImport("user32.dll", EntryPoint = "GetWindowLong")]
+    //    public static extern IntPtr GetWindowLong(IntPtr hWnd, int nIndex);
 
-        [DllImport("user32.dll")]
-        public static extern int SetWindowLong(IntPtr hWnd, int nIndex, IntPtr newWndProc);
+    //    [DllImport("user32.dll")]
+    //    public static extern int SetWindowLong(IntPtr hWnd, int nIndex, IntPtr newWndProc);
 
-        [DllImport("user32.dll")]
-        public static extern IntPtr CallWindowProc(IntPtr lpPrevWndFunc, IntPtr hWnd, uint Msg, IntPtr wParam, IntPtr lParam);
+    //    [DllImport("user32.dll")]
+    //    public static extern IntPtr CallWindowProc(IntPtr lpPrevWndFunc, IntPtr hWnd, uint Msg, IntPtr wParam, IntPtr lParam);
 
-        public const int LB_ITEMFROMPOINT = 425;
+    //    public const int LB_ITEMFROMPOINT = 425;
 
-        [DllImport("user32.dll")]
-        public static extern bool GetClientRect(IntPtr hWnd, out RECT lpRect);
+    //    [DllImport("user32.dll")]
+    //    public static extern bool GetClientRect(IntPtr hWnd, out RECT lpRect);
 
-        #endregion
+    //    #endregion
 
-        [DllImport("user32.dll")]
-        public static extern IntPtr GetWindowDC(IntPtr hwnd);
-        [DllImport("user32.dll")]
-        public static extern int ReleaseDC(IntPtr hwnd, IntPtr hdc);
+    //    [DllImport("user32.dll")]
+    //    public static extern IntPtr GetWindowDC(IntPtr hwnd);
+    //    [DllImport("user32.dll")]
+    //    public static extern int ReleaseDC(IntPtr hwnd, IntPtr hdc);
 
-        // pinvoke.net
-        [DllImport("psapi.dll")]
-        public static extern uint GetModuleFileNameEx(IntPtr hProcess, IntPtr hModule, [Out] StringBuilder lpBaseName, [In] [MarshalAs(UnmanagedType.U4)] int nSize);
+    //    // pinvoke.net
+    //    [DllImport("psapi.dll")]
+    //    public static extern uint GetModuleFileNameEx(IntPtr hProcess, IntPtr hModule, [Out] StringBuilder lpBaseName, [In] [MarshalAs(UnmanagedType.U4)] int nSize);
 
-        /*
-         * ToolHelpHandle and related methods are based upon
-         * http://blogs.msdn.com/jasonz/archive/2007/05/11/code-sample-is-your-process-using-the-silverlight-clr.aspx
-         * and http://www.csharpfriends.com/Forums/ShowPost.aspx?PostID=27395.
-         */
+    //    /*
+    //     * ToolHelpHandle and related methods are based upon
+    //     * http://blogs.msdn.com/jasonz/archive/2007/05/11/code-sample-is-your-process-using-the-silverlight-clr.aspx
+    //     * and http://www.csharpfriends.com/Forums/ShowPost.aspx?PostID=27395.
+    //     */
 
-        public class ToolHelpHandle : SafeHandleZeroOrMinusOneIsInvalid
-        {
-            private ToolHelpHandle() : base(true)
-            {
-            }
+    //    public class ToolHelpHandle : SafeHandleZeroOrMinusOneIsInvalid
+    //    {
+    //        private ToolHelpHandle() : base(true)
+    //        {
+    //        }
 
-            [ReliabilityContract(Consistency.WillNotCorruptState, Cer.MayFail)]
-            override protected bool ReleaseHandle()
-            {
-                return CloseHandle(handle);
-            }
-        }
+    //        [ReliabilityContract(Consistency.WillNotCorruptState, Cer.MayFail)]
+    //        override protected bool ReleaseHandle()
+    //        {
+    //            return CloseHandle(handle);
+    //        }
+    //    }
 
-        [DllImport("kernel32.dll", SetLastError = true)]
-        static public extern bool CloseHandle(IntPtr hHandle);
+    //    [DllImport("kernel32.dll", SetLastError = true)]
+    //    static public extern bool CloseHandle(IntPtr hHandle);
 
-        [DllImport("kernel32.dll")]
-        static public extern bool Process32First(ToolHelpHandle hSnapshot, ref PROCESSENTRY32 lppe);
+    //    [DllImport("kernel32.dll")]
+    //    static public extern bool Process32First(ToolHelpHandle hSnapshot, ref PROCESSENTRY32 lppe);
 
-        [DllImport("kernel32.dll")]
-        static public extern bool Process32Next(ToolHelpHandle hSnapshot, ref PROCESSENTRY32 lppe);
+    //    [DllImport("kernel32.dll")]
+    //    static public extern bool Process32Next(ToolHelpHandle hSnapshot, ref PROCESSENTRY32 lppe);
 
-        [DllImport("kernel32.dll", SetLastError = true)]
-        static public extern ToolHelpHandle CreateToolhelp32Snapshot(SnapshotFlags dwFlags, uint th32ProcessID);
+    //    [DllImport("kernel32.dll", SetLastError = true)]
+    //    static public extern ToolHelpHandle CreateToolhelp32Snapshot(SnapshotFlags dwFlags, uint th32ProcessID);
 
-        [Flags]
-        public enum SnapshotFlags : uint
-        {
-            HeapList = 0x00000001,
-            Process = 0x00000002,
-            Thread = 0x00000004,
-            Module = 0x00000008,
-            Module32 = 0x00000010,
-            Inherit = 0x80000000,
-            All = 0x0000001F
-        }
+    //    [Flags]
+    //    public enum SnapshotFlags : uint
+    //    {
+    //        HeapList = 0x00000001,
+    //        Process = 0x00000002,
+    //        Thread = 0x00000004,
+    //        Module = 0x00000008,
+    //        Module32 = 0x00000010,
+    //        Inherit = 0x80000000,
+    //        All = 0x0000001F
+    //    }
 
-        [StructLayoutAttribute(LayoutKind.Sequential)]
-        public struct PROCESSENTRY32
-        {
-            public uint dwSize;
-            public uint cntUsage;
-            public uint th32ProcessID;
-            public IntPtr th32DefaultHeapID;
-            public uint th32ModuleID;
-            public uint cntThreads;
-            public uint th32ParentProcessID;
-            public int pcPriClassBase;
-            public uint dwFlags;
+    //    [StructLayoutAttribute(LayoutKind.Sequential)]
+    //    public struct PROCESSENTRY32
+    //    {
+    //        public uint dwSize;
+    //        public uint cntUsage;
+    //        public uint th32ProcessID;
+    //        public IntPtr th32DefaultHeapID;
+    //        public uint th32ModuleID;
+    //        public uint cntThreads;
+    //        public uint th32ParentProcessID;
+    //        public int pcPriClassBase;
+    //        public uint dwFlags;
 
-            [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 260)]
-            public string szExeFile;
-        }
+    //        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 260)]
+    //        public string szExeFile;
+    //    }
 
-        [Flags]
-        public enum TOKEN_ACCESS : uint
-        {
-            TOKEN_QUERY = 0x0008
-        };
+    //    [Flags]
+    //    public enum TOKEN_ACCESS : uint
+    //    {
+    //        TOKEN_QUERY = 0x0008
+    //    };
 
-        [DllImport("advapi32.dll", SetLastError = true)]
-        [return: MarshalAs(UnmanagedType.Bool)]
-        public static extern bool OpenProcessToken(IntPtr ProcessHandle, TOKEN_ACCESS DesiredAccess, out IntPtr TokenHandle);
+    //    [DllImport("advapi32.dll", SetLastError = true)]
+    //    [return: MarshalAs(UnmanagedType.Bool)]
+    //    public static extern bool OpenProcessToken(IntPtr ProcessHandle, TOKEN_ACCESS DesiredAccess, out IntPtr TokenHandle);
 
-        [DllImport("kernel32.dll", SetLastError = true)]
-        public extern static bool QueryPerformanceCounter(out long x);
-        [DllImport("kernel32.dll", SetLastError = true)]
-        public extern static bool QueryPerformanceFrequency(out long x);
+    //    [DllImport("kernel32.dll", SetLastError = true)]
+    //    public extern static bool QueryPerformanceCounter(out long x);
+    //    [DllImport("kernel32.dll", SetLastError = true)]
+    //    public extern static bool QueryPerformanceFrequency(out long x);
 
-        public delegate IntPtr OFNHookProcDelegate(IntPtr hdlg, int msg, IntPtr wParam, IntPtr lParam);
+    //    public delegate IntPtr OFNHookProcDelegate(IntPtr hdlg, int msg, IntPtr wParam, IntPtr lParam);
 
-        [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Auto)]
-        public struct OPENFILENAME
-        {
-            public int lStructSize;
-            public IntPtr hwndOwner;
-            public int hInstance;
-            [MarshalAs(UnmanagedType.LPTStr)]
-            public string lpstrFilter;
-            [MarshalAs(UnmanagedType.LPTStr)]
-            public string lpstrCustomFilter;
-            public int nMaxCustFilter;
-            public int nFilterIndex;
-            [MarshalAs(UnmanagedType.LPTStr)]
-            public string lpstrFile;
-            public int nMaxFile;
-            [MarshalAs(UnmanagedType.LPTStr)]
-            public string lpstrFileTitle;
-            public int nMaxFileTitle;
-            [MarshalAs(UnmanagedType.LPTStr)]
-            public string lpstrInitialDir;
-            [MarshalAs(UnmanagedType.LPTStr)]
-            public string lpstrTitle;
-            public int Flags;
-            public short nFileOffset;
-            public short nFileExtension;
-            [MarshalAs(UnmanagedType.LPTStr)]
-            public string lpstrDefExt;
-            public int lCustData;
-            public OFNHookProcDelegate lpfnHook;
-            [MarshalAs(UnmanagedType.LPTStr)]
-            public string lpTemplateName;
-            //only if on nt 5.0 or higher
-            public int pvReserved;
-            public int dwReserved;
-            public int FlagsEx;
-        }
+    //    [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Auto)]
+    //    public struct OPENFILENAME
+    //    {
+    //        public int lStructSize;
+    //        public IntPtr hwndOwner;
+    //        public int hInstance;
+    //        [MarshalAs(UnmanagedType.LPTStr)]
+    //        public string lpstrFilter;
+    //        [MarshalAs(UnmanagedType.LPTStr)]
+    //        public string lpstrCustomFilter;
+    //        public int nMaxCustFilter;
+    //        public int nFilterIndex;
+    //        [MarshalAs(UnmanagedType.LPTStr)]
+    //        public string lpstrFile;
+    //        public int nMaxFile;
+    //        [MarshalAs(UnmanagedType.LPTStr)]
+    //        public string lpstrFileTitle;
+    //        public int nMaxFileTitle;
+    //        [MarshalAs(UnmanagedType.LPTStr)]
+    //        public string lpstrInitialDir;
+    //        [MarshalAs(UnmanagedType.LPTStr)]
+    //        public string lpstrTitle;
+    //        public int Flags;
+    //        public short nFileOffset;
+    //        public short nFileExtension;
+    //        [MarshalAs(UnmanagedType.LPTStr)]
+    //        public string lpstrDefExt;
+    //        public int lCustData;
+    //        public OFNHookProcDelegate lpfnHook;
+    //        [MarshalAs(UnmanagedType.LPTStr)]
+    //        public string lpTemplateName;
+    //        //only if on nt 5.0 or higher
+    //        public int pvReserved;
+    //        public int dwReserved;
+    //        public int FlagsEx;
+    //    }
 
-        [DllImport("Comdlg32.dll", CharSet = CharSet.Auto, SetLastError = true)]
-        public static extern bool GetSaveFileName(ref OPENFILENAME lpofn);
+    //    [DllImport("Comdlg32.dll", CharSet = CharSet.Auto, SetLastError = true)]
+    //    public static extern bool GetSaveFileName(ref OPENFILENAME lpofn);
 
-        [DllImport("Comdlg32.dll")]
-        public static extern int CommDlgExtendedError();
+    //    [DllImport("Comdlg32.dll")]
+    //    public static extern int CommDlgExtendedError();
 
-        /// <summary>
-        /// Extended message header for WM_NOTIFY
-        /// </summary>
-        [StructLayout(LayoutKind.Sequential)]
-        public struct NMHEADER
-        {
-            public NMHDR hdr;
-            public int iItem;
-            public int iButton;
-            public IntPtr pitem;
-        }
+    //    /// <summary>
+    //    /// Extended message header for WM_NOTIFY
+    //    /// </summary>
+    //    [StructLayout(LayoutKind.Sequential)]
+    //    public struct NMHEADER
+    //    {
+    //        public NMHDR hdr;
+    //        public int iItem;
+    //        public int iButton;
+    //        public IntPtr pitem;
+    //    }
 
-        /// <summary>
-        /// message header for WM_NOTIFY
-        /// </summary>
-        [StructLayout(LayoutKind.Sequential)]
-        public struct NMHDR
-        {
-            public IntPtr HwndFrom;
-            public IntPtr IdFrom;
-            public int code;
-        }
+    //    /// <summary>
+    //    /// message header for WM_NOTIFY
+    //    /// </summary>
+    //    [StructLayout(LayoutKind.Sequential)]
+    //    public struct NMHDR
+    //    {
+    //        public IntPtr HwndFrom;
+    //        public IntPtr IdFrom;
+    //        public int code;
+    //    }
 
-        public const int S_OK = unchecked((int)0x00000000);
-        public const int E_ACCESSDENIED = unchecked((int)0x80070005);
-        public const int INET_E_DEFAULT_ACTION = unchecked((int)0x800C0011);
+    //    public const int S_OK = unchecked((int)0x00000000);
+    //    public const int E_ACCESSDENIED = unchecked((int)0x80070005);
+    //    public const int INET_E_DEFAULT_ACTION = unchecked((int)0x800C0011);
 
-        [ComImport, Guid("6d5140c1-7436-11ce-8034-00aa006009fa"),
-         InterfaceType(ComInterfaceType.InterfaceIsIUnknown),
-         ComVisible(false)]
-        public interface IServiceProvider
-        {
-            [return: MarshalAs(UnmanagedType.I4)]
-            [PreserveSig]
-            int QueryService(ref Guid guidService, ref Guid riid, out IntPtr ppvObject);
-        }
+    //    [ComImport, Guid("6d5140c1-7436-11ce-8034-00aa006009fa"),
+    //     InterfaceType(ComInterfaceType.InterfaceIsIUnknown),
+    //     ComVisible(false)]
+    //    public interface IServiceProvider
+    //    {
+    //        [return: MarshalAs(UnmanagedType.I4)]
+    //        [PreserveSig]
+    //        int QueryService(ref Guid guidService, ref Guid riid, out IntPtr ppvObject);
+    //    }
 
-        private const string _IID_IAuthenticate = "79eac9d0-baf9-11ce-8c82-00aa004ba90b";
-        public static readonly Guid IID_IAuthenticate = new Guid(_IID_IAuthenticate);
-        [ComImport, Guid(_IID_IAuthenticate),
-         InterfaceType(ComInterfaceType.InterfaceIsIUnknown),
-         ComVisible(false)]
-        public interface IAuthenticate
-        {
-            [return: MarshalAs(UnmanagedType.I4)]
-            [PreserveSig]
-            int Authenticate(ref IntPtr phwnd, ref IntPtr pszUsername, ref IntPtr pszPassword);
-        }
+    //    private const string _IID_IAuthenticate = "79eac9d0-baf9-11ce-8c82-00aa004ba90b";
+    //    public static readonly Guid IID_IAuthenticate = new Guid(_IID_IAuthenticate);
+    //    [ComImport, Guid(_IID_IAuthenticate),
+    //     InterfaceType(ComInterfaceType.InterfaceIsIUnknown),
+    //     ComVisible(false)]
+    //    public interface IAuthenticate
+    //    {
+    //        [return: MarshalAs(UnmanagedType.I4)]
+    //        [PreserveSig]
+    //        int Authenticate(ref IntPtr phwnd, ref IntPtr pszUsername, ref IntPtr pszPassword);
+    //    }
     }
 }

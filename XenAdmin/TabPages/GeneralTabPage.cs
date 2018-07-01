@@ -92,39 +92,6 @@ namespace XenAdmin.TabPages
             }            
         }
 
-        //private void licenseStatus_ItemUpdated(object sender, EventArgs e)
-        //{
-        //    GeneralTabLicenseStatusStringifier ss = new GeneralTabLicenseStatusStringifier();
-        //    Program.Invoke(Program.MainWindow, () => 
-        //    {
-        //        pdSectionLicense.UpdateEntryValueWithKey(
-        //            FriendlyName("host.license_params-expiry"),
-        //            ss.ExpiryDate, 
-        //            ss.ShowExpiryDate);
-        //    });
-
-        //    Program.Invoke(Program.MainWindow, () =>
-        //    {
-        //        pdSectionLicense.UpdateEntryValueWithKey(
-        //            Messages.LICENSE_STATUS,
-        //            ss.ExpiryStatus,
-        //            true);
-        //    });
-
-        //    Pool p = xenObject as Pool;
-        //    if (p != null)
-        //        Program.Invoke(Program.MainWindow, () =>
-        //        {
-        //            var additionalString = PoolAdditionalLicenseString();
-        //            pdSectionGeneral.UpdateEntryValueWithKey(
-        //                Messages.POOL_LICENSE,
-        //                additionalString != string.Empty
-        //                    ? string.Format(Messages.MAINWINDOW_CONTEXT_REASON, p.LicenseString(), additionalString)
-        //                    : p.LicenseString(),
-        //                true);
-        //        });
-        //}
-
         void s_contentReceivedFocus(PDSection s)
         {
             scrollToSelectionIfNeeded(s);

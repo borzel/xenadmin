@@ -79,62 +79,64 @@ namespace XenAdmin.Controls
 
         }
 
-        protected override void OnPaint(PaintEventArgs e)
-        {
-            base.OnPaint(e);
+		// TODO: Implement new
+        //protected override void OnPaint(PaintEventArgs e)
+        //{
+        //    base.OnPaint(e);
 
-            if (this.BorderStyle == BorderStyle.FixedSingle)
-            {
-                IntPtr hDC = Win32.GetWindowDC(this.Handle);
-                Graphics g = Graphics.FromHdc(hDC);
+        //    if (this.BorderStyle == BorderStyle.FixedSingle)
+        //    {
+        //        IntPtr hDC = Win32.GetWindowDC(this.Handle);
+        //        Graphics g = Graphics.FromHdc(hDC);
 
-                ControlPaint.DrawBorder(
-                    g,
-                    new Rectangle(0, 0, this.Width, this.Height),
-                    _borderColor,
-                    _borderWidth,
-                    ButtonBorderStyle.Solid,
-                    _borderColor,
-                    _borderWidth,
-                    ButtonBorderStyle.Solid,
-                    _borderColor,
-                    _borderWidth,
-                    ButtonBorderStyle.Solid,
-                    _borderColor,
-                    _borderWidth,
-                    ButtonBorderStyle.Solid);
-                g.Dispose();
-                Win32.ReleaseDC(Handle, hDC);
-            }
-        }
+        //        ControlPaint.DrawBorder(
+        //            g,
+        //            new Rectangle(0, 0, this.Width, this.Height),
+        //            _borderColor,
+        //            _borderWidth,
+        //            ButtonBorderStyle.Solid,
+        //            _borderColor,
+        //            _borderWidth,
+        //            ButtonBorderStyle.Solid,
+        //            _borderColor,
+        //            _borderWidth,
+        //            ButtonBorderStyle.Solid,
+        //            _borderColor,
+        //            _borderWidth,
+        //            ButtonBorderStyle.Solid);
+        //        g.Dispose();
+        //        Win32.ReleaseDC(Handle, hDC);
+        //    }
+        //}
 
-        protected override void OnPaintBackground(PaintEventArgs e)
-        {
-            base.OnPaintBackground(e);
+		// TODO: Implement new
+        //protected override void OnPaintBackground(PaintEventArgs e)
+        //{
+        //    base.OnPaintBackground(e);
 
-            if (this.BorderStyle == BorderStyle.FixedSingle)
-            {
-                IntPtr hDC = Win32.GetWindowDC(this.Handle);
-                Graphics g = Graphics.FromHdc(hDC);
+        //    if (this.BorderStyle == BorderStyle.FixedSingle)
+        //    {
+        //        IntPtr hDC = Win32.GetWindowDC(this.Handle);
+        //        Graphics g = Graphics.FromHdc(hDC);
 
-                ControlPaint.DrawBorder(
-                    g,
-                    new Rectangle(0, 0, this.Width, this.Height),
-                    _borderColor,
-                    _borderWidth,
-                    ButtonBorderStyle.Solid,
-                    _borderColor,
-                    _borderWidth,
-                    ButtonBorderStyle.Solid,
-                    _borderColor,
-                    _borderWidth,
-                    ButtonBorderStyle.Solid,
-                    _borderColor,
-                    _borderWidth,
-                    ButtonBorderStyle.Solid);
-                g.Dispose();
-                Win32.ReleaseDC(Handle, hDC);
-            }
-        }
+        //        ControlPaint.DrawBorder(
+        //            g,
+        //            new Rectangle(0, 0, this.Width, this.Height),
+        //            _borderColor,
+        //            _borderWidth,
+        //            ButtonBorderStyle.Solid,
+        //            _borderColor,
+        //            _borderWidth,
+        //            ButtonBorderStyle.Solid,
+        //            _borderColor,
+        //            _borderWidth,
+        //            ButtonBorderStyle.Solid,
+        //            _borderColor,
+        //            _borderWidth,
+        //            ButtonBorderStyle.Solid);
+        //        g.Dispose();
+        //        Win32.ReleaseDC(Handle, hDC);
+        //    }
+        //}
     }
 }

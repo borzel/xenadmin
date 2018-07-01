@@ -287,25 +287,26 @@ namespace XenAdmin.Controls
 
         #region Layout
 
-        protected override void OnLayout(LayoutEventArgs levent)
-        {
+		// TODO: Check later, if needed
+        //protected override void OnLayout(LayoutEventArgs levent)
+        //{
 
-            if (root != null && this.Parent != null)
-            {
-                //This is needed to maximize and minimize properly, there is some issue in the ListView Control
-                Win32.POINT pt = new Win32.POINT();
-                IntPtr hResult = SendMessage(Handle, LVM_GETORIGIN, IntPtr.Zero, ref pt);
+        //    if (root != null && this.Parent != null)
+        //    {
+        //        //This is needed to maximize and minimize properly, there is some issue in the ListView Control
+        //        Win32.POINT pt = new Win32.POINT();
+        //        IntPtr hResult = SendMessage(Handle, LVM_GETORIGIN, IntPtr.Zero, ref pt);
 
-                origin = pt;
-                root.InvalidateAll();
-                int x = Math.Max(this.HGap, this.Size.Width / 2 - root.SubtreeWidth / 2);
-                int y = Math.Max(this.VGap, this.Size.Height / 2 - root.SubtreeHeight / 2);
-                PositionSnapshots(root, x, y);
-                Invalidate();
+        //        origin = pt;
+        //        root.InvalidateAll();
+        //        int x = Math.Max(this.HGap, this.Size.Width / 2 - root.SubtreeWidth / 2);
+        //        int y = Math.Max(this.VGap, this.Size.Height / 2 - root.SubtreeHeight / 2);
+        //        PositionSnapshots(root, x, y);
+        //        Invalidate();
 
-                whiteIcon.Position = new Point(x + origin.X, y + root.SubtreeHeight - 20 + origin.Y);
-            }
-        }
+        //        whiteIcon.Position = new Point(x + origin.X, y + root.SubtreeHeight - 20 + origin.Y);
+        //    }
+        //}
 
         protected override void OnParentChanged(EventArgs e)
         {
@@ -338,8 +339,8 @@ namespace XenAdmin.Controls
 
         private Win32.POINT origin = new Win32.POINT();
 
-        [DllImport("user32.dll")]
-        internal static extern IntPtr SendMessage(IntPtr hWnd, int msg, IntPtr wParam, ref Win32.POINT pt);
+        //[DllImport("user32.dll")]
+        //internal static extern IntPtr SendMessage(IntPtr hWnd, int msg, IntPtr wParam, ref Win32.POINT pt);
 
 
 

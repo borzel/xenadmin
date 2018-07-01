@@ -347,8 +347,8 @@ namespace XenAdmin
         /// <returns></returns>
         private static byte[] PromptForMasterPassword(bool isRetry)
         {
-            // close the splash screen before opening the password dialog (the dialog comes up behind the splash screen)
-            Program.CloseSplash();
+            //// close the splash screen before opening the password dialog (the dialog comes up behind the splash screen)
+            //Program.CloseSplash();
 
             LoadSessionDialog dialog = new LoadSessionDialog(isRetry);
             dialog.ShowDialog(Program.MainWindow);

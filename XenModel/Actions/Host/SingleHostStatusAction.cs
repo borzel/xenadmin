@@ -106,8 +106,9 @@ namespace XenAdmin.Actions
                 host.Status = HostStatus.failed;
                 host.error = e;
 
+
                 Description = 
-                    Win32.GetHResult(e) == Win32.ERROR_DISK_FULL ? 
+					Util.IsWin32DiskFull(e) ? 
                     Messages.ACTION_SYSTEM_STATUS_DISK_FULL : 
                     Messages.ACTION_SYSTEM_STATUS_FAILED;
             }
