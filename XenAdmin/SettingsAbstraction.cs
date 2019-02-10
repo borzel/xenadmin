@@ -2,6 +2,7 @@
 using System.Runtime.Serialization;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Configuration;
 
 namespace XenAdmin
 {
@@ -476,6 +477,13 @@ namespace XenAdmin
 				PropertyChanged(this, e);
 		}
 
+		public event SettingChangingEventHandler SettingChanging;
+
+		protected virtual void OnSettingChanging(SettingChangingEventArgs e)
+        {
+			if (SettingChanging != null)
+				SettingChanging(this, e);
+        }
 
 		void _setValue<t>(string key, t value)
 		{

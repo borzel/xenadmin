@@ -239,8 +239,7 @@ namespace XenAdmin
 
             SelectionManager.BindTo(MainMenuBar.Items, this);
             SelectionManager.BindTo(ToolStrip.Items, this);
-			// TODO: Properties.Settings.Default
-			Properties.Settings.Default.SettingChanging += Default_SettingChanging;
+			SettingsAbstraction.Instance.SettingChanging += Default_SettingChanging;
            
             toolStripSeparator7.Visible = xenSourceOnTheWebToolStripMenuItem.Visible = xenCenterPluginsOnlineToolStripMenuItem.Visible = !HiddenFeatures.ToolStripMenuItemHidden;
             healthCheckToolStripMenuItem1.Visible = !HiddenFeatures.HealthCheckHidden;
@@ -2953,7 +2952,7 @@ namespace XenAdmin
 
         private void SetTitleLabelMaxWidth()
         {
-            TitleLabel.MaximumSize = new Size(tableLayoutPanel1.Width - loggedInLabel1.Width - LicenseStatusTitleLabel.Width - 6, TitleLabel.Height);
+            TitleLabel.MaximumSize = new Size(tableLayoutPanel1.Width - loggedInLabel1.Width - LicenseStatusTitleLabel.Width - 6, TitleLabel.Height);         
         }
 
         private void UpdateViewMenu(NavigationPane.NavigationMode mode)

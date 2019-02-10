@@ -585,7 +585,7 @@ namespace XenAdmin
             // loggedInLabel1
             // 
             resources.ApplyResources(this.loggedInLabel1, "loggedInLabel1");
-            this.loggedInLabel1.BackColor = System.Drawing.Color.Transparent;
+            //this.loggedInLabel1.BackColor = System.Drawing.Color.Transparent;         
             this.loggedInLabel1.Connection = null;
             this.loggedInLabel1.Name = "loggedInLabel1";
             // 
